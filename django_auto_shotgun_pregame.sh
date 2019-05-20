@@ -46,7 +46,38 @@ print('the fields for the ' + str(model1) + 'model are as follows:')
 r_field_list = range(len(field_list))
 for r_elem in r_field_list:
 	print(str(field_list[r_elem]))
+
+apps_found = False
+
+fin1=open('config/config/settings.py','r')
+s_pre_marker=''
+s_post_marker=''
+for line in fin1:
+	if(apps_found == False):
+		s_pre_marker = str(s_pre_marker) + str(line)
+	if(line.count('django.contrib.admin') >= 1):
+		s_pre_marker = str(s_pre_marker) + str(line.replace(('django.contrib.admin'), ('rest_framework')))
+	if(line.find('INSTALLED_APPS') == True ):
+		apps_found = True
+fin1.close()
+
+apps_found = False
+
+fin2=open('config/config/settings.py','r')
+for line in fin2:
+	if(apps_found == True):
+		s_post_marker = str(s_pre_marker) + str(line)
+		if(line.count('INSTALLED_APPS') >= 1 ):
+			apps_found = True
+fin2.close()
+
+fout3=open('config/config/settings_alt.py','w')
+
+fout3.write(str(s_pre_marker))
+fout3.write(str(s_post_marker))
+
 " > stage1_auto_d.py
+
 
 touch api_auto_xxx/steps_5_plus_pregame.sh
 chmod 777 api_auto_xxx/steps_5_plus_pregame.sh
