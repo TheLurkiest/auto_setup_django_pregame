@@ -2,6 +2,9 @@
 # Brent Fanning
 # Comp 705
 
+# step1
+echo('remember to activate your virtual environment before executing this or going further')
+
 echo 'Welcome to the Django Rest API quick and dirty auto-setup skip-o-matic 5000!'
 echo 'If all goes as planned this shell script you have just executed will hopefully implement all the tedious and'
 echo 'frankly not very useful or difficult-- but extremely time-consuming process of setting up your initial '
@@ -12,44 +15,51 @@ echo 'is likely to have right at the start.  Fingers Crossed...'
 
 echo '...something like: sudo python3 auto_text_cleaner1.py'
 
+# step2
+mkdir api_auto_xxx
+touch api_auto_xxx/stage1_auto_d.py
 
+echo "import os
 
-sudo python3 auto_shot1.py
+print('step 1: if virtual environment is not active, ctrl+c/d out of this python code')
+print('...and then activate the virtual environment first before running this again')
 
+p_reply = ''
+p_reply = input('What would you like to call your first model?')
 
+model1 = p_reply
 
+print('ok.  Creating '+str(model1)+' model now.')
+p_reply2='YES'
+field_list=[]
 
+while(p_reply2.upper() == 'YES'):
+	p_reply = input('What would you like to call your field within that model?')
+	if(len(p_reply) >= 1):
+		field_list.append(p_reply)
+	p_reply2 = input('Would you like to create any additional fields (yes/no)?')
 
+print('the fields for the ' + str(model1) + 'model are as follows:')
 
+r_field_list = range(len(field_list))
+for r_elem in r_field_list:
+	print(str(field_list[r_elem]))
 
+# step 3a
+os.system('git init')
 
+# step 3b
+os.system('cp ~/workspace/final_project_reflections/my2_branch_reflect/reflections-project/.gitignore .')
+os.system('git add .gitignore')
 
+# step 3c
+os.system('git commit -m "hopefully first commit"')
 
+# step 4
+os.system('touch requirements.txt')
+os.system('pip freeze > requirements.txt')
 
+# step 5
+os.system(mv steps_5_plus_pregame.sh)
 
-mkdir five
-c_dir=0
-while [ $c_dir -le 4 ]
-do
-	c_dir=$[$c_dir +1]
-	echo Creating our five directories now... now creating dir$c_dir
-	mkdir dir$c_dir
-	c_file=0
-
-	while [ $c_file -le 3 ]
-	do
-		c_file=$[ $c_file +1 ]
-		echo Creating our four files now... now creating file$c_file
-		touch dir$c_dir/file$c_file
-		c_line=0
-
-		while [ $c_line -le $c_file ]
-		do
-			c_line=$[$c_line +1]
-			echo line$c_line >> dir$c_dir/file$c_file
-		done
-
-	done
-
-done
-
+" > api_auto_xxx/stage1_auto_d.py
