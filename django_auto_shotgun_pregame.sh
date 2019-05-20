@@ -71,7 +71,10 @@ for line in fin2:
 			apps_found = True
 fin2.close()
 
-fout3=open('config/config/settings_alt.py','w')
+os.system('sudo rm config/config/settings.py')
+
+
+fout3=open('config/config/settings.py','w')
 
 fout3.write(str(s_pre_marker))
 fout3.write(str(s_post_marker))
@@ -106,7 +109,7 @@ django-admin startproject config
 
 # step 6
 python3 config/manage.py migrate
-python3 manange.py makemigrations
+python3 config/manage.py makemigrations
 python3 config/manage.py migrate
 
 
