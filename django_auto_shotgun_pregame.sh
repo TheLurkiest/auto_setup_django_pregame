@@ -17,7 +17,9 @@ echo '...something like: sudo python3 auto_text_cleaner1.py'
 
 # step2
 mkdir api_auto_xxx
-touch api_auto_xxx/stage1_auto_d.py
+touch stage1_auto_d.py
+
+chmod 777 api_auto_xxx/stage1_auto_d.py
 
 echo "import os
 
@@ -44,41 +46,49 @@ print('the fields for the ' + str(model1) + 'model are as follows:')
 r_field_list = range(len(field_list))
 for r_elem in r_field_list:
 	print(str(field_list[r_elem]))
+" > stage1_auto_d.py
 
-# step 3a
-os.system('git init')
+touch api_auto_xxx/steps_5_plus_pregame.sh
+chmod 777 api_auto_xxx/steps_5_plus_pregame.sh
 
-# step 3b
-os.system('cp ~/workspace/final_project_reflections/my2_branch_reflect/reflections-project/.gitignore .')
-os.system('git add .gitignore')
-
-# step 3c
-os.system('git commit -m "hopefully first commit"')
-
-# step 4
-os.system('touch requirements.txt')
-os.system('pip freeze > requirements.txt')
-
-" > api_auto_xxx/stage1_auto_d.py
 
 echo "This second shell script will be created and placed into the new folder"
 echo "This will enable you to complete the remaining steps of the pregame"
 echo "Just cd into that directory and execute that shell script to finish it."
 
-echo "# step 5
-django-admin startproject config
-# step 6
+echo "# step 3a
+git init
 
+# step 3b
+cp ~/workspace/final_project_reflections/my2_branch_reflect/reflections-project/.gitignore .
+git add .gitignore
+
+# step 3c
+git commit -m 'hopefully first commit'
+
+# step 4
+touch requirements.txt
+pip freeze > requirements.txt
+
+# step 5
+django-admin startproject config
+
+# step 6
 python3 manage.py migrate
 python3 manange.py makemigrations
 python3 manage.py migrate
 
+
 # step7.1
-python3 manage.py runserver
+# python3 manage.py runserver
+
+
+
+sudo cp ../stage1_auto_d.py .
 
 " > api_auto_xxx/steps_5_plus_pregame.sh
 
-chmod +x api_auto_xxx/steps_5_plus_pregame.sh
+chmod 777 api_auto_xxx/steps_5_plus_pregame.sh
 
 echo "now cd into the api_auto_xxx folder you created and execute the shell script within it to continue"
 
