@@ -59,7 +59,27 @@ os.system('git commit -m "hopefully first commit"')
 os.system('touch requirements.txt')
 os.system('pip freeze > requirements.txt')
 
-# step 5
-os.system(mv steps_5_plus_pregame.sh)
-
 " > api_auto_xxx/stage1_auto_d.py
+
+echo "This second shell script will be created and placed into the new folder"
+echo "This will enable you to complete the remaining steps of the pregame"
+echo "Just cd into that directory and execute that shell script to finish it."
+
+echo "# step 5
+django-admin startproject config
+# step 6
+
+python3 manage.py migrate
+python3 manange.py makemigrations
+python3 manage.py migrate
+
+# step7.1
+python3 manage.py runserver
+
+" > api_auto_xxx/steps_5_plus_pregame.sh
+
+chmod +x api_auto_xxx/steps_5_plus_pregame.sh
+
+echo "now cd into the api_auto_xxx folder you created and execute the shell script within it to continue"
+
+cd api_auto_xxx
