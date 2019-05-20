@@ -1,7 +1,7 @@
 # auto_setup_django_pregame
 
 
-For set up we create a basic little 2 step domino push, causing the shell script we've 
+For set up we create a basic little 2 step domino push, causing the shell script we've
 created to run our python3 module when we execute it.
 
 Make sure to use chmod +x django_auto_shotgun_pregame.sh in order get permissions
@@ -15,3 +15,6 @@ much in terms of detailed options for our initial setup but hopefully that'll ch
 time-- but right now you only get one model at setup.
 
 
+Now that we have prompted the user and gotten the user we wanted we will rush
+through the first 4 steps of django rest api setup with a bunch of generic
+placeholder 
