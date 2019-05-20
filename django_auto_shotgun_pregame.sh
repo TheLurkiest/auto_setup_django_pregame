@@ -3,7 +3,7 @@
 # Comp 705
 
 # step1
-echo('remember to activate your virtual environment before executing this or going further')
+echo 'remember to activate your virtual environment before executing this or going further'
 
 echo 'Welcome to the Django Rest API quick and dirty auto-setup skip-o-matic 5000!'
 echo 'If all goes as planned this shell script you have just executed will hopefully implement all the tedious and'
@@ -19,7 +19,7 @@ echo '...something like: sudo python3 auto_text_cleaner1.py'
 mkdir api_auto_xxx
 touch stage1_auto_d.py
 
-chmod 777 api_auto_xxx/stage1_auto_d.py
+chmod 777 stage1_auto_d.py
 
 echo "import os
 
@@ -74,13 +74,13 @@ pip freeze > requirements.txt
 django-admin startproject config
 
 # step 6
-python3 manage.py migrate
+python3 config/manage.py migrate
 python3 manange.py makemigrations
-python3 manage.py migrate
+python3 config/manage.py migrate
 
 
 # step7.1
-# python3 manage.py runserver
+# python3 config/manage.py runserver
 
 
 
