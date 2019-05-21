@@ -13,8 +13,6 @@ echo 'be set off momentarily and we will start seeing prompts asking specificall
 echo 'followed by a quick and relatively painless transition into our initial Django setup that pretty much everyone'
 echo 'is likely to have right at the start.  Fingers Crossed...'
 
-echo '...something like: sudo python3 auto_text_cleaner1.py'
-
 # step2
 mkdir api_auto_xxx
 touch stage1_auto_d.py
@@ -112,13 +110,36 @@ python3 config/manage.py migrate
 python3 config/manage.py makemigrations
 python3 config/manage.py migrate
 
-
 # step7.1
 # python3 config/manage.py runserver
 
 
-
 sudo cp ../stage1_auto_d.py .
+
+
+git add config
+git add requirements.txt
+git add stage1_auto_d.py
+git add steps_5_plus_pregame.sh
+
+git commit -m 'added all our files just prior to final step of the pregame'
+
+# step 10
+
+python3 config/manage.py startapp api
+
+
+# final step of pregame:
+python3 stage1_auto_d.py
+
+# ...and just to be on the safe side:
+python3 config/manage.py migrate
+python3 config/manage.py makemigrations
+python3 config/manage.py migrate
+
+echo 'The automatic setup of your Django Rest API is now complete.  This is stage 1 of the auto-setup process.'
+echo 'Stage 2 --if we decide to pursue this-- is essentially just going to be setting up those SEVEN PRIMARY PYTHON MODULES within this API.'
+
 
 " > api_auto_xxx/steps_5_plus_pregame.sh
 
