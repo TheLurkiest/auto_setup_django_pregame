@@ -172,6 +172,7 @@ model_now_var=$outer_folder$model_name
 
 touch $model_now_var
 
+echo $model_name >> $model_now_var
 
 while :
 do
