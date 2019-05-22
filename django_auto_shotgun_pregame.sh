@@ -47,7 +47,7 @@ for r_elem in r_field_list:
 
 apps_found = False
 
-fin1=open('config/config/settings.py','r')
+fin1=open('config/settings.py','r')
 s_pre_marker=''
 s_post_marker=''
 for line in fin1:
@@ -61,7 +61,7 @@ fin1.close()
 
 apps_found = False
 
-fin2=open('config/config/settings.py','r')
+fin2=open('config/settings.py','r')
 for line in fin2:
 	if(apps_found == True):
 		s_post_marker = str(s_pre_marker) + str(line)
@@ -69,10 +69,10 @@ for line in fin2:
 			apps_found = True
 fin2.close()
 
-os.system('sudo rm config/config/settings.py')
+os.system('sudo rm config/settings.py')
 
 
-fout3=open('config/config/settings.py','w')
+fout3=open('config/settings.py','w')
 
 fout3.write(str(s_pre_marker))
 fout3.write(str(s_post_marker))
@@ -103,15 +103,15 @@ touch requirements.txt
 pip freeze > requirements.txt
 
 # step 5
-django-admin startproject config
+django-admin startproject config .
 
 # step 6
-python3 config/manage.py migrate
-python3 config/manage.py makemigrations
-python3 config/manage.py migrate
+python3 manage.py migrate
+python3 manage.py makemigrations
+python3 manage.py migrate
 
 # step7.1
-# python3 config/manage.py runserver
+# python3 manage.py runserver
 
 
 sudo cp ../stage1_auto_d.py .
@@ -124,18 +124,18 @@ git add steps_5_plus_pregame.sh
 
 git commit -m 'added all our files just prior to final step of the pregame'
 
-# step 10
+# step 9
 
-python3 config/manage.py startapp api
+python3 manage.py startapp api
 
 
 # final step of pregame:
 python3 stage1_auto_d.py
 
 # ...and just to be on the safe side:
-python3 config/manage.py migrate
-python3 config/manage.py makemigrations
-python3 config/manage.py migrate
+python3 manage.py migrate
+python3 manage.py makemigrations
+python3 manage.py migrate
 
 echo 'The automatic setup of your Django Rest API is now complete.  This is stage 1 of the auto-setup process.'
 echo 'Stage 2 --if we decide to pursue this-- is essentially just going to be setting up those SEVEN PRIMARY PYTHON MODULES within this API.'
