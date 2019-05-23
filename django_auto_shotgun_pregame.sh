@@ -170,14 +170,17 @@ read num_fields
 
 model_now_var=$outer_folder$model_name
 
-touch $model_now_var
+# touch $model_now_var
 
-echo $model_name >> $model_now_var
+
+shortfolder='dir'
+
+echo $model_name >> $outer_folder$shortfolder$num_models
 
 
 startingmodels=$num_models
 
-shortfolder='dir'
+
 
 while :
 do
@@ -194,15 +197,16 @@ do
 			read model_name
 			echo 'how many fields do you want to make for that model?'
 			read num_fields
-			model_now_var=$outer_folder$model_name
+			# with num_models coming first we can grab the specific file from that alone
+			# model_now_var=$num_models$outer_folder$model_name
 			#touch $model_now_var
 			touch $outer_folder$shortfolder$num_models
-			echo $model_name >> $model_now_var
+			echo $model_name >> $outer_folder$shortfolder$num_models
 		fi
 	else
 		echo 'what would you like this field to be named?'
 		read field_name
-		echo $field_name >> $model_now_var
+		echo $field_name >> $outer_folder$shortfolder$num_models
 		num_fields=$[ $num_fields -1 ]
 	fi
 	echo "models remaining to set up: "$num_models
@@ -218,6 +222,7 @@ line1model=''
 line2plusfields=''
 countforfields=0
 
+# this is the final product thatll become models.py:
 models_info1='models_alt.py'
 
 
@@ -230,9 +235,17 @@ echo '' > $outer_folder$models_info1
 
 
 num_models=$[ $num_models +1 ]
+#num_models=$[ $num_models +1 ]
+input1=$outer_folder$shortfolder$num_models
 
+echo "num_models just prior to start of while loop is: ${num_models}"
+echo "input1 just prior to start of while loop is: ${input1}"
+echo "output location just prior to start of while loop is: ${outer_folder}${models_info1} so that is where text from models will output to"
 
-while [ "$num_models" -lt startingmodels ]
+$outer_folder
+$models_info1
+
+while [ "$num_models" -lt "$startingmodels" ]
 do
 
 
@@ -246,20 +259,25 @@ do
         then
                 line1model=$line
                 outputline="class ${line1model}(models.Model):"
+                echo $outputline >> $outer_folder$models_info1                
         else
                 line2plusfields=$line
-                outputline="\t${line2plusfields} = models.CharField(max_length=255, null=False)"
+                outputline="	${line2plusfields} = models.CharField(max_length=255, null=False)"
+                echo $outputline >> $outer_folder$models_info1
         fi
         countforfields=$[ $countforfields +1 ]
-        echo $outputline >> $outer_folder$models_info1$countformodel
+
+        # echo $outputline >> $outer_folder$shortfolder$num_models
 
 done < $input1
 
 num_models=$[ $num_models +1 ]
 
+# we need to continually update our input like this to make sure get the correct input:
 input1=$outer_folder$shortfolder$num_models
 
 
+echo "input1 after the completion of a single cycle outside the first while loop but inside the second: ${input1}"
 
 done
 
