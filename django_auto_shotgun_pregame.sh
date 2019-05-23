@@ -216,7 +216,11 @@ line1model=''
 line2plusfields=''
 countformodel=0
 
-echo '' > models_alt.py
+models_info1='models_alt.py'
+
+
+echo '' > $outer_folder$models_info1
+# models_alt.py
 
 while read -r line
 do
@@ -228,11 +232,11 @@ do
                 outputline="class ${line1model}(models.Model):"
         else
                 line2plusfields=$line
-                outputline="testing123    ${line2plusfields} = models.CharField(max_length=255, null=False)"
+                outputline="		${line2plusfields} = models.CharField(max_length=255, null=False)"
         fi
-        echo $outputline >> models_alt.py
+        echo $outputline >> $outer_folder$models_info1
         countformodel=$[ $countformodel +1 ]
-        # countformodel=${ countformodel + 1 }
+
 done < $input1
 
 
