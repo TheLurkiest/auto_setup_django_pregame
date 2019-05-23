@@ -242,9 +242,6 @@ echo "num_models just prior to start of while loop is: ${num_models}"
 echo "input1 just prior to start of while loop is: ${input1}"
 echo "output location just prior to start of while loop is: ${outer_folder}${models_info1} so that is where text from models will output to"
 
-$outer_folder
-$models_info1
-
 while [ "$num_models" -lt "$startingmodels" ]
 do
 
@@ -264,6 +261,7 @@ do
                 line2plusfields=$line
                 outputline="	${line2plusfields} = models.CharField(max_length=255, null=False)"
                 echo $outputline >> $outer_folder$models_info1
+		echo "	tab test this line should be slightly indented"
         fi
         countforfields=$[ $countforfields +1 ]
 
