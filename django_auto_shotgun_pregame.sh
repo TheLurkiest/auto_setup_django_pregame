@@ -174,6 +174,11 @@ touch $model_now_var
 
 echo $model_name >> $model_now_var
 
+
+startingmodels=$num_models
+
+shortfolder='dir'
+
 while :
 do
 	if [ $num_fields -lt 1 ]
@@ -190,7 +195,8 @@ do
 			echo 'how many fields do you want to make for that model?'
 			read num_fields
 			model_now_var=$outer_folder$model_name
-			touch $model_now_var
+			#touch $model_now_var
+			touch $outer_folder$shortfolder$num_models
 			echo $model_name >> $model_now_var
 		fi
 	else
@@ -201,20 +207,16 @@ do
 	fi
 	echo "models remaining to set up: "$num_models
 	echo "fields remaining to set up: "$num_fields
-
 done
 
 
-
-
-
-
-input1=$model_now_var
+#input1=$model_now_var
+input1=$outer_folder$shortfolder$num_models
 
 
 line1model=''
 line2plusfields=''
-countformodel=0
+countforfields=0
 
 models_info1='models_alt.py'
 
@@ -222,31 +224,48 @@ models_info1='models_alt.py'
 echo '' > $outer_folder$models_info1
 # models_alt.py
 
+
+
+
+
+
+num_models=$[ $num_models +1 ]
+
+
+while [ "$num_models" -lt startingmodels ]
+do
+
+
+
+
 while read -r line
 do
         set $line
         echo $line
-        if [ "$countformodel" -lt 1 ]
+        if [ "$countforfields" -lt 1 ]
         then
                 line1model=$line
                 outputline="class ${line1model}(models.Model):"
         else
                 line2plusfields=$line
-                outputline="		${line2plusfields} = models.CharField(max_length=255, null=False)"
+                outputline="\t${line2plusfields} = models.CharField(max_length=255, null=False)"
         fi
-        echo $outputline >> $outer_folder$models_info1
-        countformodel=$[ $countformodel +1 ]
+        countforfields=$[ $countforfields +1 ]
+        echo $outputline >> $outer_folder$models_info1$countformodel
 
 done < $input1
 
+num_models=$[ $num_models +1 ]
+
+input1=$outer_folder$shortfolder$num_models
 
 
 
+done
 
 
 
-
-
+input1=$outer_folder$shortfolder$num_models
 
 
 
