@@ -153,13 +153,42 @@ chmod 777 api_auto_xxx/steps_5_plus_pregame.sh
 echo "now cd into the api_auto_xxx folder you created and execute the shell script within it to continue"
 
 
+echo 'this is where the seven python modules that need to be entered manually by'
+echo 'hand normally-- which typically require significant manual modifications.'
+echo 'these python modules will need significant alterations prior to this django'
+echo 'rest API being functional.  The following code is designed to over-ride the'
+echo 'normally lengthy and complex process of setting up each of these python'
+echo 'files manually for each model or field you wish to add or alter using inputs '
+echo 'you will enter at the outset, momentarily.  The easiest way to do this is'
+echo 'by simply setting up a .csv from a libreoffice or excel spreadsheet with '
+echo 'model names at the top of each column and fields in the column directly '
+echo 'beneath them.  Any cell in the top row labeled NOMODEL will not be included.'
+echo 'Any field cell beneath that first row labeled NA will not be included.  If'
+echo 'you wish, you may exit this process using ctrl+d and ctrl+c now and create '
+echo 'a .csv file in order to perform this task-- you will be able to safely start'
+echo 'the whole process again from scratch, the same way you did initially.'
 
+echo 'Alternatively, a slightly slower approach-- except perhaps if your intended'
+echo 'creation will contain only a few models and fields-- would'
+echo 'be to input the models and fields into the code following prompts.  To do'
+echo 'Simply enter NO at the initial prompt to use this method instead.'
 
+echo 'Remember: all any of this code will do for you is get you off the ground.'
+echo 'If this code is functioning properly then simply entering the names of '
+echo 'fields and models using either method mentioned should create a fully'
+echo 'functional django rest API right from the start-- without any need for '
+echo 'further manual alterations from the user.  Simply using '
+echo 'python3 manage.py runserver and entering the URL displayed in the terminal'
+echo 'into firefox with admin/ added at the end should get you to the log in '
+echo 'screen for a fully functional API-- python3 manage.py createsuperuser '
 
+echo '...after that your basic setup will be complete.  After the setup of '
+echo 'these 7 modules is complete I will go into more detail on what this means'
+echo 'and how best to proceed past this point.'
 
-
-
-
+sudo rm -r seven_namesakes
+mkdir seven_namesakes
+outer_folder='seven_namesakes/'
 
 csv_reply=""
 
@@ -170,17 +199,12 @@ read csv_reply
 # ------------------- START OF DIRECT ENTRY INTO 7 PYTHON MODULES UPON USER PROMPTS -------------------
 if [ "$csv_reply" == "NO" ]
 	then
-	sudo rm -r field_and_model_info
-	mkdir field_and_model_info
-	outer_folder='field_and_model_info/'
 	echo 'how many models do you want to make to start out with?'
 	read num_models
 	echo 'what is the name of the first model you wish to create?'
 	read model_name
 	echo 'how many fields do you want to make for this model?'
 	read num_fields
-	model_now_var=$outer_folder$model_name
-	# touch $model_now_var
 	shortfolder='dir'
 	echo $model_name >> $outer_folder$shortfolder$num_models
 	startingmodels=$num_models
@@ -189,7 +213,7 @@ if [ "$csv_reply" == "NO" ]
 		if [ $num_fields -lt 1 ]
 		then
 			num_models=$[ $num_models -1 ]
-			
+
 			if [ $num_models -lt 1 ]
 			then
 				echo 'all fields and all models have been created!!!  Moving on...'
@@ -199,9 +223,6 @@ if [ "$csv_reply" == "NO" ]
 				read model_name
 				echo 'how many fields do you want to make for that model?'
 				read num_fields
-				# with num_models coming first we can grab the specific file from that alone
-				# model_now_var=$num_models$outer_folder$model_name
-				#touch $model_now_var
 				touch $outer_folder$shortfolder$num_models
 				echo $model_name >> $outer_folder$shortfolder$num_models
 			fi
@@ -215,7 +236,6 @@ if [ "$csv_reply" == "NO" ]
 		echo "fields remaining to set up: "$num_fields
 	done
 
-	#input1=$model_now_var
 	input1=$outer_folder$shortfolder$num_models
 
 	line1model=''
@@ -247,7 +267,7 @@ if [ "$csv_reply" == "NO" ]
 			then
 					line1model=$line
 					outputline="class ${line1model}(models.Model):"
-					echo $outputline >> $outer_folder$models_info1                
+					echo $outputline >> $outer_folder$models_info1
 			else
 					line2plusfields=$line
 					outputline="	${line2plusfields} = models.CharField(max_length=255, null=False)"
@@ -274,7 +294,7 @@ else
 	input1=$csv_reply
 	output1=""
 
-	# this just counts everything that gets read out so we can use an if 
+	# this just counts everything that gets read out so we can use an if
 	# conditional to check if the models have been dislayed yet
 	tot_num_all_mf=0
 
@@ -290,12 +310,6 @@ else
 	while read -r line
 	do
 		set $line
-
-		field1=$(echo $1 | tr -d '"')
-		field2=$(echo $2 | tr -d '"')
-		field3=$(echo $3 | tr -d '"')
-		field4=$(echo $4 | tr -d '"')
-		field5=$(echo $5 | tr -d '"')
 
 		while [ "$num_fields_counted" -lt "$num_fields_less_one" ]
 		do
@@ -337,10 +351,39 @@ else
 
 
 	for file in dir[1-99]; do
+		echo "echo first:"
+		echo $file
+		echo XXXXXXXXXXXXXXXXXXXX CHECKING HOW FOR LOOP WORKS XXXXXXXXXXXXXXXXXXXX
+		echo "more second:"
 		more $file
+		# more +number5 dir2
+		# this prints out the total number of lines:
+		linec=1
+		line_count_mf=1
+		wc -l $file | awk '{print $1}' | cat > $line_count_mf_storage
+		line_count_mf=$line_count_mf_storage
+
+		line_count_mf=$mf_val2
+
+		# ...then gives us the model name:
+		head -n 1 $file > $model_name_storage
+		# more -1 +number1 $file > model_name_storage
+		# let line_count_less_one=$line_count_mf+1
+		line_count_less_one=$[ "$line_count_mf" +1 ]
+		outputline="class ${model_name_storage}(models.Model):"
+		echo $outputline > models_alt2.py
+
+		echo "line_count_mf is: ${line_count_mf} and line_count_mf_storage is: ${line_count_mf_storage}."
+		echo "line_count_less_one is: ${line_count_less_one} and linec is: ${linec}."
+
+		while [ "$linec" -lt "$line_count_less_one" ]
+		do
+			# more -1 +number$linec $file > field_storage
+			head -n $linec $file > field_storage
+			outputline="	<--should be indented; tab this here ${field_storage} = models.CharField(max_length=255, null=False)"
+			echo $outputline >> models_alt2.py
+		done
 	done
-
-
 
 # ------------------- END OF .CSV INPUT INTO 7 PYTHON MODULES UPON USER PROMPTS -------------------
 
@@ -348,7 +391,3 @@ else
 
 
 fi
-
-
-
-
