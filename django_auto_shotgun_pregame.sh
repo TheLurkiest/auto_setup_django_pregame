@@ -356,6 +356,12 @@ else
 	mf1=0
 	mf1_plus=0
 
+	# admin.py get imports from m_all and then object strings from pt2:
+	m_all=""
+	a2_pt2="zzz"
+
+	echo "" > a2_pt2_file
+
 	# namesake-ification of 7 python modules:
 
 	# admin.py, models.py, and serializers.py:
@@ -397,6 +403,32 @@ else
 				while read -r line; do set $line; m1=$(echo $1); done < m1_file
 				outputline="class ${m1}(models.Model):"
 				echo $outputline >> m2_file
+
+
+				# now we get admin.py done:
+				if [ "$a2_pt2" == "zzz" ]
+				then
+					m_all="from .models import ${m1}"
+					a2_pt2=""
+				else
+					m_all="${m_all}, ${m1}"
+					# let mf1_plus=mf1+1
+				fi
+
+				if [ "$countforfields" -lt 2 ]
+				# if [ "$a2_pt2" == "xxx" ]
+				then
+					a2_pt2="${m1}"
+					echo $a2_pt2 >> a2_pt2_file
+				fi
+
+				if [ "$countforfields" -lt 2 ]
+				# if [ "$a2_pt2" == "xxx" ]
+				then
+					a2_pt2="${m1}"
+					echo $a2_pt2 >> a2_pt2_file
+				fi
+
 			else
 				head -n $countforfields $file | cat > f1_file
 				while read -r line; do set $line; f1=$(echo $1); done < f1_file
@@ -405,13 +437,22 @@ else
 			fi
 			let countforfields=countforfields+1
 		done
+
 		# wc -l $file | awk '{print $1}' | cat > $line_count_mf_storage
 		# line_count_mf=$line_count_mf_storage
 		# line_count_mf=$mf_val2
 		# more -1 +number1 $file > model_name_storage
 		# let line_count_less_one=$line_count_mf+1
+
+		# a2_pt2="xxx"
 		countforfields=1
 	done
+	# admin.py get imported models once assembled:
+	echo $m_all >> a2_file
+	while read -r line; do set $line; a1="admin.site.register(${1})"; echo $a1 >> a2_file; done < a2_pt2_file
+
+
+
 # ------------------- END OF .CSV INPUT INTO 7 PYTHON MODULES UPON USER PROMPTS -------------------
 fi
 
@@ -424,4 +465,4 @@ fi
 
 
 
-head -n $countforfields $file
+# head -n $countforfields $file
