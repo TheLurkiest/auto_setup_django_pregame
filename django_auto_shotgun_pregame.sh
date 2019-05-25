@@ -268,6 +268,7 @@ if [ "$csv_reply" == "NO" ]
 					line1model=$line
 					outputline="class ${line1model}(models.Model):"
 					echo $outputline >> $outer_folder$models_info1
+
 			else
 					line2plusfields=$line
 					outputline="	${line2plusfields} = models.CharField(max_length=255, null=False)"
@@ -305,6 +306,8 @@ else
 
 	dir="dir"
 	mod_now=""
+
+	serializers_fields="<--<--two-indents fields = ("
 
 
 	while read -r line
@@ -369,7 +372,7 @@ else
 	# admin.py, models.py, and serializers.py:
 	echo "from django.contrib import admin" > a2_file
 	echo "from django.db import models" > m2_file
-	echo "from rest_famework import serializers" > s2_file
+	echo "from rest_framework import serializers" > s2_file
 
 	# for tests.py:
 	echo "import unittest" > t2_file
@@ -405,11 +408,18 @@ else
 				while read -r line; do set $line; m1=$(echo $1); done < m1_file
 				outputline="class ${m1}(models.Model):"
 				echo $outputline >> m2_file
+
+				echo "" >> s2_file
+				echo "from .models import ${m1}" >> s2_file
+				echo "class ${m1}Serializer(serializers.ModelSerializer):" >> s2_file
+				echo "<--one-indent class Meta:" >> s2_file
+				echo "<--<--two-indents model = ${m1}" >> s2_file
 				# now we get admin.py done:
 				if [ "$a2_pt2" == "zzz" ]
 				then
 					m_all="from .models import ${m1}"
 					a2_pt2=""
+
 				else
 					m_all="${m_all}, ${m1}"
 				fi
@@ -427,23 +437,31 @@ else
 
 				while read -r line; do set $line; sense_of_self="${sense_of_self}self.$1, "; done < f1_file
 
-
 				# sense_of_self
 				while read -r line; do set $line; sense_of_self="class ${m1}(models.Model):"; done < f1_file
 
-
 				outputline="	<--indent ${f1} = models.CharField(max_length=255, null=False)"
 				echo $outputline >> m2_file
+
+				# while read -r line; do set $line; serializers_fields="${serializers_fields}\"${f1}\", "; done < f1_file
+
+				while read -r line; do set $line; serializers_fields=$serializers_fields$f1; done < f1_file
+
 				outputline=""
 				f1=""
 			fi
 			let countforfields=countforfields+1
 		done
+
+		serializers_fields="${serializers_fields})"
+		echo $serializers_fields >> s2_file
+
 		sense_of_self="${sense_of_self})"
 		sense_of_self=$placeholder_s$sense_of_self
 		echo "def __str__(self):" >> m2_file
 		echo $sense_of_self >> m2_file
 		countforfields=1
+		serializers_fields="<--<--two-indents fields = ("
 		sense_of_self=""
 	done
 
