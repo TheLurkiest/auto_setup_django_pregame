@@ -348,7 +348,11 @@ else
 	let tot_num_all_mf=0
 	rm $dir$tot_num_all_mf
 
-
+	linec=1
+	line_count_mf=1
+	countforfields=1
+	f1=""
+	m1=""
 
 	for file in dir[1-99]; do
 		echo "echo first:"
@@ -358,36 +362,37 @@ else
 		more $file
 		# more +number5 dir2
 		# this prints out the total number of lines:
-		linec=1
-		line_count_mf=1
-		wc -l $file | awk '{print $1}' | cat > $line_count_mf_storage
-		line_count_mf=$line_count_mf_storage
-
-		line_count_mf=$mf_val2
-
-		# ...then gives us the model name:
-		head -n 1 $file > $model_name_storage
+		if [ "$countforfields" -lt 2 ]
+		then
+			head -n $countforfields $file | cat > m1_file
+			while read -r line; do set $line; m1=$(echo $1); done < m1_file
+			outputline="class ${m1}(models.Model):"
+			echo $outputline > models_alt2.py
+		else
+			head -n $countforfields $file | cat > f1_file
+			while read -r line; do set $line; f1=$(echo $1); done < f1_file
+			outputline="	<--indent ${f1} = models.CharField(max_length=255, null=False)"
+			echo $outputline >> models_alt2.py
+		fi
+		# wc -l $file | awk '{print $1}' | cat > $line_count_mf_storage
+		# line_count_mf=$line_count_mf_storage
+		# line_count_mf=$mf_val2
 		# more -1 +number1 $file > model_name_storage
 		# let line_count_less_one=$line_count_mf+1
-		line_count_less_one=$[ "$line_count_mf" +1 ]
-		outputline="class ${model_name_storage}(models.Model):"
-		echo $outputline > models_alt2.py
-
-		echo "line_count_mf is: ${line_count_mf} and line_count_mf_storage is: ${line_count_mf_storage}."
-		echo "line_count_less_one is: ${line_count_less_one} and linec is: ${linec}."
-
-		while [ "$linec" -lt "$line_count_less_one" ]
-		do
-			# more -1 +number$linec $file > field_storage
-			head -n $linec $file > field_storage
-			outputline="	<--should be indented; tab this here ${field_storage} = models.CharField(max_length=255, null=False)"
-			echo $outputline >> models_alt2.py
-		done
+		let countforfields=$countforfields+1
 	done
-
 # ------------------- END OF .CSV INPUT INTO 7 PYTHON MODULES UPON USER PROMPTS -------------------
-
-
-
-
 fi
+
+
+
+
+
+
+
+
+
+
+
+
+head -n $countforfields $file
