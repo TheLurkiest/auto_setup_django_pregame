@@ -361,7 +361,7 @@ else
 	first_m=""
 
 	a2_pt2="zzz"
-
+	sense_of_self=""
 	echo "" > a2_pt2_file
 	echo "" > m1_file
 	# namesake-ification of 7 python modules:
@@ -423,6 +423,15 @@ else
 			else
 				head -n $countforfields $file | cat > f1_file
 				while read -r line; do set $line; f1=$(echo $1); done < f1_file
+				placeholder_s='<--indent return "{} - {}".format('
+
+				while read -r line; do set $line; sense_of_self="${sense_of_self}self.$1, "; done < f1_file
+
+
+				# sense_of_self
+				while read -r line; do set $line; sense_of_self="class ${m1}(models.Model):"; done < f1_file
+
+
 				outputline="	<--indent ${f1} = models.CharField(max_length=255, null=False)"
 				echo $outputline >> m2_file
 				outputline=""
@@ -430,8 +439,14 @@ else
 			fi
 			let countforfields=countforfields+1
 		done
+		sense_of_self="${sense_of_self})"
+		sense_of_self=$placeholder_s$sense_of_self
+		echo "def __str__(self):" >> m2_file
+		echo $sense_of_self >> m2_file
 		countforfields=1
+		sense_of_self=""
 	done
+
 	# admin.py get imported models once assembled:
 	echo $m_all >> a2_file
 
@@ -441,7 +456,6 @@ else
 	cat a2_file
 	echo ...a1 on the other hand just prior to while loop ending looks like this:
 	echo $a1
-
 
 	w_count=0
 	while read -r line
@@ -457,8 +471,6 @@ else
 		fi
 		let w_count=w_count+1
 	done < a2_pt2_file
-
-
 
 # ------------------- END OF .CSV INPUT INTO 7 PYTHON MODULES UPON USER PROMPTS -------------------
 fi
