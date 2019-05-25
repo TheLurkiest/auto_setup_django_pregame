@@ -361,7 +361,7 @@ else
 	a2_pt2="zzz"
 
 	echo "" > a2_pt2_file
-
+	echo "" > m1_file
 	# namesake-ification of 7 python modules:
 
 	# admin.py, models.py, and serializers.py:
@@ -395,7 +395,7 @@ else
 		while read -r line; do set $line; mf1=$(echo $1); done < lc_mf
 		let mf1_plus=mf1+1
 
-		while [ "$countforfields" -lt "$mf1_plus" ]
+		while [ "$countforfields" -le "$mf1" ]
 		do
 			if [ "$countforfields" -lt 2 ]
 			then
@@ -403,8 +403,6 @@ else
 				while read -r line; do set $line; m1=$(echo $1); done < m1_file
 				outputline="class ${m1}(models.Model):"
 				echo $outputline >> m2_file
-
-
 				# now we get admin.py done:
 				if [ "$a2_pt2" == "zzz" ]
 				then
@@ -412,16 +410,7 @@ else
 					a2_pt2=""
 				else
 					m_all="${m_all}, ${m1}"
-					# let mf1_plus=mf1+1
 				fi
-
-				if [ "$countforfields" -lt 2 ]
-				# if [ "$a2_pt2" == "xxx" ]
-				then
-					a2_pt2="${m1}"
-					echo $a2_pt2 >> a2_pt2_file
-				fi
-
 				if [ "$countforfields" -lt 2 ]
 				# if [ "$a2_pt2" == "xxx" ]
 				then
@@ -434,17 +423,11 @@ else
 				while read -r line; do set $line; f1=$(echo $1); done < f1_file
 				outputline="	<--indent ${f1} = models.CharField(max_length=255, null=False)"
 				echo $outputline >> m2_file
+				outputline=""
+				f1=""
 			fi
 			let countforfields=countforfields+1
 		done
-
-		# wc -l $file | awk '{print $1}' | cat > $line_count_mf_storage
-		# line_count_mf=$line_count_mf_storage
-		# line_count_mf=$mf_val2
-		# more -1 +number1 $file > model_name_storage
-		# let line_count_less_one=$line_count_mf+1
-
-		# a2_pt2="xxx"
 		countforfields=1
 	done
 	# admin.py get imported models once assembled:
