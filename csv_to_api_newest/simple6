@@ -1,0 +1,61 @@
+#!/bin/bash
+# Brent Fanning
+# Comp 705
+
+input1="spaces_samp_in.csv"
+output1=""
+
+tot_num_ppl=0
+
+num_fields=5
+let num_fields_less_one=num_fields+1
+
+num_fields_counted=1
+
+dir="dir"
+mod_now=""
+
+
+while read -r line
+do
+	echo "initial while loop starts here"
+	set $line
+
+
+	field1=$(echo $1 | tr -d '"')
+	field2=$(echo $2 | tr -d '"')
+	field3=$(echo $3 | tr -d '"')
+	field4=$(echo $4 | tr -d '"')
+	field5=$(echo $5 | tr -d '"')
+
+	while [ "$num_fields_counted" -lt "$num_fields_less_one" ]
+	do
+		echo "secondary while loop starts here"
+		if [ "$tot_num_ppl" -lt 1 ]
+		then
+			echo field$num_fields_counted is
+			echo "${!num_fields_counted}"
+			
+			echo "${!num_fields_counted}" > $dir$num_fields_counted
+			
+			
+			let num_fields_counted=num_fields_counted+1
+		else
+			echo "${!num_fields_counted}" >> $dir$num_fields_counted
+			let num_fields_counted=num_fields_counted+1
+		fi
+	done
+
+	let num_fields_counted=0
+	let tot_num_ppl=tot_num_ppl+1
+
+done < $input1
+
+
+tot_age=1000
+echo tot num ppl is $tot_num_ppl
+echo tot_age is $tot_age
+avg_age=1000
+
+let avg_age=(tot_age/tot_num_ppl)
+echo average age is $avg_age
