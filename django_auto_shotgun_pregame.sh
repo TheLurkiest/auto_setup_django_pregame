@@ -353,38 +353,67 @@ else
 	countforfields=1
 	f1=""
 	m1=""
+	mf1=0
+	mf1_plus=0
+
+	# namesake-ification of 7 python modules:
+
+	# admin.py, models.py, and serializers.py:
+	echo "from django.contrib import admin" > a2_file
+	echo "from django.db import models" > m2_file
+	echo "from rest_famework import serializers" > s2_file
+
+	# for tests.py:
+	echo "import unittest" > t2_file
+	echo "from django.test import TestCase" >> t2_file
+	echo "from django.test import Client" >> t2_file
+
+	# first urls.py which lives in folder with 6 .py modules together:
+	echo 'from django.urls import path' > u2_main_file
+
+	# views.py:
+	echo 'from rest_framework.views import APIView' > v2_file
+	echo 'from rest_framework.response import Response' >> v2_file
+	echo 'from rest_framework import status' >> v2_file
+
+	echo 'from django.contrib import admin' > u2_alone_config
+	echo 'from django.urls import path, include, re_path' >> u2_alone_config
+	echo 'urlpatterns = [' >> u2_alone_config
+	echo '<--indent    path('admin/', admin.site.urls),' >> u2_alone_config
+	echo "<--indent    re_path('api/(?P<version>(v1|v2))/', include('api.urls'))" >> u2_alone_config
+	echo ']' >> u2_alone_config
 
 	for file in dir[1-99]; do
-		echo "echo first:"
-		echo $file
-		echo XXXXXXXXXXXXXXXXXXXX CHECKING HOW FOR LOOP WORKS XXXXXXXXXXXXXXXXXXXX
-		echo "more second:"
-		more $file
 		# more +number5 dir2
-		# this prints out the total number of lines:
-		if [ "$countforfields" -lt 2 ]
-		then
-			head -n $countforfields $file | cat > m1_file
-			while read -r line; do set $line; m1=$(echo $1); done < m1_file
-			outputline="class ${m1}(models.Model):"
-			echo $outputline > models_alt2.py
-		else
-			head -n $countforfields $file | cat > f1_file
-			while read -r line; do set $line; f1=$(echo $1); done < f1_file
-			outputline="	<--indent ${f1} = models.CharField(max_length=255, null=False)"
-			echo $outputline >> models_alt2.py
-		fi
+		wc -l $file | awk '{print $1}' | cat > lc_mf
+		while read -r line; do set $line; mf1=$(echo $1); done < lc_mf
+		let mf1_plus=mf1+1
+
+		while [ "$countforfields" -lt "$mf1_plus" ]
+		do
+			if [ "$countforfields" -lt 2 ]
+			then
+				head -n $countforfields $file | cat >> m1_file
+				while read -r line; do set $line; m1=$(echo $1); done < m1_file
+				outputline="class ${m1}(models.Model):"
+				echo $outputline >> m2_file
+			else
+				head -n $countforfields $file | cat > f1_file
+				while read -r line; do set $line; f1=$(echo $1); done < f1_file
+				outputline="	<--indent ${f1} = models.CharField(max_length=255, null=False)"
+				echo $outputline >> m2_file
+			fi
+			let countforfields=countforfields+1
+		done
 		# wc -l $file | awk '{print $1}' | cat > $line_count_mf_storage
 		# line_count_mf=$line_count_mf_storage
 		# line_count_mf=$mf_val2
 		# more -1 +number1 $file > model_name_storage
 		# let line_count_less_one=$line_count_mf+1
-		let countforfields=$countforfields+1
+		countforfields=1
 	done
 # ------------------- END OF .CSV INPUT INTO 7 PYTHON MODULES UPON USER PROMPTS -------------------
 fi
-
-
 
 
 
