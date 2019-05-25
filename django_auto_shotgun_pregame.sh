@@ -154,135 +154,200 @@ echo "now cd into the api_auto_xxx folder you created and execute the shell scri
 
 
 
-sudo rm -r field_and_model_info
-mkdir field_and_model_info
-
-outer_folder='field_and_model_info/'
-
-echo 'how many models do you want to make to start out with?'
-read num_models
-
-echo 'what is the name of the first model you wish to create?'
-read model_name
-
-echo 'how many fields do you want to make for this model?'
-read num_fields
-
-model_now_var=$outer_folder$model_name
-
-# touch $model_now_var
-
-
-shortfolder='dir'
-
-echo $model_name >> $outer_folder$shortfolder$num_models
-
-
-startingmodels=$num_models
 
 
 
-while :
-do
-	if [ $num_fields -lt 1 ]
+
+
+
+
+csv_reply=""
+
+echo 'Enter a .csv file separated by spaces that contains models at the top of each column followed by their fields below them'
+echo '...otherwise just say NO here to type the fields and models in directly when prompted one by one: '
+read csv_reply
+
+# ------------------- START OF DIRECT ENTRY INTO 7 PYTHON MODULES UPON USER PROMPTS -------------------
+if [ "$csv_reply" == "NO" ]
 	then
-		num_models=$[ $num_models -1 ]
-		
-		if [ $num_models -lt 1 ]
+	sudo rm -r field_and_model_info
+	mkdir field_and_model_info
+	outer_folder='field_and_model_info/'
+	echo 'how many models do you want to make to start out with?'
+	read num_models
+	echo 'what is the name of the first model you wish to create?'
+	read model_name
+	echo 'how many fields do you want to make for this model?'
+	read num_fields
+	model_now_var=$outer_folder$model_name
+	# touch $model_now_var
+	shortfolder='dir'
+	echo $model_name >> $outer_folder$shortfolder$num_models
+	startingmodels=$num_models
+	while :
+	do
+		if [ $num_fields -lt 1 ]
 		then
-			echo 'all fields and all models have been created!!!  Moving on...'
-			break
+			num_models=$[ $num_models -1 ]
+			
+			if [ $num_models -lt 1 ]
+			then
+				echo 'all fields and all models have been created!!!  Moving on...'
+				break
+			else
+				echo 'what would you like to call the next model?'
+				read model_name
+				echo 'how many fields do you want to make for that model?'
+				read num_fields
+				# with num_models coming first we can grab the specific file from that alone
+				# model_now_var=$num_models$outer_folder$model_name
+				#touch $model_now_var
+				touch $outer_folder$shortfolder$num_models
+				echo $model_name >> $outer_folder$shortfolder$num_models
+			fi
 		else
-			echo 'what would you like to call the next model?'
-			read model_name
-			echo 'how many fields do you want to make for that model?'
-			read num_fields
-			# with num_models coming first we can grab the specific file from that alone
-			# model_now_var=$num_models$outer_folder$model_name
-			#touch $model_now_var
-			touch $outer_folder$shortfolder$num_models
-			echo $model_name >> $outer_folder$shortfolder$num_models
+			echo 'what would you like this field to be named?'
+			read field_name
+			echo $field_name >> $outer_folder$shortfolder$num_models
+			num_fields=$[ $num_fields -1 ]
 		fi
-	else
-		echo 'what would you like this field to be named?'
-		read field_name
-		echo $field_name >> $outer_folder$shortfolder$num_models
-		num_fields=$[ $num_fields -1 ]
-	fi
-	echo "models remaining to set up: "$num_models
-	echo "fields remaining to set up: "$num_fields
-done
+		echo "models remaining to set up: "$num_models
+		echo "fields remaining to set up: "$num_fields
+	done
+
+	#input1=$model_now_var
+	input1=$outer_folder$shortfolder$num_models
+
+	line1model=''
+	line2plusfields=''
+	countforfields=0
+
+	# this is the final product thatll become models.py:
+	models_info1='models_alt.py'
 
 
-#input1=$model_now_var
-input1=$outer_folder$shortfolder$num_models
+	echo '' > $outer_folder$models_info1
+	# models_alt.py
+
+	num_models=$[ $num_models +1 ]
+	#num_models=$[ $num_models +1 ]
+	input1=$outer_folder$shortfolder$num_models
+
+	echo "num_models just prior to start of while loop is: ${num_models}"
+	echo "input1 just prior to start of while loop is: ${input1}"
+	echo "output location just prior to start of while loop is: ${outer_folder}${models_info1} so that is where text from models will output to"
+
+	while [ "$num_models" -lt "$startingmodels" ]
+	do
+		while read -r line
+		do
+			set $line
+			echo $line
+			if [ "$countforfields" -lt 1 ]
+			then
+					line1model=$line
+					outputline="class ${line1model}(models.Model):"
+					echo $outputline >> $outer_folder$models_info1                
+			else
+					line2plusfields=$line
+					outputline="	${line2plusfields} = models.CharField(max_length=255, null=False)"
+					echo $outputline >> $outer_folder$models_info1
+			echo "	tab test this line should be slightly indented"
+			fi
+			countforfields=$[ $countforfields +1 ]
+			# echo $outputline >> $outer_folder$shortfolder$num_models
+		done < $input1
+	num_models=$[ $num_models +1 ]
+	# we need to continually update our input like this to make sure get the correct input:
+	input1=$outer_folder$shortfolder$num_models
+	echo "input1 after the completion of a single cycle outside the first while loop but inside the second: ${input1}"
+	done
+	input1=$outer_folder$shortfolder$num_models
+
+# ------------------- END OF DIRECT ENTRY INTO 7 PYTHON MODULES UPON USER PROMPTS -------------------
+
+# ------------------- START OF .CSV INPUT INTO 7 PYTHON MODULES UPON USER PROMPTS -------------------
+
+else
+	# default input1 is spaces_only.csv which we will leave as this as for quicker testing and debugging until done
+	# ...however once finished it will revert back to $csv_reply --since we've confirmed this manual entry works
+	input1=$csv_reply
+	output1=""
+
+	# this just counts everything that gets read out so we can use an if 
+	# conditional to check if the models have been dislayed yet
+	tot_num_all_mf=0
+
+	num_fields=5
+	let num_fields_less_one=num_fields+1
+
+	num_fields_counted=1
+
+	dir="dir"
+	mod_now=""
 
 
-line1model=''
-line2plusfields=''
-countforfields=0
+	while read -r line
+	do
+		set $line
 
-# this is the final product thatll become models.py:
-models_info1='models_alt.py'
+		field1=$(echo $1 | tr -d '"')
+		field2=$(echo $2 | tr -d '"')
+		field3=$(echo $3 | tr -d '"')
+		field4=$(echo $4 | tr -d '"')
+		field5=$(echo $5 | tr -d '"')
 
+		while [ "$num_fields_counted" -lt "$num_fields_less_one" ]
+		do
+			if [ "$tot_num_all_mf" -lt 1 ]
+			then
+				echo model $num_fields_counted is
+				echo "${!num_fields_counted}"
+				if [ "${!num_fields_counted}" == "NOMODEL" ]
+				then
+					echo "no model here... skipped"
+					rm $dir$num_fields_counted
+				else
+					echo "${!num_fields_counted}" > $dir$num_fields_counted
+				fi
 
-echo '' > $outer_folder$models_info1
-# models_alt.py
+				let num_fields_counted=num_fields_counted+1
+			else
+				if [ "${!num_fields_counted}" == "NA" ]
+				then
+					let tot_num_all_mf=99
+					# null statement alters now pointless variable
+				else
+					echo "${!num_fields_counted}" >> $dir$num_fields_counted
+				fi
 
+				let num_fields_counted=num_fields_counted+1
+			fi
+		done
 
+		let num_fields_counted=0
+		let tot_num_all_mf=tot_num_all_mf+1
 
+	done < $input1
 
-
-
-num_models=$[ $num_models +1 ]
-#num_models=$[ $num_models +1 ]
-input1=$outer_folder$shortfolder$num_models
-
-echo "num_models just prior to start of while loop is: ${num_models}"
-echo "input1 just prior to start of while loop is: ${input1}"
-echo "output location just prior to start of while loop is: ${outer_folder}${models_info1} so that is where text from models will output to"
-
-while [ "$num_models" -lt "$startingmodels" ]
-do
-
-
-
-
-while read -r line
-do
-        set $line
-        echo $line
-        if [ "$countforfields" -lt 1 ]
-        then
-                line1model=$line
-                outputline="class ${line1model}(models.Model):"
-                echo $outputline >> $outer_folder$models_info1                
-        else
-                line2plusfields=$line
-                outputline="	${line2plusfields} = models.CharField(max_length=255, null=False)"
-                echo $outputline >> $outer_folder$models_info1
-		echo "	tab test this line should be slightly indented"
-        fi
-        countforfields=$[ $countforfields +1 ]
-
-        # echo $outputline >> $outer_folder$shortfolder$num_models
-
-done < $input1
-
-num_models=$[ $num_models +1 ]
-
-# we need to continually update our input like this to make sure get the correct input:
-input1=$outer_folder$shortfolder$num_models
-
-
-echo "input1 after the completion of a single cycle outside the first while loop but inside the second: ${input1}"
-
-done
+	# this just gets rid of any dir0 that might develop by accident
+	let tot_num_all_mf=0
+	rm $dir$tot_num_all_mf
 
 
 
-input1=$outer_folder$shortfolder$num_models
+	for file in dir[1-99]; do
+		more $file
+	done
 
+
+
+# ------------------- END OF .CSV INPUT INTO 7 PYTHON MODULES UPON USER PROMPTS -------------------
+
+
+
+
+fi
 
 
 
