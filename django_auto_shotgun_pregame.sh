@@ -358,6 +358,8 @@ else
 
 	# admin.py get imports from m_all and then object strings from pt2:
 	m_all=""
+	first_m=""
+
 	a2_pt2="zzz"
 
 	echo "" > a2_pt2_file
@@ -432,7 +434,29 @@ else
 	done
 	# admin.py get imported models once assembled:
 	echo $m_all >> a2_file
-	while read -r line; do set $line; a1="admin.site.register(${1})"; echo $a1 >> a2_file; done < a2_pt2_file
+
+	echo a2_pt2_file just prior to very end where a2_file gets finished:
+	cat a2_pt2_file
+	echo ...a2_file on the other hand just prior to while loop ending looks like this:
+	cat a2_file
+	echo ...a1 on the other hand just prior to while loop ending looks like this:
+	echo $a1
+
+
+	w_count=0
+	while read -r line
+	do
+		if [ "$w_count" -lt 1 ]
+		then
+			echo ""
+		else
+			set $line
+			a1="admin.site.register($1)"
+			echo $a1 >> a2_file
+			echo "a1 is $1"
+		fi
+		let w_count=w_count+1
+	done < a2_pt2_file
 
 
 
