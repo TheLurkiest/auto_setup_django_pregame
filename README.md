@@ -1,5 +1,29 @@
 # auto_setup_django_pregame
 
+
+
+
+
+
+alright, we now have the bare bones setup complete-- for now, and the next time
+we show up here we're just going to have to do a ton of little tests and
+debugs most likely-- it's probably a good idea to update the manner by which
+files are being transferred to make it take fewer manual steps just to get the
+files in there.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 For the time being I'm going to skip over tests.py and come back to it
 --it's a lot to implement.
 
