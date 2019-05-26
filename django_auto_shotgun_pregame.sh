@@ -410,6 +410,8 @@ else
 				while read -r line; do set $line; m1=$(echo $1); done < m1_file
 				outputline="class ${m1}(models.Model):"
 				echo $outputline >> m2_file
+				echo "from .views import ${m1}View" >> u2_main_file
+				
 
 				echo "" >> s2_file
 
