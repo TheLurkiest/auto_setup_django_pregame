@@ -411,7 +411,13 @@ else
 				outputline="class ${m1}(models.Model):"
 				echo $outputline >> m2_file
 				echo "from .views import ${m1}View" >> u2_main_file
-				
+
+				# url_pat2="View.as_view(), name=\"user-all\""
+
+				echo "urlpatterns = [" >> u2_main_file
+				echo "<--indent path('${m1}/', ${m1}View.as_view(), name=\"user-all\"" >> u2_main_file
+				echo "]" >> u2_main_file
+				echo "" >> u2_main_file
 
 				echo "" >> s2_file
 
