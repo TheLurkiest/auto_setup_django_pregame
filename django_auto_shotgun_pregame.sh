@@ -417,8 +417,10 @@ else
 				echo "from .serializers import ${m1}Serializer" >> v2_file
 
 				echo "class ${m1}View(APIView):" >> v2_file
-				echo "<--indent def get(self, request, version, format=None):"
-				echo ""
+				echo "<--indent def get(self, request, version, format=None):" >> v2_file
+				echo "<--<--two indents ${m1,,} = ${m1}.objects.all()" >> v2_file
+				echo "<--<--two indents serializer = ${m1}Serializer(${m1,,}, many=True)" >> v2_file
+				echo "<--<--two indents return Response(serializer.data)" >> v2_file
 
 				# url_pat2="View.as_view(), name=\"user-all\""
 
