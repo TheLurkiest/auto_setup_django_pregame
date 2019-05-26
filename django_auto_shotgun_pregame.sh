@@ -295,6 +295,8 @@ else
 	input1=$csv_reply
 	output1=""
 
+	s2_field_count=1
+
 	# this just counts everything that gets read out so we can use an if
 	# conditional to check if the models have been dislayed yet
 	tot_num_all_mf=0
@@ -410,7 +412,9 @@ else
 				echo $outputline >> m2_file
 
 				echo "" >> s2_file
+
 				echo "from .models import ${m1}" >> s2_file
+
 				echo "class ${m1}Serializer(serializers.ModelSerializer):" >> s2_file
 				echo "<--one-indent class Meta:" >> s2_file
 				echo "<--<--two-indents model = ${m1}" >> s2_file
@@ -443,9 +447,24 @@ else
 				outputline="	<--indent ${f1} = models.CharField(max_length=255, null=False)"
 				echo $outputline >> m2_file
 
-				# while read -r line; do set $line; serializers_fields="${serializers_fields}\"${f1}\", "; done < f1_file
+				let s2_field_count=$s2_field_count+1
+				if [ "$s2_field_count" -ge "$mf1" ]
+				then
+					s_outputline="\"${f1}\""
+				else
+					s_outputline="\"${f1}\", "
+				fi
 
-				while read -r line; do set $line; serializers_fields=$serializers_fields$f1; done < f1_file
+				# while read -r line; do set $line; serializers_fields=$serializers_fields$s_outputline; done < f1_file
+				serializers_fields=$serializers_fields$s_outputline
+				echo "------------------------------------------------------------------"
+				echo "------------------------------------------------------------------"
+				echo "for debug purposes: f1 at this moment is: ${f1}"
+				echo "...and s_outputline is: ${s_outputline}"
+				echo "...and serializers_fields is: ${serializers_fields}"
+				echo "...and number of fields plus model is: ${mf1}"
+				echo "------------------------------------------------------------------"
+				echo "------------------------------------------------------------------"
 
 				outputline=""
 				f1=""
@@ -454,8 +473,11 @@ else
 		done
 
 		serializers_fields="${serializers_fields})"
+		echo ""
+		echo "--------------------------------"
 		echo $serializers_fields >> s2_file
-
+		echo "--------------------------------"
+		echo ""
 		sense_of_self="${sense_of_self})"
 		sense_of_self=$placeholder_s$sense_of_self
 		echo "def __str__(self):" >> m2_file
@@ -463,6 +485,7 @@ else
 		countforfields=1
 		serializers_fields="<--<--two-indents fields = ("
 		sense_of_self=""
+		s2_field_count=1
 	done
 
 	# admin.py get imported models once assembled:
