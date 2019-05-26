@@ -26,6 +26,14 @@ First-- our current default setup will be laid out (this is how we plan on imple
 BASIC BARE-BONES AUTO-API MAKER:
 ------------------------------
 
+--remember that we can re-use a BUNCH of existing code by using ${name2,,} to
+forcibly lowercase our model names to re-use them like we see done typically.
+
+Similarly, we can re-uppercase a lowercase word (just 1st letter) with ^ instead:
+echo ${name1^}
+
+...we might want to double check that we've done that occasionally
+
 models.py:
 1- every field is defaulted to CharField
 2- all models (classes within models.py) get a NON-UUID url in main urls.py urlpatterns list (urls.py urlpatterns list)

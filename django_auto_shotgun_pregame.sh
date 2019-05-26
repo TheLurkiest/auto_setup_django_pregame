@@ -412,10 +412,18 @@ else
 				echo $outputline >> m2_file
 				echo "from .views import ${m1}View" >> u2_main_file
 
+				echo "" >> v2_file
+				echo "from .models import ${m1}" >> v2_file
+				echo "from .serializers import ${m1}Serializer" >> v2_file
+
+				echo "class ${m1}View(APIView):" >> v2_file
+				echo "<--indent def get(self, request, version, format=None):"
+				echo ""
+
 				# url_pat2="View.as_view(), name=\"user-all\""
 
 				echo "urlpatterns = [" >> u2_main_file
-				echo "<--indent path('${m1}/', ${m1}View.as_view(), name=\"user-all\"" >> u2_main_file
+				echo "<--indent path('${m1,,}/', ${m1}View.as_view(), name=\"${m1,,}-all\"" >> u2_main_file
 				echo "]" >> u2_main_file
 				echo "" >> u2_main_file
 
