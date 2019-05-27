@@ -357,7 +357,7 @@ else
 	fi
 
 
-	placeholder_s='	return "{}, {}".format('
+	placeholder_s='	return "{}, {}".format(self.'
 	input1=$csv_reply
 	output1=""
 	s2_field_count=1
@@ -617,13 +617,12 @@ let model_count_now=model_count_now+1
 
 		if [ "$fk_found_in_model" == 0 ]
 		then
-			sense_of_self=$placeholder_s$sense_of_self
 			echo "	def __str__(self):" >> seven_namesakes/models.py
-			echo "	${sense_of_self}" >> seven_namesakes/models.py
+			echo "	${placeholder_s}${sense_of_self}" >> seven_namesakes/models.py
 		else
 			placeholder_s='return self.'
-			while read -r line; do set $line; other_self=$(echo $1); done < "${fk_model,,}_self_id.txt"
-			sense_of_self="self.${fk_model,,}.other_self"
+			while read -r line; do set $line; other_self=$(echo $1); done < "../${fk_model,,}_self_id.txt"
+			sense_of_self="${fk_model,,}.${other_self}"
 		fi
 
 		countforfields=1
@@ -632,22 +631,8 @@ let model_count_now=model_count_now+1
 		s2_field_count=1
 		placeholder_s='	return ".format(self.'
 
-
-
-
-
-
-
-
-
 		fk_found_in_model=0
 		let model_count_now=model_count_now+1
-
-
-
-
-
-
 
 	done
 
