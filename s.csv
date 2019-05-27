@@ -1,6 +1,6 @@
 CultivarGroup SingleMound PlotOfLand FarmerId NOMODEL
-weekly_desired_h2o_input cultivar_group(fk) farmer_id(fk) user_id NA
-min_desired_soil_temp plot_of_land(fk) num_columns_full first_name NA
+weekly_desired_h2o_input cultivar_group farmer_id user_id NA
+min_desired_soil_temp plot_of_land num_columns_full first_name NA
 min_desired_air_temp x_coord_in_plot approx_gps last_name NA
 max_desired_sunlight y_coord_in_plot num_rows_full email NA
 desired_soil_moist last_h2o_input_date x_dist_between_mounds phone_number NA

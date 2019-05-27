@@ -80,6 +80,56 @@ if (p_reply.upper() != 'SKIP'):
 
 	fout3.write(str(s_pre_marker))
 	fout3.write(str(s_post_marker))
+
+	fout3.close()
+
+
+
+
+	apps_found = False
+
+	fin1=open('config/settings.py','r')
+	s_pre_marker=''
+	s_post_marker=''
+	for line in fin1:
+		if(apps_found == False):
+			s_pre_marker = str(s_pre_marker) + str(line)
+		if(line.count('django.contrib.admin') >= 1):
+			s_pre_marker = str(s_pre_marker) + str(line.replace(('django.contrib.admin'), ('api')))
+		if(line.find('INSTALLED_APPS') == True ):
+			apps_found = True
+	fin1.close()
+
+	apps_found = False
+
+	fin2=open('config/settings.py','r')
+	for line in fin2:
+		if(apps_found == True):
+			s_post_marker = str(s_pre_marker) + str(line)
+			if(line.count('INSTALLED_APPS') >= 1 ):
+				apps_found = True
+	fin2.close()
+
+	os.system('sudo rm config/settings.py')
+
+	fout3=open('config/settings.py','w')
+
+	fout3.write(str(s_pre_marker))
+	fout3.write(str(s_post_marker))
+
+	fout3.close()
+
+
+
+
+
+
+
+
+
+
+
+
 else:
 	# ----------------------------------------------------------------------------
 	# here is where we can potentially choose to add new fields to existing files:
@@ -164,7 +214,7 @@ pip freeze > requirements.txt
 django-admin startproject config .
 
 # step 6
-python3 manage.py migrate
+# python3 manage.py migrate
 python3 manage.py makemigrations
 python3 manage.py migrate
 
@@ -365,7 +415,7 @@ else
 	dir="dir"
 	mod_now=""
 
-	serializers_fields="		fields = ("
+	serializers_fields="fields = ("
 
 
 	while read -r line
@@ -449,7 +499,7 @@ else
 	echo 'from django.urls import path, include, re_path' >> seven_namesakes/config/urls.py
 	echo 'urlpatterns = [' >> seven_namesakes/config/urls.py
 	echo "	path('admin/', admin.site.urls)," >> seven_namesakes/config/urls.py
-	echo "	re_path('api/(?P<version>(v1|v2))/', include('api.urls'))" >> seven_namesakes/config/urls.py
+	echo "	re_path('api/(?P<version>(v1|v2))', include('api.urls'))" >> seven_namesakes/config/urls.py
 	echo ']' >> seven_namesakes/config/urls.py
 
 	for file in dir[1-99]; do
@@ -481,7 +531,7 @@ else
 				# url_pat2="View.as_view(), name=\"user-all\""
 
 				echo "urlpatterns = [" >> seven_namesakes/urls.py
-				echo "	('${m1,,}/', ${m1}View.as_view(), name=\"${m1,,}\")" >> seven_namesakes/urls.py
+				echo "	('${m1,,}/', ${m1}View.as_view(), name=\"${m1,,}-all\")," >> seven_namesakes/urls.py
 				echo "]" >> seven_namesakes/urls.py
 				echo "" >> seven_namesakes/urls.py
 
@@ -517,9 +567,9 @@ else
 
 				if [ "$countforfields" -lt 3 ]
 				then
-					while read -r line; do set $line; placeholder_s="${placeholder_s}self.$1"; done < f1_file
+					placeholder_s="${placeholder_s}self.${f1}"
 				else
-					while read -r line; do set $line; sense_of_self="${sense_of_self}, self.$1"; done < f1_file
+					sense_of_self="${sense_of_self}, self.${f1}"
 				fi
 
 				# sense_of_self
