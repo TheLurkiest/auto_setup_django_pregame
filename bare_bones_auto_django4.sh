@@ -6,14 +6,32 @@
 echo 'remember to activate your virtual environment before executing this or going further'
 
 echo 'Welcome to the Django Rest API quick and dirty auto-setup skip-o-matic 5000!'
-echo 'If all goes as planned this shell script you have just executed will hopefully implement all the tedious and'
-echo 'frankly not very useful or difficult-- but extremely time-consuming process of setting up your initial '
-echo 'stages for your Django Rest API.  Hopefully, if all goes as planned, a bit of python of python code will'
-echo 'be set off momentarily and we will start seeing prompts asking specifically what we would like to set up'
-echo 'followed by a quick and relatively painless transition into our initial Django setup that pretty much everyone'
-echo 'is likely to have right at the start.  Fingers Crossed...'
+echo 'This shell script you have just executed will implement all the tedious and'
+echo 'time-consuming steps needed to setup a Django Rest API with basic functionality.'
+echo '------------------------------------------------------------------------'
+echo ' '
+csv_reply=""
 
-# step2
+echo 'you must have a .csv file already created to continue-- if not, use ctrl+d/ctrl+c to exit this code and use the info below to create one before starting this process again.'
+echo "to input models and fields into your API you must create a .csv file with models at the top, fields below them, seperated by a single space."
+echo "if you have never done this before it is quite simple to implement-- simply create a spreadsheet using excel or libreoffice and enter text into the cells in the following manner: "
+echo '1) model names go in the top row'
+echo '2) the fields of each model go right below them (within the same column of the model they are within)'
+echo '3) save as --> choose .csv in drop-down menu --> field delimeter: (just put a space in that box), string delimeter: (just delete everything in that box) --> hit ok -->'
+echo ' '
+echo '>>>> for more advanced info/options regarding this .csv setup enter ADVANCED now-- otherwise hit any key to continue'
+read csv_reply
+if [ "$csv_reply" == "ADVANCED" ]
+then
+	echo '4) to write down any additional text that will not be read into the API (like names, dates, etc.) just put NOMODEL into the top row or some column, and you will be able to freely enter whatever text you wish into the cells within that column beneath that initial top row.'
+fi
+
+echo '----------------------------------------------------------------------------------------------------------'
+echo 'Enter the name of your .csv file below or say NO here to enter fields and models manually: '
+read csv_reply
+
+
+
 mkdir api_auto_xxx
 touch stage1_auto_d.py
 
@@ -25,63 +43,101 @@ print('step 1: if virtual environment is not active, ctrl+c/d out of this python
 print('...and then activate the virtual environment first before running this again')
 
 p_reply = ''
-p_reply = input('What would you like to call your first model?')
+p_reply = input('press ANY KEY to continue automatic default setup or enter SKIP if you have already finished and tested this API and wish to make further alterations by adding new fields to existing models.')
 
-model1 = p_reply
 
-print('ok.  Creating '+str(model1)+' model now.')
-p_reply2='YES'
-field_list=[]
+if (p_reply.upper() != 'SKIP'):
 
-while(p_reply2.upper() == 'YES'):
-	p_reply = input('What would you like to call your field within that model?')
-	if(len(p_reply) >= 1):
-		field_list.append(p_reply)
-	p_reply2 = input('Would you like to create any additional fields (yes/no)?')
+	apps_found = False
 
-print('the fields for the ' + str(model1) + 'model are as follows:')
-
-r_field_list = range(len(field_list))
-for r_elem in r_field_list:
-	print(str(field_list[r_elem]))
-
-apps_found = False
-
-fin1=open('config/settings.py','r')
-s_pre_marker=''
-s_post_marker=''
-for line in fin1:
-	if(apps_found == False):
-		s_pre_marker = str(s_pre_marker) + str(line)
-	if(line.count('django.contrib.admin') >= 1):
-		s_pre_marker = str(s_pre_marker) + str(line.replace(('django.contrib.admin'), ('rest_framework')))
-	if(line.find('INSTALLED_APPS') == True ):
-		apps_found = True
-fin1.close()
-
-apps_found = False
-
-fin2=open('config/settings.py','r')
-for line in fin2:
-	if(apps_found == True):
-		s_post_marker = str(s_pre_marker) + str(line)
-		if(line.count('INSTALLED_APPS') >= 1 ):
+	fin1=open('config/settings.py','r')
+	s_pre_marker=''
+	s_post_marker=''
+	for line in fin1:
+		if(apps_found == False):
+			s_pre_marker = str(s_pre_marker) + str(line)
+		if(line.count('django.contrib.admin') >= 1):
+			s_pre_marker = str(s_pre_marker) + str(line.replace(('django.contrib.admin'), ('rest_framework')))
+		if(line.find('INSTALLED_APPS') == True ):
 			apps_found = True
-fin2.close()
+	fin1.close()
 
-os.system('sudo rm config/settings.py')
+	apps_found = False
+
+	fin2=open('config/settings.py','r')
+	for line in fin2:
+		if(apps_found == True):
+			s_post_marker = str(s_pre_marker) + str(line)
+			if(line.count('INSTALLED_APPS') >= 1 ):
+				apps_found = True
+	fin2.close()
+
+	os.system('sudo rm config/settings.py')
+
+	fout3=open('config/settings.py','w')
+
+	fout3.write(str(s_pre_marker))
+	fout3.write(str(s_post_marker))
+else:
+	# ----------------------------------------------------------------------------
+	# here is where we can potentially choose to add new fields to existing files:
+	# ----------------
+
+	print('If you have not yet tested out that this API currently works by going ')
+	print('to the url listed when the terminal command python3 manage.py runserver')
+	print('is used, and checking that the url listed within the terminal upon ')
+	print('running that terminal command leads you to a working website then')
+	print('answer NO to the following question.  This feature can be used in the')
+	print('future to add new fields to your models once it has been fully')
+	print('implemented-- but wait until you have tested the base setup first.')
+
+	print(' ')
+	print('NOTE: this feature is still under development-- not all changes are')
+	print('automatically implemented.  The following modules still need auto-')
+	print('alteration features added to make this option fully automatic:')
+	print('models.py, serializers.py, urls.py, ')
+
+	print('once tests.py has had its basic setup it will also need to have ')
+	print('features added here to make the new changes compatible will the')
+	print('new models.')
+
+	p_reply2 = ''
+	p_reply2 = input('Would you like to add a new field?')
+	p_reply = input('What is the name of the model you want to add that field to?')
+
+	model1 = p_reply
+
+	field_list=[]
+
+	while(p_reply2.upper() == 'YES'):
+		p_reply = input('What would you like to call your field within that model?')
+		if(len(p_reply) >= 1):
+			field_list.append(p_reply)
+		p_reply2 = input('Would you like to create any additional fields (yes/no)?')
 
 
-fout3=open('config/settings.py','w')
+	print('the fields for the ' + str(model1) + 'model are as follows:')
 
-fout3.write(str(s_pre_marker))
-fout3.write(str(s_post_marker))
+	r_field_list = range(len(field_list))
+	for r_elem in r_field_list:
+		print(str(field_list[r_elem]))
+
+	print('use the following two terminal commands to implement any changes: ')
+	print('python3 manage.py makemigrations')
+	print('python3 manage.py migrate')
+	# ----------------------------------------------------------------------------
 
 " > stage1_auto_d.py
 
 
-touch api_auto_xxx/steps_5_plus_pregame.sh
-chmod 777 api_auto_xxx/steps_5_plus_pregame.sh
+
+
+
+
+
+
+touch api_auto_xxx/finish_my_api.sh
+chmod 777 api_auto_xxx/finish_my_api.sh
 
 
 echo "This second shell script will be created and placed into the new folder"
@@ -120,7 +176,7 @@ sudo cp ../stage1_auto_d.py .
 git add config
 git add requirements.txt
 git add stage1_auto_d.py
-git add steps_5_plus_pregame.sh
+git add finish_my_api.sh
 
 git commit -m 'added all our files just prior to final step of the pregame'
 
@@ -146,56 +202,30 @@ admin.site.register(User)
 ' >> api/admin.py
 
 
-" > api_auto_xxx/steps_5_plus_pregame.sh
 
-chmod 777 api_auto_xxx/steps_5_plus_pregame.sh
+cp ../seven_namesakes/admin.py api/
+cp ../seven_namesakes/models.py api/
+cp ../seven_namesakes/config/urls.py config/
 
-echo "now cd into the api_auto_xxx folder you created and execute the shell script within it to continue"
+cp ../seven_namesakes/tests.py api/
+cp ../seven_namesakes/views.py api/
+cp ../seven_namesakes/serializers.py api/
+cp ../seven_namesakes/urls.py api/
 
 
-echo 'this is where the seven python modules that need to be entered manually by'
-echo 'hand normally-- which typically require significant manual modifications.'
-echo 'these python modules will need significant alterations prior to this django'
-echo 'rest API being functional.  The following code is designed to over-ride the'
-echo 'normally lengthy and complex process of setting up each of these python'
-echo 'files manually for each model or field you wish to add or alter using inputs '
-echo 'you will enter at the outset, momentarily.  The easiest way to do this is'
-echo 'by simply setting up a .csv from a libreoffice or excel spreadsheet with '
-echo 'model names at the top of each column and fields in the column directly '
-echo 'beneath them.  Any cell in the top row labeled NOMODEL will not be included.'
-echo 'Any field cell beneath that first row labeled NA will not be included.  If'
-echo 'you wish, you may exit this process using ctrl+d and ctrl+c now and create '
-echo 'a .csv file in order to perform this task-- you will be able to safely start'
-echo 'the whole process again from scratch, the same way you did initially.'
 
-echo 'Alternatively, a slightly slower approach-- except perhaps if your intended'
-echo 'creation will contain only a few models and fields-- would'
-echo 'be to input the models and fields into the code following prompts.  To do'
-echo 'Simply enter NO at the initial prompt to use this method instead.'
+" > api_auto_xxx/finish_my_api.sh
 
-echo 'Remember: all any of this code will do for you is get you off the ground.'
-echo 'If this code is functioning properly then simply entering the names of '
-echo 'fields and models using either method mentioned should create a fully'
-echo 'functional django rest API right from the start-- without any need for '
-echo 'further manual alterations from the user.  Simply using '
-echo 'python3 manage.py runserver and entering the URL displayed in the terminal'
-echo 'into firefox with admin/ added at the end should get you to the log in '
-echo 'screen for a fully functional API-- python3 manage.py createsuperuser '
+chmod 777 api_auto_xxx/finish_my_api.sh
 
-echo '...after that your basic setup will be complete.  After the setup of '
-echo 'these 7 modules is complete I will go into more detail on what this means'
-echo 'and how best to proceed past this point.'
+echo "now cd into the api_auto_xxx folder you created and execute the shell script within it called finish_my_api.sh to continue"
 
 sudo rm -r seven_namesakes
 mkdir seven_namesakes
 mkdir seven_namesakes/config
 outer_folder='seven_namesakes/'
 
-csv_reply=""
 
-echo 'Enter a .csv file separated by spaces that contains models at the top of each column followed by their fields below them'
-echo '...otherwise just say NO here to type the fields and models in directly when prompted one by one: '
-read csv_reply
 
 # ------------------- START OF DIRECT ENTRY INTO 7 PYTHON MODULES UPON USER PROMPTS -------------------
 if [ "$csv_reply" == "NO" ]
@@ -368,7 +398,7 @@ else
 
 	a2_pt2="zzz"
 	sense_of_self=""
-	echo "" > a2_pseven_namesakes/tests.py
+	echo "" > a2_pt2_file
 	echo "" > m1_file
 	# namesake-ification of 7 python modules:
 
@@ -450,7 +480,7 @@ else
 				# if [ "$a2_pt2" == "xxx" ]
 				then
 					a2_pt2="${m1}"
-					echo $a2_pt2 >> a2_pseven_namesakes/tests.py
+					echo $a2_pt2 >> a2_pt2_file
 				fi
 
 			else
@@ -510,8 +540,8 @@ else
 	# admin.py get imported models once assembled:
 	echo $m_all >> seven_namesakes/admin.py
 
-	echo a2_pseven_namesakes/tests.py just prior to very end where seven_namesakes/admin.py gets finished:
-	cat a2_pseven_namesakes/tests.py
+	echo a2_pt2_file just prior to very end where seven_namesakes/admin.py gets finished:
+	cat a2_pt2_file
 	echo ...seven_namesakes/admin.py on the other hand just prior to while loop ending looks like this:
 	cat seven_namesakes/admin.py
 	echo ...a1 on the other hand just prior to while loop ending looks like this:
@@ -530,7 +560,7 @@ else
 			echo "a1 is $1"
 		fi
 		let w_count=w_count+1
-	done < a2_pseven_namesakes/tests.py
+	done < a2_pt2_file
 
 # ------------------- END OF .CSV INPUT INTO 7 PYTHON MODULES UPON USER PROMPTS -------------------
 fi
