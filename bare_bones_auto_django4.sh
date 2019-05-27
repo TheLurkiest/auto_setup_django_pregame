@@ -345,6 +345,7 @@ if [ "$csv_reply" == "NO" ]
 # ------------------- START OF .CSV INPUT INTO 7 PYTHON MODULES UPON USER PROMPTS -------------------
 
 else
+	placeholder_s='	return "{} - {}".format('
 	# default input1 is spaces_only.csv which we will leave as this as for quicker testing and debugging until done
 	# ...however once finished it will revert back to $csv_reply --since we've confirmed this manual entry works
 	input1=$csv_reply
@@ -510,14 +511,21 @@ else
 			else
 				head -n $countforfields $file | cat > f1_file
 				while read -r line; do set $line; f1=$(echo $1); done < f1_file
-				placeholder_s='	return "{} - {}".format('
 
-				while read -r line; do set $line; sense_of_self="${sense_of_self}self.$1, "; done < f1_file
+
+
+
+				if [ "$countforfields" -lt 3 ]
+				then
+					while read -r line; do set $line; placeholder_s="${placeholder_s}self.$1"; done < f1_file
+				else
+					while read -r line; do set $line; sense_of_self="${sense_of_self}, self.$1"; done < f1_file
+				fi
 
 				# sense_of_self
-				while read -r line; do set $line; sense_of_self="class ${m1}(models.Model):"; done < f1_file
+				# while read -r line; do set $line; sense_of_self="class ${m1}(models.Model):"; done < f1_file
 
-				outputline="	${f1} = models.CharField(max_length=255, null=False)"
+				outputline="${f1} = models.CharField(max_length=255, null=False)"
 				echo "	${outputline}" >> seven_namesakes/models.py
 
 				let s2_field_count=$s2_field_count+1
@@ -554,11 +562,13 @@ else
 		sense_of_self="${sense_of_self})"
 		sense_of_self=$placeholder_s$sense_of_self
 		echo "	def __str__(self):" >> seven_namesakes/models.py
-		echo "		${sense_of_self}" >> seven_namesakes/models.py
+		echo "	${sense_of_self}" >> seven_namesakes/models.py
 		countforfields=1
 		serializers_fields="		fields = ("
 		sense_of_self=""
 		s2_field_count=1
+		placeholder_s='	return "{} - {}".format('
+
 	done
 
 	# admin.py get imported models once assembled:
@@ -598,6 +608,8 @@ rm m1_file
 rm lc_mf
 rm dir[1-4]
 
+echo ""
+echo "-----------------------------------------------------------------------"
 echo "to complete the setup of this API, use the following terminal commands: "
 echo "cd api_auto_xxx"
 echo "...followed by:"
