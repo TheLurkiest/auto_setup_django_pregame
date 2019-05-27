@@ -24,6 +24,11 @@ read csv_reply
 if [ "$csv_reply" == "ADVANCED" ]
 then
 	echo '4) to write down any additional text that will not be read into the API (like names, dates, etc.) just put NOMODEL into the top row or some column, and you will be able to freely enter whatever text you wish into the cells within that column beneath that initial top row.'
+	echo '5) if you want more control over the auto-setup of the API you can create a SECOND .csv file to set up each field based on specific data types '
+	echo '>>> 5a) simply copy your original spreadsheet into a second one and turn it into a .csv in the same way-- then just change each cell so that each cell is data type of the field that was previously inside it.'
+	echo '>>> 5b) at the moment your choices are limited to: Char, Integer, Float, Boolean, and Date'
+	echo '>>> 5c) any other text (besides NA) will be assumed to indicate a ForeignKey in that cell location-- with the text contained within being the model that the key originated from.'
+	echo '>>> 5d) if you wish to set up ForeignKeys, make sure that the primary key models are in prior columns of the spreadsheet to ensure the code can correctly identify this key.'
 fi
 
 echo '----------------------------------------------------------------------------------------------------------'
@@ -297,7 +302,7 @@ else
 	read csv_reply2
 	if [ "$csv_reply2" != "SKIP" ]
 	then
-		placeholder_s='	return "{} - {}".format('
+		placeholder_s='	return "{} - {}".format(self.'
 		input1b=$csv_reply2
 		output1=""
 		s2_field_count=1
@@ -444,6 +449,10 @@ else
 
 tier_b_info=''
 
+
+fk_found_in_field=0
+fk_found_in_model=0
+
 let model_count_now=model_count_now+1
 
 	for file in dir[1-99]; do
@@ -508,6 +517,19 @@ let model_count_now=model_count_now+1
 					a2_pt2="${m1}"
 					echo $a2_pt2 >> a2_pt2_file
 				fi
+
+
+
+
+
+				if [ "$f_dtype" == "Boolean" ]
+				then
+					f_dtype2=""
+
+
+				fi
+
+
 			else
 				head -n $countforfields $file | cat > f1_file
 				while read -r line; do set $line; f1=$(echo $1); done < f1_file
@@ -519,21 +541,44 @@ let model_count_now=model_count_now+1
 
 				if [ "$countforfields" -lt 3 ]
 				then
-					placeholder_s="${placeholder_s}self.${f1}"
-				else
-					sense_of_self="${sense_of_self}, self.${f1}"
+					sense_of_self="${sense_of_self}${f1}"
 				fi
 
-				# sense_of_self
-				# while read -r line; do set $line; sense_of_self="class ${m1}(models.Model):"; done < f1_file
+				# this is where the data type gets assigned if info is known--
+				# --otherwise it sets to default-- CharField.
 				if [ "$f_dtype" == "Integer" ]
 				then
 					f_dtype2="default=99"
-				else
+				elif [ "$f_dtype" == "Float" ]
+				then
+					f_dtype2="default=0.5"
+				elif [ "$f_dtype" == "Boolean" ]
+				then
+					f_dtype2=""
+				elif [ "$f_dtype" == "Date" ]
+				then
+					f_dtype=""
+				elif [ "$csv_reply2" == "SKIP" ]
+				then
+					f_dtype="CharField"
 					f_dtype2="max_length=255, null=False"
+				elif [ "$f_dtype" == "Char" ]
+				then
+					f_dtype="CharField"
+					f_dtype2="max_length=255, null=False"
+				else
+					# here we assume we will get an fk if not recognized
+					outputline="${f1,,} = models.ForeignKey(\"${f1^}\") on_delete=models.CASCADE"
+					fk_found_in_field=1
+					fk_found_in_model=
+					fk_model="${f1}"
 				fi
 
-				outputline="${f1} = models.${f_dtype}Field(${f_dtype2})"
+				if [ "$fk_found_in_field" == 0 ]
+				then
+					outputline="${f1,,} = models.${f_dtype}Field(${f_dtype2})"
+				fi
+
 				echo "	${outputline}" >> seven_namesakes/models.py
 
 				let s2_field_count=$s2_field_count+1
@@ -546,18 +591,12 @@ let model_count_now=model_count_now+1
 
 				# while read -r line; do set $line; serializers_fields=$serializers_fields$s_outputline; done < f1_file
 				serializers_fields=$serializers_fields$s_outputline
-				echo "------------------------------------------------------------------"
-				echo "------------------------------------------------------------------"
-				echo "for debug purposes: f1 at this moment is: ${f1}"
-				echo "...and s_outputline is: ${s_outputline}"
-				echo "...and serializers_fields is: ${serializers_fields}"
-				echo "...and number of fields plus model is: ${mf1}"
-				echo "------------------------------------------------------------------"
-				echo "------------------------------------------------------------------"
+
 				outputline=""
 				f1=""
 			fi
 			let countforfields=countforfields+1
+			fk_found_in_field=0
 		done
 		serializers_fields="${serializers_fields})"
 		echo ""
@@ -565,15 +604,41 @@ let model_count_now=model_count_now+1
 		echo "		${serializers_fields}" >> seven_namesakes/serializers.py
 		echo "--------------------------------"
 		echo ""
+
+		echo "${sense_of_self}" > "${m1,,}_self_id.txt"
+
+
+		other_self=''
 		sense_of_self="${sense_of_self})"
-		sense_of_self=$placeholder_s$sense_of_self
-		echo "	def __str__(self):" >> seven_namesakes/models.py
-		echo "	${sense_of_self}" >> seven_namesakes/models.py
+		if [ "$fk_found_in_model" == 0 ]
+		then
+			sense_of_self=$placeholder_s$sense_of_self
+			echo "	def __str__(self):" >> seven_namesakes/models.py
+			echo "	${sense_of_self}" >> seven_namesakes/models.py
+		else
+			placeholder_s='return self.'
+			while read -r line; do set $line; other_self=$(echo $1); done < "${fk_model,,}_self_id.txt"
+			sense_of_self="self.${fk_model,,}.other_self"
+		fi
+
 		countforfields=1
 		serializers_fields="fields = ("
 		sense_of_self=""
 		s2_field_count=1
-		placeholder_s='	return "{} - {}".format('
+		placeholder_s='	return "{} - {}".format(self.'
+
+		# the only way I'll put a uuid in one of these is if they had ZERO fk's
+
+		if [ "$fk_found_in_model" == 0 ]
+		then
+			f_dtype="UUID"
+			f1="uuid"
+			f_dtype2="default=uuid.uuid4, editable=False"
+			outputline="${f1} = models.${f_dtype}Field(${f_dtype2})"
+			echo "	${outputline}" >> seven_namesakes/models.py
+		fi
+		fk_found_in_model=0
+
 
 		let model_count_now=model_count_now+1
 
