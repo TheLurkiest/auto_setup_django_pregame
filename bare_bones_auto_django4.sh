@@ -42,6 +42,8 @@ echo "import os
 print('step 1: if virtual environment is not active, ctrl+c/d out of this python code')
 print('...and then activate the virtual environment first before running this again')
 
+print(' ')
+print('------------------------------------------------------------------')
 p_reply = ''
 p_reply = input('press ANY KEY to continue automatic default setup or enter SKIP if you have already finished and tested this API and wish to make further alterations by adding new fields to existing models.')
 
@@ -193,8 +195,10 @@ python3 manage.py migrate
 python3 manage.py makemigrations
 python3 manage.py migrate
 
-echo 'The automatic setup of your Django Rest API is now complete.  This is stage 1 of the auto-setup process.'
-echo 'Stage 2 --if we decide to pursue this-- is essentially just going to be setting up those SEVEN PRIMARY PYTHON MODULES within this API.'
+echo 'The automatic portion of the Django Rest API setup is now complete.'
+echo 'Now for testing and implementation of changes-- '
+
+
 
 echo '
 from .models import runserver
@@ -213,6 +217,26 @@ cp ../seven_namesakes/serializers.py api/
 cp ../seven_namesakes/urls.py api/
 
 
+
+echo 'use the following two terminal commands to implement any changes: '
+echo 'python3 manage.py makemigrations'
+echo 'python3 manage.py migrate'
+
+echo '...then use the following command:'
+
+echo 'python3 manage.py runserver'
+
+echo '...and copy the url displayed in the terminal into your firefox browser to test it.  '
+echo 'adding admin/ to the end will let you view the login screen'
+echo 'once this is confirmed, go back to the terminal hit ctrl+c'
+echo 'then you can set up the manner with which you want to log in using: '
+
+echo 'python3 manage.py createsuperuser.py'
+
+echo 'that should give you everything you need to get through the login screen'
+echo 'and beyond to what you have created after using runserver again'
+
+echo '...and if all that works-- this automatic setup is complete-- congrats!'
 
 " > api_auto_xxx/finish_my_api.sh
 
@@ -456,7 +480,7 @@ else
 				# url_pat2="View.as_view(), name=\"user-all\""
 
 				echo "urlpatterns = [" >> seven_namesakes/urls.py
-				echo "	('${m1,,}/', ${m1}View.as_view(), name=\"${m1,,}-all\"" >> seven_namesakes/urls.py
+				echo "	('${m1,,}/', ${m1}View.as_view(), name=\"${m1,,}\")" >> seven_namesakes/urls.py
 				echo "]" >> seven_namesakes/urls.py
 				echo "" >> seven_namesakes/urls.py
 
@@ -568,8 +592,16 @@ fi
 
 
 
+rm f1_file
+rm a2_pt2_file
+rm m1_file
+rm lc_mf
+rm dir[1-4]
 
-
+echo "to complete the setup of this API, use the following terminal commands: "
+echo "cd api_auto_xxx"
+echo "...followed by:"
+echo "./finish_my_api"
 
 
 
