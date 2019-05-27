@@ -1,6 +1,6 @@
 CultivarGroup SingleMound PlotOfLand FarmerId NOMODEL
-TSWV_resistance cultivar_group (fk) farmer_id (fk) user_id NA
-yield_lbs_per_acre plot_of_land (fk) num_columns_full first_name NA
+TSWV_resistance cultivar_group farmer_id user_id NA
+yield_lbs_per_acre plot_of_land num_columns_full first_name NA
 days_to_mature x_coord_in_plot approx_gps last_name NA
 Desired_Ca y_coord_in_plot num_rows_full email NA
 white_mold_resistance days_since_h2o_input x_dist_between_mounds phone_number NA

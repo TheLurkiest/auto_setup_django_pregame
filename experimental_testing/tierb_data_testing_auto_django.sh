@@ -444,7 +444,7 @@ else
 
 tier_b_info=''
 
-model_count_now=1
+let model_count_now=model_count_now+1
 
 	for file in dir[1-99]; do
 		# more +number5 dir2
@@ -575,7 +575,7 @@ model_count_now=1
 		s2_field_count=1
 		placeholder_s='	return "{} - {}".format('
 
-		model_count_now=$model_count_now+1
+		let model_count_now=model_count_now+1
 
 	done
 
