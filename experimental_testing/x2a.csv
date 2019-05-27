@@ -1,0 +1,19 @@
+CultivarGroup SingleMound PlotOfLand FarmerId NOMODEL
+TSWV_resistance cultivar_group (fk) farmer_id (fk) user_id NA
+yield_lbs_per_acre plot_of_land (fk) num_columns_full first_name NA
+days_to_mature x_coord_in_plot approx_gps last_name NA
+Desired_Ca y_coord_in_plot num_rows_full email NA
+white_mold_resistance days_since_h2o_input x_dist_between_mounds phone_number NA
+CBR_resistance last_h2o_input_amt y_dist_between_mounds NA NA
+limb_rot_resistance days_since_planting diameter_mounds NA NA
+NA soil_moist peanuts_seeds_per_mound NA NA
+NA plant_height NA NA NA
+NA leaf_discolor NA NA NA
+NA avg_sunlight NA NA NA
+NA avg_soil_temp NA NA NA
+NA avg_air_temp NA NA NA
+NA leaf_discolor_resolved NA NA NA
+NA peanut_inoculant_applied NA NA NA
+NA last_date_local_observation NA NA NA
+NA soil_ph NA NA NA
+NA NA NA NA NA

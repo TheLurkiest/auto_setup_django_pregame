@@ -605,7 +605,7 @@ model_count_now=1
 	done < a2_pt2_file
 
 # ------------------- END OF .CSV INPUT INTO 7 PYTHON MODULES UPON USER PROMPTS -------------------
-# fi
+fi
 
 
 
