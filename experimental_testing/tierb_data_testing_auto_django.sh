@@ -15,6 +15,8 @@ csv_reply=""
 echo 'you must have a .csv file already created to continue-- if not, use ctrl+d/ctrl+c to exit this code and use the info below to create one before starting this process again.'
 echo "to input models and fields into your API you must create a .csv file with models at the top, fields below them, seperated by a single space."
 echo "if you have never done this before it is quite simple to implement-- simply create a spreadsheet using excel or libreoffice and enter text into the cells in the following manner: "
+echo "if you save your draw.io API class diagram as a pdf on your computer, you can just copy and paste them directly into spreadsheet columns in one swift move"
+
 echo '1) model names go in the top row'
 echo '2) the fields of each model go right below them (within the same column of the model they are within)'
 echo '3) save as --> choose .csv in drop-down menu --> field delimeter: (just put a space in that box), string delimeter: (just delete everything in that box) --> hit ok -->'
@@ -302,7 +304,7 @@ else
 	read csv_reply2
 	if [ "$csv_reply2" != "SKIP" ]
 	then
-		placeholder_s='	return "{} - {}".format(self.'
+		placeholder_s='	return "{}, {}".format(self.'
 		input1b=$csv_reply2
 		output1=""
 		s2_field_count=1
@@ -355,7 +357,7 @@ else
 	fi
 
 
-	placeholder_s='	return "{} - {}".format('
+	placeholder_s='	return "{}, {}".format('
 	input1=$csv_reply
 	output1=""
 	s2_field_count=1
@@ -472,7 +474,6 @@ let model_count_now=model_count_now+1
 				while read -r line; do set $line; m1_b_tier=$(echo $1); done < m1_file_b
 				f_dtype=$m1_b_tier
 
-
 				for line in $(cat alt_f_test2); do echo "${line}"; done
 
 				outputline="class ${m1}(models.Model):"
@@ -519,17 +520,6 @@ let model_count_now=model_count_now+1
 				fi
 
 
-
-
-
-				if [ "$f_dtype" == "Boolean" ]
-				then
-					f_dtype2=""
-
-
-				fi
-
-
 			else
 				head -n $countforfields $file | cat > f1_file
 				while read -r line; do set $line; f1=$(echo $1); done < f1_file
@@ -538,8 +528,12 @@ let model_count_now=model_count_now+1
 				while read -r line; do set $line; m1_b_tier=$(echo $1); done < m1_file_b
 				f_dtype=$m1_b_tier
 
-
+				# this seems like a decent default self-identification method:
 				if [ "$countforfields" -lt 3 ]
+				then
+					sense_of_self="${sense_of_self}${f1}"
+					echo "${sense_of_self}" > "${m1,,}_self_id.txt"
+				elif [ "$countforfields" -lt 4 ]
 				then
 					sense_of_self="${sense_of_self}${f1}"
 				fi
@@ -560,17 +554,17 @@ let model_count_now=model_count_now+1
 					f_dtype=""
 				elif [ "$csv_reply2" == "SKIP" ]
 				then
-					f_dtype="CharField"
+					f_dtype="Char"
 					f_dtype2="max_length=255, null=False"
 				elif [ "$f_dtype" == "Char" ]
 				then
-					f_dtype="CharField"
+					f_dtype="Char"
 					f_dtype2="max_length=255, null=False"
 				else
 					# here we assume we will get an fk if not recognized
-					outputline="${f1,,} = models.ForeignKey(\"${f1^}\") on_delete=models.CASCADE"
+					outputline="${f1,,} = models.ForeignKey(\"${f1^}\", on_delete=models.CASCADE)"
 					fk_found_in_field=1
-					fk_found_in_model=
+					fk_found_in_model=1
 					fk_model="${f1}"
 				fi
 
@@ -605,11 +599,22 @@ let model_count_now=model_count_now+1
 		echo "--------------------------------"
 		echo ""
 
-		echo "${sense_of_self}" > "${m1,,}_self_id.txt"
 
 
+
+
+
+		if [ "$fk_found_in_model" == 0 ]
+		then
+			f_dtype="UUID"
+			f1="uuid"
+			f_dtype2="default=uuid.uuid4, editable=False"
+			outputline="${f1} = models.${f_dtype}Field(${f_dtype2})"
+			echo "	${outputline}" >> seven_namesakes/models.py
+		fi
 		other_self=''
 		sense_of_self="${sense_of_self})"
+
 		if [ "$fk_found_in_model" == 0 ]
 		then
 			sense_of_self=$placeholder_s$sense_of_self
@@ -625,22 +630,24 @@ let model_count_now=model_count_now+1
 		serializers_fields="fields = ("
 		sense_of_self=""
 		s2_field_count=1
-		placeholder_s='	return "{} - {}".format(self.'
+		placeholder_s='	return ".format(self.'
 
-		# the only way I'll put a uuid in one of these is if they had ZERO fk's
 
-		if [ "$fk_found_in_model" == 0 ]
-		then
-			f_dtype="UUID"
-			f1="uuid"
-			f_dtype2="default=uuid.uuid4, editable=False"
-			outputline="${f1} = models.${f_dtype}Field(${f_dtype2})"
-			echo "	${outputline}" >> seven_namesakes/models.py
-		fi
+
+
+
+
+
+
+
 		fk_found_in_model=0
-
-
 		let model_count_now=model_count_now+1
+
+
+
+
+
+
 
 	done
 
