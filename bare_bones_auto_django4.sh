@@ -252,27 +252,23 @@ cp ../seven_namesakes/views.py api/
 cp ../seven_namesakes/serializers.py api/
 cp ../seven_namesakes/urls.py api/
 
+python manage.py makemigrations
+python manage.py migrate
 
+echo 'use the following command:'
 
-echo 'use the following two terminal commands to implement any changes: '
-echo 'python3 manage.py makemigrations'
-echo 'python3 manage.py migrate'
-
-echo '...then use the following command:'
-
-echo 'python3 manage.py runserver'
+echo 'python manage.py runserver'
 
 echo '...and copy the url displayed in the terminal into your firefox browser to test it.  '
 echo 'adding admin/ to the end will let you view the login screen'
 echo 'once this is confirmed, go back to the terminal hit ctrl+c'
 echo 'then you can set up the manner with which you want to log in using: '
 
-echo 'python3 manage.py createsuperuser.py'
+echo 'python manage.py createsuperuser.py'
 
 echo 'that should give you everything you need to get through the login screen'
-echo 'and beyond to what you have created after using runserver again'
 
-echo '...and if all that works-- this automatic setup is complete-- congrats!'
+
 
 " > api_auto_xxx/finish_my_api.sh
 
@@ -600,7 +596,7 @@ else
 		echo "	def __str__(self):" >> seven_namesakes/models.py
 		echo "	${sense_of_self}" >> seven_namesakes/models.py
 		countforfields=1
-		serializers_fields="		fields = ("
+		serializers_fields="fields = ("
 		sense_of_self=""
 		s2_field_count=1
 		placeholder_s='	return "{} - {}".format('
