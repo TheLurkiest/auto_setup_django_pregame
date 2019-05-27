@@ -213,15 +213,6 @@ pip freeze > requirements.txt
 # step 5
 django-admin startproject config .
 
-# step 6
-# python3 manage.py migrate
-python3 manage.py makemigrations
-python3 manage.py migrate
-
-# step7.1
-# python3 manage.py runserver
-
-
 sudo cp ../stage1_auto_d.py .
 
 
@@ -239,11 +230,6 @@ python3 manage.py startapp api
 
 # final step of pregame:
 python3 stage1_auto_d.py
-
-# ...and just to be on the safe side:
-python3 manage.py migrate
-python3 manage.py makemigrations
-python3 manage.py migrate
 
 echo 'The automatic portion of the Django Rest API setup is now complete.'
 echo 'Now for testing and implementation of changes-- '
@@ -531,7 +517,7 @@ else
 				# url_pat2="View.as_view(), name=\"user-all\""
 
 				echo "urlpatterns = [" >> seven_namesakes/urls.py
-				echo "	('${m1,,}/', ${m1}View.as_view(), name=\"${m1,,}-all\")," >> seven_namesakes/urls.py
+				echo "	path('${m1,,}/', ${m1}View.as_view(), name=\"${m1,,}-all\")," >> seven_namesakes/urls.py
 				echo "]" >> seven_namesakes/urls.py
 				echo "" >> seven_namesakes/urls.py
 
