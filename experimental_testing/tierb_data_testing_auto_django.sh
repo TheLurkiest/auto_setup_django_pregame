@@ -129,14 +129,6 @@ if (p_reply.upper() != 'SKIP'):
 
 
 
-
-
-
-
-
-
-
-
 else:
 	# ----------------------------------------------------------------------------
 	# here is where we can potentially choose to add new fields to existing files:
@@ -187,11 +179,6 @@ else:
 	# ----------------------------------------------------------------------------
 
 " > stage1_auto_d.py
-
-
-
-
-
 
 
 
@@ -314,8 +301,11 @@ else
 		num_fields_counted=1
 		dir="dir"
 		dir_b="dir_b"
+		dir_a="dir_a"
 		mod_now=""
 		serializers_fields="fields = ("
+		rm $dir_b[0-9]
+		rm $dir_a[0-9]
 		while read -r line
 		do
 			set $line
@@ -329,8 +319,9 @@ else
 					then
 						echo "no model here... skipped"
 						rm $dir_b$num_fields_counted
+						let num_fields_counted=num_fields_counted-1
 					else
-						echo "${!num_fields_counted}" > $dir_b$num_fields_counted
+						echo "${!num_fields_counted}" >> $dir_b$num_fields_counted
 					fi
 					let num_fields_counted=num_fields_counted+1
 				else
@@ -402,6 +393,9 @@ else
 		let num_fields_counted=0
 		let tot_num_all_mf=tot_num_all_mf+1
 	done < $input1
+
+
+
 	# this just gets rid of any dir0 that might develop by accident
 	let tot_num_all_mf=0
 	rm $dir$tot_num_all_mf
@@ -519,7 +513,6 @@ let model_count_now=model_count_now+1
 					echo $a2_pt2 >> a2_pt2_file
 				fi
 
-
 			else
 				head -n $countforfields $file | cat > f1_file
 				while read -r line; do set $line; f1=$(echo $1); done < f1_file
@@ -599,11 +592,6 @@ let model_count_now=model_count_now+1
 		echo "--------------------------------"
 		echo ""
 
-
-
-
-
-
 		if [ "$fk_found_in_model" == 0 ]
 		then
 			f_dtype="UUID"
@@ -629,9 +617,10 @@ let model_count_now=model_count_now+1
 		serializers_fields="fields = ("
 		sense_of_self=""
 		s2_field_count=1
-		placeholder_s='	return ".format(self.'
+		placeholder_s='	return "{}, {}".format(self.'
 
 		fk_found_in_model=0
+		fk_found_in_field=0
 		let model_count_now=model_count_now+1
 
 	done
