@@ -583,13 +583,15 @@ else
 	echo ']' >> seven_namesakes/config/urls.py
 
   arr1=()
+	lc_mf_count=0
 	for file in dir[1-99]; do
 		# more +number5 dir2
+		let lc_mf_count=lc_mf_count+1
 
     arr1+=( $(head -n $countforfields $file) )
 
-		wc -l $file | awk '{print $1}' | cat > lc_mf
-		while read -r line; do set $line; mf1=$(echo $1); done < lc_mf
+		wc -l $file | awk '{print $1}' | cat > lc_mf$lc_mf_count
+		while read -r line; do set $line; mf1=$(echo $1); done < lc_mf$lc_mf_count
 		let mf1_plus=mf1+1
 
 		while [ "$countforfields" -le "$mf1" ]
