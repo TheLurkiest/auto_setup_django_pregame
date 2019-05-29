@@ -1,5 +1,75 @@
 # auto_setup_django_pregame
 
+1) Brief (skippable) Explanation of Design and Intent:
+-------------------------------------------------
+This Django Rest API automatic setup is designed to take you from that first step of creative development of your initial ideas-- to total instant functionality in one quick step.  
+
+The natural creative step that is typically implemented at the start of creating your own API is typically the creation of a series of tables-- with each table representing a model with the model name written in the top row and the field names contained within it listed directly below the table-- and once the user has a firm idea of how these models all inter-relate to one another, they incorporate these tables into a diagram, which will have a series of arrows pointing towards the direction of the models containing data which they depend on directly, through foreign keys exhibiting the many-to-one relationships which are typical in these sorts of designs.
+
+I'm not going into details if you are not aware of exactly how these sorts of things work, suffice to say-- there are data which has similar relevancy to multiple files, and in order to compress that data, save space and reduce complexity we have some models simply refer to the data contained within other models.  This is especially/commonly useful/used if we want to allow a large number of users to create their own unique identity to represent themselves --with a cascading series of a smaller creations being dependent on that user's initial creation.
+
+We see an example of this in the .pdf file we have included.
+
+The only file in here that actually will matter is the shell script (.sh file)-- everything else included is merely an example to demonstrate how things would initially be set up, and how easy it would be to get DIRECTLY from the natural creative step, to fully functional code.  Later, a description is given on where next to proceed in the process once this initial setup is complete.  For now, we focus on basic instructions on use, based on the assumption that the user is at a place in the development of their project where they are just now transitioning from the creative step (coming up with initial ideas on which fields and models they should include in their overarching design)-- to the initial implementation step.  This is often tricky because there is no room for error-- which is a factor made all the more frustrating and difficult since this creation process will require that you go through a lengthy series of precise steps which are not really explicitly written down in any one single location to refer back to for guidance.  
+
+In order to make this work, you will need to alter a series of python modules by hand in a very specific manner-- all of which have a tangled web of inter-dependent relationships with each other module-- meaning that any one change you make to any single python file will have cascading effects on a number of other files in the initial Django package setup.  That means that making even the tiniest possible change you could possibly make when setting up a new django rest api from scratch as a new beginner (which would generally just be creating an initial model containing a single field)-- would require that the user alter a whole host of python files by hand-- none of which will even contain any other simple little sample models, for this person who's just starting out to refer back to for confirmation.  Because there is seemingly no official straight-forward set-up for how to setup the most basic API imaginable-- the foundation for the creation of any Django project-- I decided to create one.  In the process of doing so I realized that these steps STILL take way too long, and that no one within their right mind would ever go through them more than once (once they realize that much of these initial steps are a time-consuming slog which is generally very much the same from project to project).  
+
+The obvious solution is to automate these initial steps.  This is all done with a single .sh file.  
+
+Everything else (besides that .sh file) is just part of the example data showing how we got from the typical creative/brainstorming portion of a typical Django project to implementation of creating the necessary code that will actually allow it to function in reality.  
+
+We also include a folder which contains all information regarding what that code is actually happening from a human stand-point-- this is the step-by-step instructional guide to creating a Django Rest API by hand-- a process which is entirely taken care of by our shell script, and is therefore, somewhat superfluous-- but does give an explanation such that the user should be able to make further changes to the code if they wish.
+
+--if for whatever reason, you wish to understand what is actually happening within the code to allow us to do what we do within this package-- but this is not a requirement.  The purpose of this code is entirely to supplant that slow, tedious process.  However, to summarize the basic point for individuals with no experience in Django and no simple guide on how to even get started would be this:
+
+--------------------------------------------------
+To sum up:
+
+Starting out with Django-- and for a very long time AFTER you start out-- this is the only thing you should ever realistically care about or be thinking about as it relates to constructing/manipulating this web framework-- the (approximately) 7 "namesake" (for lack of a better term) .py files-- the specific python modules (6 in 'api' folder, 1 in 'config') which you would typically be expected to manually edit by hand-- and which possess tangled inter-dependencies with one another that cannot be ignored-- the are listed in order of importance from most to least important:
+
+the 6 files in api:
+models.py,
+views.py,
+serializers.py,
+urls.py
+admin.py
+
+tests.py
+
+the 1 file in config:
+urls.py
+
+...there are a couple others that you might consider, but to keep the range of our discussion limited we're really just going to say that those 7 files are really all you're ever really going to need to know about.  However, as far as I can tell, there is nothing that exists within those 7 files which uniquely and specifically differentiates itself between those .py files and others that exist within our API.  
+
+When you are finished with this automated Django Rest API setup, the alteration and manipulation of these seven python files is all you're really ever going to need to think about, when going forward.
+
+The reality of what you need to know is obscured by the complexity of what you're being handed right off the bat.  The terminology is often ambiguous or misleading-- but I think it helps --especially for people who are still relatively new to it-- to focus on the spirit of what an API is intended/designed to do: to facilitate/ease communication between otherwise incompatible software/machines.
+
+For simplicity's sake, there are only 7 different python modules within the Django Rest API that you're ever really going to mess around with (give or take a couple-- realistically your code will still function without any attention at all paid to "tests.py" and "settings.py" I was sort of on the fence about)-- so if there's ever something that's gone wrong in your setup, you're only really ever going to need to check through those 7 files in order to make your API function correctly.  In much of the comments and code, I will refer back to those 7 files.  They are essentially in most of these Django Frameworks universally used to create a basic structure-- though I've not really read much that distinguishes them from other python files in any official capacity.
+------------------------------------------------------------------------
+
+
+Basic Instructions on how to implement our shell script (this is mostly completely unnecessary to explain-- and unnecessarily specific-- but I really wanted to create instructions wherein it would be almost impossible for the user to fail to create a functional API product on the very first attempt-- or soon after):
+>>> this is based on expectations of where you'll be when transitioning from the creative development of your original ideas to the concrete foundation of our functional code that we're setting up.
+-------------------------------------------------
+
+1) basic creative step: right click empty space in Google Drive ----> more ----> draw.io Diagrams ----> once your class diagram is finished and saved-- export as pdf file (or anything that allows you to copy and paste large portions of text as columns)
+2) copy and paste tables into a blank spreadsheet file like excel or libreoffice calc-- and save that file as a .csv file with fields and models separated only by a single space.
+  2a) remove any text containing parentheses --like "(fk)" marking foreign keys-- in the .csv file you create.
+  2b) if you want to create FEWER than five models in the initial setup you will need to enter NOMODEL in the top row of every column you do not use between the first and fifth column of the spreadsheet.  Adding NA to fields below that first row to indicate fields not in use mostly just seems to improve clarity a little bit from a visual standpoint, but may also have some actual impact as well under some circumstances.  I just wanted to make our tables line up somewhat better visually, after they were converted to .csv files.
+  2c) Then we execute our shell script just like any other-- go into the terminal in any linux system and (after adding permission to execute, if need be, with chmod +x python_only_simp2_api_finisher.sh) you simply enter the following into the terminal: ./python_only_simp2_api_finisher.sh
+  2d) and this leads you to a prompt (which you can skip w/ enter key)
+3) execute a second shell script created by the first based on instructions given by the first in the terminal screen itself.
+  3a) ...which eventually results in a second prompt-- this one you can't skip-- this is where you'll enter the name of the .csv file you created earlier from our class diagram.
+  3b) if any additional prompts pop up in the process of executing the shell script, you can just choose the default option or if no default option specified, will be given an option to skip through the prompts-- for your first run through of this shell script you should just do that.
+  3c) ...The shell script itself will guide you through the last remaining steps you need to take
+
+
+==============================================================================
+==============================================================================
+Implementation notes on development of code still under construction (below this point):
+----------------------------------------------------------------------------
+
 New simplified setup for Django Rest API automatic setup
 
 our new plan is to exclusively use python code in order to finish things off and allow the user to have more advanced options when setting up his code and giving it greater range and functionality in use.  The next natural step in the evolution of this automatic django rest api generator is to give our code the versatility to give the user the option to setup specific field types and incorporate those types into the setup of the automatically as well.
