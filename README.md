@@ -1,5 +1,25 @@
 # auto_setup_django_pregame
 
+basic instructions on how to use this shell script (based on example with sample data):
+
+...start by entering command into terminal (from location of shell script file):
+./python_only_simp2_api_finisher.sh
+
+--hit enter at 1st prompt
+--enter this at 2nd prompt:
+xa.csv
+--enter this at 3rd prompt:
+xb.csv
+
+--then, following instructions displayed on terminal enter these 2 commands into terminal:
+cd api_auto_xxx
+./finish_my_api
+
+--then enter YES at prompt asking you if you added a 2nd .csv
+--then just hit enter at any additional prompts
+
+
+
 1) Brief (skippable) Explanation of Design and Intent:
 -------------------------------------------------
 This Django Rest API automatic setup is designed to take you from that first step of creative development of your initial ideas-- to total instant functionality in one quick step.  
