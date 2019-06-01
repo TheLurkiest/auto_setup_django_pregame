@@ -1,5 +1,23 @@
 # auto_setup_django_pregame
 
+===============================================================================
+NOTE:
+----
+IF YOU HAVE NOT READ "HOW_TO_GET_STARTED.md" IT IS STRONGLY ADVISED YOU DO SO (AND FOLLOW INSTRUCTIONS CONTAINED WITHIN) *BEFORE* READING ANY OF THIS README FILE.  READING THIS README FILE YOU ARE CURRENTLY READING IS *NOT* NECESSARY-- OR EVEN NECESSARILY BENEFICIAL.
+
+START WITH "HOW_TO_GET_STARTED.md"
+===============================================================================
+
+
+Again--
+If just starting out: read HOW_TO_GET_STARTED.md instead of this.
+It is a better source of concise information, which should also be clearer and more accurate.
+
+There is a great deal of info here within this README which is somewhat superfluous-- and some of it is a little bit out of date.  
+
+
+------------------------------------------------------------------------------
+
 basic instructions on how to use this shell script (based on example with sample data):
 
 ...start by entering command into terminal (from location of shell script file):
@@ -63,10 +81,24 @@ Note- this is a work in progress.  Everything currently functions-- but there is
 7- Consider possibly adding POST action into the resources that are automatically generated (for an HTTP response based on whether requests went through or not)-- as well as potentially delete as well.
 8- backend and frontend?
 
+-------------------------------------------------------------------------------
+
 
 
 
 ------------------------------------------
+
+------------------------------------------
+
+------------------------------------------
+
+------------------------------------------
+
+
+
+
+-------------------------------------------------------------------------------
+
 
 1) Brief (skippable) Explanation of Design and Intent:
 -------------------------------------------------
