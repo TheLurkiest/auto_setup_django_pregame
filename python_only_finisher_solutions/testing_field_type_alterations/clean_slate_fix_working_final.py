@@ -170,7 +170,7 @@ for elem_t in range(0,(m1_count)):
 
 arr_combo=[]
 for c_arr2, f_types_arr in enumerate(w_out2_arr):
-	arr_combo.append("	"+str(w_out_arr[c_arr2])+" = models."+str(f_types_arr)+"Field(max_length=250, null=False)")
+	arr_combo.append('	'+str(w_out_arr[c_arr2])+' = models.'+str(f_types_arr)+'Field(max_length=250, null=False)')
 
 
 
@@ -221,7 +221,7 @@ print('and fields of specific types were placed in the current directory in a fo
 
 arr_combo_feedback=[]
 for c_arr2, f_types_arr in enumerate(w_out2_arr):
-	arr_combo_feedback.append(str(w_out_arr[c_arr2])+" "+str(f_types_arr))
+	arr_combo_feedback.append(str(w_out_arr[c_arr2])+' '+str(f_types_arr))
 
 count_all_m_spots=count_f_per_m1
 count_all_m_spots.insert(0,0)
@@ -346,7 +346,7 @@ print('here is how we parse our for loop')
 print('new_full_final_fields is: '+str(new_full_final_fields))
 print('new_full_final_fields length is: '+str(len(new_full_final_fields)))
 print('\n-----------------------------------------------------------------\n')
-p_reply=input('breakup code 2')
+# p_reply=input('breakup code 2')
 
 
 
@@ -378,8 +378,8 @@ print('\n +++++++++++ \n')
 print('\n +++++++++++ \n')
 print('\n +++++++++++ \n')
 print('fields_per_m1 is '+str(fields_per_m1)+' and length is: '+str(len(fields_per_m1)))
-p_reply = input('testing 123')
-p_reply = input('fields_per_m1 is '+str(fields_per_m1)+' and length is: '+str(len(fields_per_m1)))
+# p_reply = input('testing 123')
+# p_reply = input('fields_per_m1 is '+str(fields_per_m1)+' and length is: '+str(len(fields_per_m1)))
 
 
 # f_types_per_m1# fields_per_m1
@@ -418,7 +418,7 @@ print('here is how we parse our for loop')
 print('new_full_final_fields is: '+str(new_full_final_fields))
 print('new_full_final_fields length is: '+str(len(new_full_final_fields)))
 print('\n-----------------------------------------------------------------\n')
-p_reply=input('breakup code 2')
+# p_reply=input('breakup code 2')
 
 
 # fields_per_m1
@@ -459,10 +459,10 @@ print('here is how we parse our for loop')
 print('new_full_final is: '+str(new_full_final))
 print('new_full_final length is: '+str(len(new_full_final)))
 print('\n-----------------------------------------------------------------\n')
-p_reply=input('breakup code 2')
+# p_reply=input('breakup code 2')
 
 
-fin1=open('models.py','r')
+fin1=open('seven_namesakes/models.py','r')
 
 line_sum=''
 for line in fin1:
@@ -485,7 +485,7 @@ print('here is how we parse our for loop')
 print('line_sum is: '+str(line_sum))
 print('line_sum length is: '+str(len(line_sum)))
 print('\n-----------------------------------------------------------------\n')
-p_reply=input('breakup code 2')
+# p_reply=input('breakup code 2')
 
 
 print('\n-----------------------------------------------------------------\n')
@@ -499,7 +499,7 @@ print('here is how we parse our for loop')
 print('w_out2_arr is: '+str(w_out2_arr))
 print('w_out2_arr length is: '+str(len(w_out2_arr)))
 print('\n-----------------------------------------------------------------\n')
-p_reply=input('breakup code 2')
+# p_reply=input('breakup code 2')
 
 # w_out2_arr
 print('\n---w_out_arr---')
@@ -508,7 +508,7 @@ print('here is how we parse our for loop')
 print('w_out_arr is: '+str(w_out_arr))
 print('w_out_arr length is: '+str(len(w_out_arr)))
 print('\n-----------------------------------------------------------------\n')
-p_reply=input('breakup code 2')
+# p_reply=input('breakup code 2')
 
 
 #for c_arr2, f_types_arr in enumerate(new_full_final):
@@ -532,7 +532,7 @@ for line_c, line in enumerate(line_sum):
 	print('s_pre_marker so far is:\n'+str(s_pre_marker))
 	print('last line was: '+str(final_line)+'\n')
 	print('currently-- line number '+str(line_c)+' is: '+str(line))
-	p_reply=input('debug check code break')
+	# p_reply=input('debug check code break')
 	if(new_full_final[line_c] == 'aaa' or new_full_final[line_c] == 'zzz'):
 		line2=line
 		s_pre_marker=str(s_pre_marker) + str(line2)
@@ -556,7 +556,7 @@ print('\n=============================================\n')
 print('\n=============================================\n')
 print('\n=============================================\n')
 
-p_reply=input('final line was: '+str(final_line))
+# p_reply=input('final line was: '+str(final_line))
 
 
 
@@ -568,7 +568,7 @@ print('here is how we parse our for loop')
 print('new_full_final is: '+str(new_full_final))
 print('new_full_final length is: '+str(len(new_full_final)))
 print('\n-----------------------------------------------------------------\n')
-p_reply=input('breakup code 2')
+# p_reply=input('breakup code 2')
 
 
 
@@ -583,7 +583,8 @@ p_reply=input('breakup code 2')
 
 
 
-fout3=open('fout3_models.py','w')
+fout3=open('seven_namesakes/models.py','w')
+#fout3=open('fout3_models.py','w')
 fout3.write(str(s_pre_marker))
 #fout3.write(str(s_post_marker))
 
