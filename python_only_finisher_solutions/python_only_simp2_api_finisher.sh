@@ -869,6 +869,34 @@ echo "This will enable you to complete the remaining steps of the pregame"
 echo "Just cd into that directory and execute that shell script to finish it."
 
 echo "# step 3a
+
+cp ../m1_file .
+cp ../dir_b[1-99] .
+cp ../dir[1-99] .
+cp ../lc_mf[1-99] .
+cp -r seven_namesakes/models.py .
+
+field_types_added=''
+echo 'enter YES if you DID add a second .csv file which contained field type info for your models: '
+read field_types_added
+
+if [ \"\$field_types_added\" == 'YES' ]
+then
+	echo '...starting process of incorporating type information into models.py...'
+	python ../type_application_clean_slate_final.py
+fi
+
+
+
+
+
+
+
+
+
+
+
+
 git init
 
 # step 3b
@@ -910,7 +938,7 @@ read field_types_added
 if [ \"\$field_types_added\" == 'YES' ]
 then
 	echo '...starting process of incorporating type information into models.py...'
-	python3 ../type_application_clean_slate_final.py
+	python ../type_application_clean_slate_final.py
 fi
 
 
