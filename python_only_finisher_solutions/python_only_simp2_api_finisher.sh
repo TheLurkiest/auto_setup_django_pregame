@@ -908,6 +908,8 @@ echo 'enter YES if you DID add a second .csv file which contained field type inf
 read field_types_added
 
 if [ \"\$field_types_added\" == 'YES' ]
+then
+	echo '...starting process of incorporating type information into models.py...'
 	python3 ../type_application_clean_slate_final.py
 fi
 
