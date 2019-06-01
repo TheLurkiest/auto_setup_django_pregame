@@ -3,7 +3,7 @@
 basic instructions on how to use this shell script (based on example with sample data):
 
 ...start by entering command into terminal (from location of shell script file):
-./python_only_simp2_api_finisher.sh
+./main_auto_api_maker2.sh
 
 --hit enter at 1st prompt
 --enter this at 2nd prompt:
@@ -15,10 +15,58 @@ xb.csv
 cd api_auto_xxx
 ./finish_my_api
 
+.......you'll probably have to hit enter once more here
+
 --then enter YES at prompt asking you if you added a 2nd .csv
---then just hit enter at any additional prompts
+--then just hit enter at any additional prompts or places where the code stops displaying a continuous stream of text at any point
 
 
+-----------------------------------------
+
+The Bare Essentials:
+
+All you need to know is this: I designed this code to function adequately no matter what your skill level--
+
+If you used google drive's "draw.io diagrams" feature to create your API class diagram, you can just save that as a pdf to your computer, open that pdf, and directly copy and paste every box directly into the first five rows of a new spreadsheet file you create (probably using either excel or libreoffice in Linux).
+
+It is both useful and advisable to specify which types you want the fields to be assigned as-- for the time being I limited the options to 'Date', 'Boolean', 'Char',
+'Integer' and 'Float' but there's no reason why you couldn't expand this further to include more types than those-- and I may do that in the future.  But those are the limitations for the time being.  The way that this is done is simple: just copy and paste your original spreadsheet you just created (containing models and fields) into a second file (or just create a 2nd save file of the original spreadsheet) such that you have two identical spreadsheet files; then, simply enter the type you want for each given field directly into the cell with that field in it currently (thereby overriding it, as can be seen in the differences between the two example .ods spreadsheet files seen in repository-- xa_original and xb_original).  If you want to create a foreign key, just put the name of the model into the cell instead (again, as can be seen in the example spreadsheet .ods files in the repository, xa/xb).
+
+If you make a mistake in what you put into these cells, the code will still try to accommodate you as best it can.  Just try to stick to alpha-numerical characters for simplicity's sake when assigning names to fields and models.  
+
+Also, for the time being you can only create up to 5 models at once, automatically (but up to 99 different fields for each model could theoretically be assigned)-- there's no reason this limit on models couldn't be increased-- and I may end up doing that later on.  Also of note-- this limit of 5 models for the time being means that-- as can be seen in the example .ods spreadsheets-- for every column between the 1st and 5th columns, any column which does not contain a model has NOMODEL entered into it-- and NA in the cells below for symmetry's sake-- these, of course do not appear in the final product.  However, for the time being, if you wish to have FEWER than 5 models in your starting API, just enter NOMODEL into any top row cells between 1 and 5 which are still empty after you've placed all your models within it.
+
+Once you've copied and pasted these values into your spreadsheet, just: Save As ---> some_name1.csv ---> use text csv format ---> Then under field options, character set: Unicode (UTF-8) Field delimeter: [just put a single space in this box] String delimeter: [just delete everything from this box]-- then just click ok.
+
+Then, if you want to use your own .csv file to create your own API, just follow the same steps as above starting with executing your shell script (using ./main_auto_api_maker2)-- only in this case you'd substitute some_name1.csv and some_name2.csv or whatever you decided to name your .csv files instead of xa.csv and xb.csv.  
+
+After that original shell script has been executed (as well as the shell script created by it, as explained above) you can start up your Django Rest API by entering the following two terminal commands:
+1)
+python manage.py createsuperuser
+...at which point you will be prompted to create a login id and password to get past the login page.
+2)
+python manage.py runserver
+...which gets your API up and running-- you'll need to execute this again any time you want to get log into your API.  Just copy and paste the url displayed in the terminal, with /admin/ added to the end of it-- and you can go directly to the login page of your new API where you can gain further access by entering the username and password you selected when you you used 'createsuperuser.'
+
+
+
+Remember-- the only file that is actually needed to make this entire program run is that single shell script file (main_auto_api_maker2)-- and whatever .csv files you decide to create in order to enter information into it.
+
+Note- this is a work in progress.  Everything currently functions-- but there is still more I wish to add.  Here is what has not yet been implemented which I am in the process of implementing now:
+
+1- tests.py auto-creation of tests.
+2- additional allowed types for fields
+3- increasing the number of allowed models during automated model creation process from 5 to closer to 10 (possibly more)
+4- removing files created during intermediate steps of the automated creation process which are no longer needed after the creation of API is complete
+5- automatically adding UUID based on user specification within the secondary spreadsheet.
+6- ObjectView?
+7- Consider possibly adding POST action into the resources that are automatically generated (for an HTTP response based on whether requests went through or not)-- as well as potentially delete as well.
+8- backend and frontend?
+
+
+
+
+------------------------------------------
 
 1) Brief (skippable) Explanation of Design and Intent:
 -------------------------------------------------
