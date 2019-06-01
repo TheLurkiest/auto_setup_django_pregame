@@ -580,7 +580,7 @@ for f_per_m1_elem in f_types_per_m1_2:
 
 
 print('\nf_types_per_m1 is:\n'+str(f_types_per_m1))
-p_reply=input('breakup code 2')
+#p_reply=input('breakup code 2')
 
 
 index_count=1
@@ -607,7 +607,7 @@ print('\n +++++++++++ \n')
 print('\n +++++++++++ \n')
 print('f_types_per_m1 is '+str(f_types_per_m1)+' and length is: '+str(len(f_types_per_m1)))
 # p_reply = input('testing 123')
-p_reply = input('f_types_per_m1 is '+str(f_types_per_m1)+' and length is: '+str(len(f_types_per_m1)))
+#p_reply = input('f_types_per_m1 is '+str(f_types_per_m1)+' and length is: '+str(len(f_types_per_m1)))
 
 
 # f_types_per_m1# f_types_per_m1
@@ -927,10 +927,9 @@ for line_c, line in enumerate(line_sum):
 			fk_cap2 = fk_cap.replace('_',' ')
 			fk_cap2=fk_cap2.title()
 			fk_cap2=fk_cap2.replace(' ','')
-			print('\n444444444444444444444444444444444444444')
-			print('This is what we are looking to Replace: ' + str(fields_per_m1[line_c]) + ' = models.CharField(max_length=255, null=False)')
-			print('This is what we want to replace it WITH: ' + str(stage_3_s) + ' = models.ForeignKey(\"' + str(fk_cap2) + '\", on_delete=models.CASCADE)' )
-			if(list_m1.count(fk_cap2) >= 1):
+			if(list_m1.count(fk_cap2) < 1):
+				s_pre_marker =str(s_pre_marker) + '	' + str(stage_3_s) + ' = models.CharField(max_length=255, null=False)'
+			elif(list_m1.count(fk_cap2) >= 1):
 				s_pre_marker=str(s_pre_marker) + line2.replace(str(fields_per_m1[line_c]) + ' = models.CharField(max_length=255, null=False)', str(stage_3_s) + ' = models.ForeignKey(\"'+str(fk_cap2)+'\", on_delete=models.CASCADE)' )
 	s_pre_marker = s_pre_marker + '\n'
 	# asadfa
