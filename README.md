@@ -9,6 +9,69 @@ START WITH "HOW_TO_GET_STARTED.md"
 ===============================================================================
 
 
+
+
+
+
+===============================================================================
+CURRENT STEPS IN PROGRESS:
+===============================================================================
+---------------------------------------------
+changes to make django auto-api maker complete:
+---------------------------------------------
+---------------------------------------------
+
+change1- urls.py
+1a) ALL from imports need to be at the top
+1b) ALL paths need to be in a SINGLE urlpatterns list
+---------------------------------------------
+change2- views.py
+2a) remove 'version' parameter from function definitions:
+def get(self, request, version, format=None):
+...so that they just say:
+def get(self, request, format=None):
+---------------------------------------------
+change3- serializers.py
+looks identical...
+DONE!DONE!DONE!DONE!DONE!DONE!DONE!DONE!DONE!
+---------------------------------------------
+change4- config/urls.py
+4a) re_path loses 'version thing'--
+--changing from this:
+re_path('api/(?P<version>(v1|v2))', include('api.urls'))
+...to this:
+re_path('api/', include('api.urls'))
+---------------------------------------------
+change5- models.py
+looks identical!
+DONE!DONE!DONE!DONE!DONE!DONE!DONE!DONE!DONE!
+
+=======================================================================
+=======================================================================
+
+--that means we just have change1, change2, and change4 left-- that's:
+1) urls.py
+2) views.py
+4) config/urls.py
+extra) don't forget to fix pathway to .gitignore
+
+
+
+===============================================================================
+===============================================================================
+===============================================================================
+===============================================================================
+===============================================================================
+
+
+
+
+
+
+
+
+
+
 Again--
 If just starting out: read HOW_TO_GET_STARTED.md instead of this.
 It is a better source of concise information, which should also be clearer and more accurate.
