@@ -23,7 +23,13 @@ changes to make django auto-api maker complete:
 
 change1- urls.py
 1a) ALL from imports need to be at the top
+
+DONE!
+
 1b) ALL paths need to be in a SINGLE urlpatterns list
+
+DONE!
+
 ---------------------------------------------
 change2- views.py
 2a) remove 'version' parameter from function definitions:
@@ -53,6 +59,10 @@ change5- models.py
 looks identical!
 
 DONE!
+
+extra_change- .gitignore
+
+changed this so that file creation is automatic-- not created from local reference.
 
 =======================================================================
 =======================================================================

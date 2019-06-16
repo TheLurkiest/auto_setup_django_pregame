@@ -1008,29 +1008,6 @@ fout3.close()
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 touch api_auto_xxx/finish_my_api.sh
 chmod 777 api_auto_xxx/finish_my_api.sh
 
@@ -1355,6 +1332,7 @@ fi
 
 
 
+created_urls_list=0
 
 
 # ------------------- START OF DIRECT ENTRY INTO 7 PYTHON MODULES UPON USER PROMPTS -------------------
@@ -1419,6 +1397,7 @@ if [ "$csv_reply" == "NO" ]
 	echo "num_models just prior to start of while loop is: ${num_models}"
 	echo "input1 just prior to start of while loop is: ${input1}"
 	echo "output location just prior to start of while loop is: ${outer_folder}${models_info1} so that is where text from models will output to"
+	output_line_urls=""
 
 	while [ "$num_models" -lt "$startingmodels" ]
 	do
@@ -1436,6 +1415,8 @@ if [ "$csv_reply" == "NO" ]
         num_models
 				line2plusfields=$line
 				outputline="	${dir_b}${num_fields_counted} = models.CharField(max_length=255, null=False)"
+				#output_line_urls="	${dir_b}${num_fields_counted} = models.CharField(max_length=255, null=False)"
+
 				echo $outputline >> $outer_folder$models_info1
 			echo "	tab test this line should be slightly indented"
 			fi
@@ -1559,6 +1540,15 @@ else
 
   arr1=()
 	lc_mf_count=0
+
+	#created_urls_list=0
+	if [ "$created_urls_list" -lt 1 ]
+	then
+		echo "urlpatterns = [" >> seven_namesakes/urls_one_list.py
+		created_urls_list=1
+	fi
+
+
 	for file in dir[1-99]; do
 		# more +number5 dir2
 		let lc_mf_count=lc_mf_count+1
@@ -1591,10 +1581,17 @@ else
 
 				# url_pat2="View.as_view(), name=\"user-all\""
 
-				echo "urlpatterns = [" >> seven_namesakes/urls.py
-				echo "	path('${m1,,}/', ${m1}View.as_view(), name=\"${m1,,}-all\")," >> seven_namesakes/urls.py
-				echo "]" >> seven_namesakes/urls.py
-				echo "" >> seven_namesakes/urls.py
+				# most recent changes to urlpatterns:
+				#echo "urlpatterns = [" >> seven_namesakes/urls.py
+				#echo "	path('${m1,,}/', ${m1}View.as_view(), name=\"${m1,,}-all\")," >> seven_namesakes/urls.py
+				#echo "]" >> seven_namesakes/urls.py
+				#echo "" >> seven_namesakes/urls.py
+
+				#echo "urlpatterns = [" >> seven_namesakes/urls_one_list.py
+				echo "	path('${m1,,}/', ${m1}View.as_view(), name=\"${m1,,}-all\")," >> seven_namesakes/urls_one_list.py
+				# echo "]" >> seven_namesakes/urls_one_list.py
+				#echo "" >> seven_namesakes/urls_one_list.py
+
 
 				echo "" >> seven_namesakes/serializers.py
 
@@ -1720,16 +1717,17 @@ fi
 
 
 
+echo "" >> seven_namesakes/urls.py
 
 
 
 
+#echo "	path('${m1,,}/', ${m1}View.as_view(), name=\"${m1,,}-all\")," >> seven_namesakes/urls_one_list.py
+echo "]" >> seven_namesakes/urls_one_list.py
 
+# cat seven_namesakes/urls_one_list.py >> urls.py
 
-
-
-
-
+head -n 99 seven_namesakes/urls_one_list.py | cat >> seven_namesakes/urls.py
 
 
 
