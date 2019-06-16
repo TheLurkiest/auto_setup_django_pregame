@@ -1235,7 +1235,7 @@ echo 'adding admin/ to the end will let you view the login screen'
 echo 'once this is confirmed, go back to the terminal hit ctrl+c'
 echo 'then you can set up the manner with which you want to log in using: '
 
-echo 'python manage.py createsuperuser.py'
+echo 'python manage.py createsuperuser'
 
 echo 'that should give you everything you need to get through the login screen'
 

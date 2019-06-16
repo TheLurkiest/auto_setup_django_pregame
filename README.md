@@ -15,6 +15,10 @@ START WITH "HOW_TO_GET_STARTED.md"
 
 ===============================================================================
 CURRENT STEPS IN PROGRESS:
+
+...all these seem to have been created now-- we can test this by sticking this into our web browser: http://127.0.0.1:8000/api/cultivargroup/
+...AFTER we've used the runserver terminal command to get things going
+
 ===============================================================================
 ---------------------------------------------
 changes to make django auto-api maker complete:
@@ -46,7 +50,7 @@ looks identical...
 DONE!
 ---------------------------------------------
 change4- config/urls.py
-4a) re_path loses 'version thing'--
+4a) re_path loses 'version' info from the 1st input parameter--
 --changing from this:
 re_path('api/(?P<version>(v1|v2))', include('api.urls'))
 ...to this:
