@@ -1061,7 +1061,7 @@ echo '
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
-*$py.class
+*\$py.class
 
 # C extensions
 *.so
