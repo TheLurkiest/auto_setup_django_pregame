@@ -30,10 +30,14 @@ change2- views.py
 def get(self, request, version, format=None):
 ...so that they just say:
 def get(self, request, format=None):
+
+DONE!
+
 ---------------------------------------------
 change3- serializers.py
 looks identical...
-DONE!DONE!DONE!DONE!DONE!DONE!DONE!DONE!DONE!
+
+DONE!
 ---------------------------------------------
 change4- config/urls.py
 4a) re_path loses 'version thing'--
@@ -41,10 +45,14 @@ change4- config/urls.py
 re_path('api/(?P<version>(v1|v2))', include('api.urls'))
 ...to this:
 re_path('api/', include('api.urls'))
+
+DONE!
+
 ---------------------------------------------
 change5- models.py
 looks identical!
-DONE!DONE!DONE!DONE!DONE!DONE!DONE!DONE!DONE!
+
+DONE!
 
 =======================================================================
 =======================================================================

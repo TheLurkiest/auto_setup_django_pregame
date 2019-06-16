@@ -1050,25 +1050,123 @@ cp -r ../seven_namesakes/models.py seven_namesakes/
 #cp -r ../seven_namesakes/models.py .
 #mkdir api
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 git init
 
 # step 3b
-cp ~/workspace/final_project_reflections/my2_branch_reflect/reflections-project/.gitignore .
+
+# cp ~/workspace/final_project_reflections/my2_branch_reflect/reflections-project/.gitignore .
+
+echo '
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+#  Usually these files are written by a python script from a template
+#  before PyInstaller builds the exe, so as to inject date/other infos into it.
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# Translations
+*.mo
+*.pot
+
+# Django stuff:
+*.log
+local_settings.py
+db.sqlite3
+
+# Flask stuff:
+instance/
+.webassets-cache
+
+# Scrapy stuff:
+.scrapy
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+target/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# pyenv
+.python-version
+
+# celery beat schedule file
+celerybeat-schedule
+
+# SageMath parsed files
+*.sage.py
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+
+' > .gitignore
+
 git add .gitignore
+
 
 # step 3c
 git commit -m 'hopefully first commit'
@@ -1456,7 +1554,7 @@ else
 	echo 'from django.urls import path, include, re_path' >> seven_namesakes/config/urls.py
 	echo 'urlpatterns = [' >> seven_namesakes/config/urls.py
 	echo "	path('admin/', admin.site.urls)," >> seven_namesakes/config/urls.py
-	echo "	re_path('api/(?P<version>(v1|v2))', include('api.urls'))" >> seven_namesakes/config/urls.py
+	echo "	re_path('api/', include('api.urls'))" >> seven_namesakes/config/urls.py
 	echo ']' >> seven_namesakes/config/urls.py
 
   arr1=()
@@ -1486,7 +1584,7 @@ else
 				echo "from .serializers import ${m1}Serializer" >> seven_namesakes/views.py
 
 				echo "class ${m1}View(APIView):" >> seven_namesakes/views.py
-				echo "	def get(self, request, version, format=None):" >> seven_namesakes/views.py
+				echo "	def get(self, request, format=None):" >> seven_namesakes/views.py
 				echo "		${m1,,} = ${m1}.objects.all()" >> seven_namesakes/views.py
 				echo "		serializer = ${m1}Serializer(${m1,,}, many=True)" >> seven_namesakes/views.py
 				echo "		return Response(serializer.data)" >> seven_namesakes/views.py
