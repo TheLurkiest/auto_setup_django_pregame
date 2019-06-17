@@ -1278,6 +1278,24 @@ echo 'python manage.py createsuperuser'
 
 echo 'that should give you everything you need to get through the login screen'
 
+
+
+
+#----------------------------------
+file_t_count=0
+
+for file in ../seven_namesakes/tests_m[1-99]; do
+
+	let file_t_count=file_t_count+1
+	head -n 199 ../m1_file_tests\$file_t_count | cat >> \$file
+
+	head -n 199 \$file | cat >> api/tests.py
+
+done
+
+#----------------------------------
+
+
 " > api_auto_xxx/finish_my_api.sh
 
 chmod 777 api_auto_xxx/finish_my_api.sh
