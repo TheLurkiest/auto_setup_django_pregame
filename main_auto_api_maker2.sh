@@ -380,7 +380,7 @@ for elem_t in range(0,(m1_count)):
 				b_fout_end.write(str(w_out2))
 				b_fout_end.close()
 			current_fields_out=current_fields_out+1
-
+	
 arr_combo=[]
 for c_arr2, f_types_arr in enumerate(w_out2_arr):
 	arr_combo.append('	'+str(w_out_arr[c_arr2])+' = models.'+str(f_types_arr)+'Field(max_length=250, null=False)')
@@ -1470,7 +1470,7 @@ if [ "$csv_reply" == "NO" ]
 				echo $outputline >> $outer_folder$models_info1
 
 			else
-        # num_models <----why is this here???
+		# num_models <----why is this here???
 				line2plusfields=$line
 				outputline="	${dir_b}${num_fields_counted} = models.CharField(max_length=255, null=False)"
 
@@ -1620,7 +1620,7 @@ else
 		# more +number5 dir2
 		let lc_mf_count=lc_mf_count+1
 
-    arr1+=( $(head -n $countforfields $file) )
+	arr1+=( $(head -n $countforfields $file) )
 
 		wc -l $file | awk '{print $1}' | cat > lc_mf$lc_mf_count
 		while read -r line; do set $line; mf1=$(echo $1); done < lc_mf$lc_mf_count
@@ -1651,7 +1651,7 @@ else
 				echo "from .serializers import ${m1}Serializer" >> seven_namesakes/tests.py
 
 				let tests_m_count=tests_m_count+1
-				echo "class BaseViewTest(APITestCase):" >> seven_namesakes/tests_m$tests_m_count
+				echo "class BaseViewTest${tests_m_count}(APITestCase):" >> seven_namesakes/tests_m$tests_m_count
 				echo "	client = APIClient()" >> seven_namesakes/tests_m$tests_m_count
 				echo "	@staticmethod" >> seven_namesakes/tests_m$tests_m_count
 				#echo "	def create${m1,,}(" >> seven_namesakes/func_def_tests_m$tests_m_count
@@ -1712,15 +1712,15 @@ else
 
 
 				# $break_up_code_for_debugging=''
-        # dir_b="dir_b"
-        # echo 'we use these user inputs to break up the code for debugging purposes:'
-        # read break_up_code_for_debugging
+		# dir_b="dir_b"
+		# echo 'we use these user inputs to break up the code for debugging purposes:'
+		# read break_up_code_for_debugging
 
 
 
 
 
-        outputline="${f1} = models.CharField(max_length=255, null=False)"
+		outputline="${f1} = models.CharField(max_length=255, null=False)"
 
 
 				echo "	${outputline}" >> seven_namesakes/models.py
@@ -1874,19 +1874,19 @@ import random
 fin_t=open('m1_file','r')
 t_list=[]
 for line in fin_t:
-    t_list.append(str(line))
+	t_list.append(str(line))
 fin_t.close()
 
 
 t2_list=[]
 for t_elem in t_list:
-    t2_list.append(t_elem.replace('\n',''))
+	t2_list.append(t_elem.replace('\n',''))
 
 
 t3_list=[]
 for t_elem in t2_list:
-    if(len(t_elem)>0):
-        t3_list.append(t_elem)
+	if(len(t_elem)>0):
+		t3_list.append(t_elem)
 
 t3_list_b=[]
 #t3_list_b=t3_list
@@ -1894,31 +1894,31 @@ t3_list_b=[]
 t4_list=[]
 
 for stage_2_elem in t3_list:
-    stage_2_s = stage_2_elem
-    stage_3_s=''
-    for c_elem_s, elem_s in enumerate(stage_2_s):
-      if(elem_s.isupper()==True):
-        if(c_elem_s != 0):
-          stage_3_s=stage_3_s+'_'
-          stage_3_s=stage_3_s+elem_s
-        else:
-          stage_3_s=stage_3_s+elem_s
-      else:
-        stage_3_s=stage_3_s+elem_s
-    stage_3_s=stage_3_s.lower()
-    t4_list.append(stage_3_s)
+	stage_2_s = stage_2_elem
+	stage_3_s=''
+	for c_elem_s, elem_s in enumerate(stage_2_s):
+	  if(elem_s.isupper()==True):
+		if(c_elem_s != 0):
+		  stage_3_s=stage_3_s+'_'
+		  stage_3_s=stage_3_s+elem_s
+		else:
+		  stage_3_s=stage_3_s+elem_s
+	  else:
+		stage_3_s=stage_3_s+elem_s
+	stage_3_s=stage_3_s.lower()
+	t4_list.append(stage_3_s)
 
-    fk_cap=stage_3_s
-    fk_cap2 = fk_cap.replace('_',' ')
-    fk_cap2=fk_cap2.title()
-    fk_cap2=fk_cap2.replace(' ','')
+	fk_cap=stage_3_s
+	fk_cap2 = fk_cap.replace('_',' ')
+	fk_cap2=fk_cap2.title()
+	fk_cap2=fk_cap2.replace(' ','')
 
-    for other_elem in t4_list:
-        t3_list_b.append(str(other_elem))
+	for other_elem in t4_list:
+		t3_list_b.append(str(other_elem))
 
 fout_t=open('m1_file_tests','w')
 for line_t in t4_list:
-    fout_t.write(str(line_t)+'\n')
+	fout_t.write(str(line_t)+'\n')
 fout_t.close()
 
 p_reply=''
@@ -1937,211 +1937,227 @@ samp_data_tests=''
 t_list_dir_b=[]
 rand_samp_data=''
 
+new_ob_c=''
+
+
+
 single_tests_line=''
 
 for m_elem in num_models_l1:
 
-    ##p_reply=input('break in the code_within_main_for_PRE_first_for')
-    try:
-        fin_t=open(str('dir' + str(m_elem)),'r')
-        t_list=[]
-        for line in fin_t:
-            t_list.append(str(line))
-        fin_t.close()
+	##p_reply=input('break in the code_within_main_for_PRE_first_for')
+	try:
+		fin_t=open(str('dir' + str(m_elem)),'r')
+		t_list=[]
+		for line in fin_t:
+			t_list.append(str(line))
+		fin_t.close()
 
 
-        fin_t=open(str('dir_b' + str(m_elem)),'r')
-        t_list_dir_b=[]
-        for line in fin_t:
-            t_list_dir_b.append(str(line))
-        fin_t.close()
-
-
-
-        fin_t=open(str('dir' + str(m_elem)),'r')
-        t_list=[]
-        for line in fin_t:
-            t_list.append(str(line))
-        fin_t.close()
+		fin_t=open(str('dir_b' + str(m_elem)),'r')
+		t_list_dir_b=[]
+		for line in fin_t:
+			t_list_dir_b.append(str(line))
+		fin_t.close()
 
 
 
-        print('dir' + str(m_elem) + ' file produces this list: ' +str(t_list))
-
-        #p_reply=input('break in code after read to show what we grabbed above')
-
-        t2_list=[]
-        for t_elem in t_list:
-            t2_list.append(t_elem.replace('\n',''))
-
-        t3_list=[]
-        for t_elem in t2_list:
-            if(len(t_elem)>0):
-                t3_list.append(t_elem)
+		fin_t=open(str('dir' + str(m_elem)),'r')
+		t_list=[]
+		for line in fin_t:
+			t_list.append(str(line))
+		fin_t.close()
 
 
 
+		print('dir' + str(m_elem) + ' file produces this list: ' +str(t_list))
 
+		#p_reply=input('break in code after read to show what we grabbed above')
 
+		t2_list=[]
+		for t_elem in t_list:
+			t2_list.append(t_elem.replace('\n',''))
 
-        t2_list_dir_b=[]
-        for t_elem in t_list_dir_b:
-            t2_list_dir_b.append(t_elem.replace('\n',''))
-
-        t3_list_dir_b=[]
-        for t_elem in t2_list_dir_b:
-            if(len(t_elem)>0):
-                t3_list_dir_b.append(t_elem)
+		t3_list=[]
+		for t_elem in t2_list:
+			if(len(t_elem)>0):
+				t3_list.append(t_elem)
 
 
 
 
 
 
+		t2_list_dir_b=[]
+		for t_elem in t_list_dir_b:
+			t2_list_dir_b.append(t_elem.replace('\n',''))
 
-        ##p_reply=input('break in the code_within_main_for_past second and third for')
-        t4_list=[]
-        for stage_2_elem in t3_list:
-            ##p_reply=input('break in the code-- within main for, within fourth for')
-
-            stage_2_s = stage_2_elem
-            stage_3_s=''
-            for c_elem_s, elem_s in enumerate(stage_2_s):
-                ##p_reply=input('break in the code-- within main for, within fourth for, within first for')
-                if(elem_s.isupper()==True):
-                    if(c_elem_s != 0):
-                      stage_3_s=stage_3_s+'_'
-                      stage_3_s=stage_3_s+elem_s
-                    else:
-                      stage_3_s=stage_3_s+elem_s
-                else:
-                    stage_3_s=stage_3_s+elem_s
-                stage_3_s=stage_3_s.lower()
-            t4_list.append(stage_3_s)
-
-            #p_reply=input('break in the code-- WITHIN fourth for-- at end-- enter s to show lists:')
-            if(p_reply == 's'):
-                print('t4_list is: '+str(t4_list))
-                print('\n----------------------\n')
-                print('t_list is: '+str(t_list))
-                print('\n----------------------\n')
-                print('t3_list is: '+str(t3_list))
-                print('\n----------------------\n')
-                print('\n----------------------\n')
-
-            #p_reply=input('break in the code')
-
-
-        ##p_reply=input('break in the code-- past fourth for')
-        for count_t4, t3_elem in enumerate(t4_list):
-            #p_reply=input('break in the code-- within FIFTH for-- enter s to show lists:')
-            if(p_reply == 's'):
-                print('t3_list_b is: '+str(t3_list_b))
-                print('t4_list is: '+str(t4_list))
-                print('t4_list_c is: '+str(t4_list_c))
-            if(count_t4 == 0):
-                if(m_elem != 1):
-                    print('null statement')
-                    #def_para = str(def_para) + '):\n'
-                    #t4_list_c.append(str(def_para))
-                    #def_cond = str(def_cond) + ':\n'
-                    #t4_list_c.append(str(def_cond))
-
-                def_para = str('	def create_' + str(t3_elem) + '(')
-                def_cond = '		if '
-
-                ob_of_class_call='			' + str(t3_elem.title()) +'.objects.create('
-
-                samp_data_tests='\n		self.create_'+ str(t3_elem) + '('
-
-#            elif(count_t4 == (len(t4_list) - 1)):
-#                if (m_elem == num_models_l1[-1]):
-#                    def_para = str(def_para) + '):\n'
-#                    t4_list_c.append(str(def_para))
-#                    def_cond = str(def_cond) + ':\n'
-#                    t4_list_c.append(str(def_cond))
-
-
-            else:
-
-                if(count_t4 != 1):
-                    def_cond = str(def_cond) + ' and '
-                    def_para = str(def_para) + ', '
-                    ob_of_class_call = str(ob_of_class_call) + ', '
-                    samp_data_tests = str(samp_data_tests) + ', '
-
-                ob_of_class_call = str(ob_of_class_call) + str(t3_elem) + '=' + str(t3_elem)
-
-                def_para = str(def_para) + str(t3_elem) + '=' + '\"\"'
-
-                def_cond = str(def_cond) + str(t3_elem) + ' != ' + '\"\"'
-
-                if(t3_list_dir_b[count_t4] == 'Char'):
-                    rand_samp_data = chr(random.randint(65,90))
-                    samp_data_tests = str(samp_data_tests) + '\"' + str(rand_samp_data) + '\"'
-                elif(t3_list_dir_b[count_t4] == 'Integer'):
-                    rand_samp_data = int(random.randint(65,90))
-                    samp_data_tests = str(samp_data_tests) + str(rand_samp_data)
-                elif(t3_list_dir_b[count_t4] == 'Float'):
-                    rand_samp_data = float(random.randint(65,90))
-                    samp_data_tests = str(samp_data_tests) + str(rand_samp_data)
-                elif(t3_list_dir_b[count_t4] == 'Date'):
-                    rand_samp_data = str(datetime.date.today())
-                    samp_data_tests = str(samp_data_tests) + str(rand_samp_data)
-                else:
-                    rand_samp_data = 'placeholder_for_Others'
-                    samp_data_tests = str(samp_data_tests) + '\"' + str(rand_samp_data) + '\"'
-                # t4_list_c.append(str('field:' + str(t3_elem) + ''))
-
-        ##p_reply=input('break in the code-- past fifth for')
-
-
-        if(def_cond != '		if '):
-            def_para = str(def_para) + '):\n'
-            t4_list_c.append(str(def_para))
-            def_cond = str(def_cond) + ':\n'
-            t4_list_c.append(str(def_cond))
-
-            ob_of_class_call = str(ob_of_class_call) + ')'
-            t4_list_c.append(str(ob_of_class_call))
-
-            t4_list_c.append( str('\n	def setUp(self):') )
-
-            samp_data_tests = str(samp_data_tests) + ')\n'
-            t4_list_c.append(str(samp_data_tests))
-
-            single_tests_line = '\nclass GetAll' + str((t3_list[0])) + 'Test(BaseViewTest):\n'
-            single_tests_line = single_tests_line.replace('_', '')
-            t4_list_c.append( str(single_tests_line) )
-
-            single_tests_line = '\n	def test_get_all_' + str(t3_list[0]) + '(self):\n'
-            t4_list_c.append( str(single_tests_line) )
-
-            single_tests_line = '\n		response = self.client.get(' + '\n'
-            single_tests_line = str(single_tests_line) + '			reverse(\"' + str(t3_list[0]) + '\"' + ')\n'
-            single_tests_line = str(single_tests_line) + '		)\n'
-            t4_list_c.append( str(single_tests_line) )
-
-            single_tests_line = '	expected = ' + str(t3_list[0]) + '.objects.all()\n'
-            single_tests_line = single_tests_line.replace('_', '')
-            single_tests_line = str(single_tests_line) + '	serialized = ' + str(t3_list[0]) + 'Serializer(expected, many=True)\n'
-            single_tests_line = str(single_tests_line) + '	self.assertEqual(response.data, serialized.data)\n'
-            single_tests_line = str(single_tests_line) + '\n	self.assertEqual(response.status_code, status.HTTP_200_OK\n'
-            t4_list_c.append( str(single_tests_line) )
+		t3_list_dir_b=[]
+		for t_elem in t2_list_dir_b:
+			if(len(t_elem)>0):
+				t3_list_dir_b.append(t_elem)
 
 
 
-        fout_t=open(str('m1_file_tests' + str(m_elem)),'w')
-        for line_t in t4_list_c:
-            fout_t.write(str(line_t))
-        fout_t.close()
 
-        t4_list_c = []
 
-        ##p_reply=input('break in the code-- past sixth for-- about to restart MAIN for loop')
 
-    except:
-        print('...fewer than '+str(m_elem)+ ' models produced.')
+
+		##p_reply=input('break in the code_within_main_for_past second and third for')
+		t4_list=[]
+		for stage_2_elem in t3_list:
+			##p_reply=input('break in the code-- within main for, within fourth for')
+
+			stage_2_s = stage_2_elem
+			stage_3_s=''
+			for c_elem_s, elem_s in enumerate(stage_2_s):
+				##p_reply=input('break in the code-- within main for, within fourth for, within first for')
+				if(elem_s.isupper()==True):
+					if(c_elem_s != 0):
+					  stage_3_s=stage_3_s+'_'
+					  stage_3_s=stage_3_s+elem_s
+					else:
+					  stage_3_s=stage_3_s+elem_s
+				else:
+					stage_3_s=stage_3_s+elem_s
+				stage_3_s=stage_3_s.lower()
+			t4_list.append(stage_3_s)
+
+			#p_reply=input('break in the code-- WITHIN fourth for-- at end-- enter s to show lists:')
+			if(p_reply == 's'):
+				print('t4_list is: '+str(t4_list))
+				print('\n----------------------\n')
+				print('t_list is: '+str(t_list))
+				print('\n----------------------\n')
+				print('t3_list is: '+str(t3_list))
+				print('\n----------------------\n')
+				print('\n----------------------\n')
+
+			#p_reply=input('break in the code')
+
+
+		##p_reply=input('break in the code-- past fourth for')
+		for count_t4, t3_elem in enumerate(t4_list):
+			#p_reply=input('break in the code-- within FIFTH for-- enter s to show lists:')
+			if(p_reply == 's'):
+				print('t3_list_b is: '+str(t3_list_b))
+				print('t4_list is: '+str(t4_list))
+				print('t4_list_c is: '+str(t4_list_c))
+			if(count_t4 == 0):
+				if(m_elem != 1):
+					print('null statement')
+					#def_para = str(def_para) + '):\n'
+					#t4_list_c.append(str(def_para))
+					#def_cond = str(def_cond) + ':\n'
+					#t4_list_c.append(str(def_cond))
+
+				def_para = str('	def create_' + str(t3_elem) + '(')
+				def_cond = '		if '
+				
+				
+
+				ob_of_class_call='			' + str(t3_elem.replace('_',''))
+
+				ob_of_class_call = ob_of_class_call.title()
+				ob_of_class_call = ob_of_class_call.replace('_', '')
+				new_ob_c = t3_elem.title()
+				new_ob_c = new_ob_c.replace('_', '')
+
+				#ob_of_class_call='			' + str(new_ob_c)
+				
+				
+				ob_of_class_call = '\n\t\t\t' + str(t3_list[0]) + '.objects.create('
+
+				samp_data_tests='\n		self.create_'+ str(t3_elem) + '('
+
+#			elif(count_t4 == (len(t4_list) - 1)):
+#				if (m_elem == num_models_l1[-1]):
+#					def_para = str(def_para) + '):\n'
+#					t4_list_c.append(str(def_para))
+#					def_cond = str(def_cond) + ':\n'
+#					t4_list_c.append(str(def_cond))
+
+
+			else:
+
+				if(count_t4 != 1):
+					def_cond = str(def_cond) + ' and '
+					def_para = str(def_para) + ', '
+					ob_of_class_call = str(ob_of_class_call) + ', '
+					samp_data_tests = str(samp_data_tests) + ', '
+
+				ob_of_class_call = str(ob_of_class_call) + str(t3_elem) + '=' + str(t3_elem)
+
+				def_para = str(def_para) + str(t3_elem) + '=' + '\"\"'
+
+				def_cond = str(def_cond) + str(t3_elem) + ' != ' + '\"\"'
+
+				if(t3_list_dir_b[count_t4] == 'Char'):
+					rand_samp_data = chr(random.randint(65,90))
+					samp_data_tests = str(samp_data_tests) + '\"' + str(rand_samp_data) + '\"'
+				elif(t3_list_dir_b[count_t4] == 'Integer'):
+					rand_samp_data = int(random.randint(65,90))
+					samp_data_tests = str(samp_data_tests) + str(rand_samp_data)
+				elif(t3_list_dir_b[count_t4] == 'Float'):
+					rand_samp_data = float(random.randint(65,90))
+					samp_data_tests = str(samp_data_tests) + str(rand_samp_data)
+				elif(t3_list_dir_b[count_t4] == 'Date'):
+					rand_samp_data = str(datetime.date.today())
+					samp_data_tests = str(samp_data_tests) + '\"' + str(rand_samp_data) + '\"'
+				else:
+					rand_samp_data = 'placeholder_for_Others'
+					samp_data_tests = str(samp_data_tests) + '\"' + str(rand_samp_data) + '\"'
+				# t4_list_c.append(str('field:' + str(t3_elem) + ''))
+
+		##p_reply=input('break in the code-- past fifth for')
+
+
+		if(def_cond != '		if '):
+			def_para = str(def_para) + '):\n'
+			t4_list_c.append(str(def_para))
+			def_cond = str(def_cond) + ':\n'
+			t4_list_c.append(str(def_cond))
+
+			ob_of_class_call = str(ob_of_class_call) + ')'
+			t4_list_c.append(str(ob_of_class_call))
+
+			t4_list_c.append( str('\n	def setUp(self):') )
+
+			samp_data_tests = str(samp_data_tests) + ')\n'
+			t4_list_c.append(str(samp_data_tests))
+
+			single_tests_line = '\nclass GetAll' + str((t3_list[0])) + 'Test(BaseViewTest' + str(m_elem) + '):\n'
+			single_tests_line = single_tests_line.replace('_', '')
+			t4_list_c.append( str(single_tests_line) )
+
+			single_tests_line = '\n	def test_get_all_' + str(t3_list[0]) + '(self):\n'
+			t4_list_c.append( str(single_tests_line) )
+
+			single_tests_line = '\n		response = self.client.get(' + '\n'
+			single_tests_line = str(single_tests_line) + '			reverse(\"' + (str((t3_list[0]).lower())).replace('_','') + '-all\"' + ')\n'
+			single_tests_line = str(single_tests_line) + '		)\n'
+			t4_list_c.append( str(single_tests_line) )
+
+			single_tests_line = '		expected = ' + str(t3_list[0]) + '.objects.all()\n'
+			single_tests_line = single_tests_line.replace('_', '')
+			single_tests_line = str(single_tests_line) + '		serialized = ' + str(t3_list[0]) + 'Serializer(expected, many=True)\n'
+			single_tests_line = str(single_tests_line) + '		self.assertEqual(response.data, serialized.data)\n'
+			single_tests_line = str(single_tests_line) + '\n		self.assertEqual(response.status_code, status.HTTP_200_OK)\n'
+			t4_list_c.append( str(single_tests_line) )
+
+
+
+		fout_t=open(str('m1_file_tests' + str(m_elem)),'w')
+		for line_t in t4_list_c:
+			fout_t.write(str(line_t))
+		fout_t.close()
+
+		t4_list_c = []
+
+		##p_reply=input('break in the code-- past sixth for-- about to restart MAIN for loop')
+
+	except:
+		print('...fewer than '+str(m_elem)+ ' models produced.')
 
 
 
