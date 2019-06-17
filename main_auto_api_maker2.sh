@@ -380,7 +380,7 @@ for elem_t in range(0,(m1_count)):
 				b_fout_end.write(str(w_out2))
 				b_fout_end.close()
 			current_fields_out=current_fields_out+1
-	
+
 arr_combo=[]
 for c_arr2, f_types_arr in enumerate(w_out2_arr):
 	arr_combo.append('	'+str(w_out_arr[c_arr2])+' = models.'+str(f_types_arr)+'Field(max_length=250, null=False)')
@@ -1849,16 +1849,15 @@ head -n 99 seven_namesakes/urls_one_list.py | cat >> seven_namesakes/urls.py
 
 
 
-
-
-
-
-
-
-
-
-
 echo "
+
+
+
+
+
+
+
+
 
 
 
@@ -1897,14 +1896,14 @@ for stage_2_elem in t3_list:
 	stage_2_s = stage_2_elem
 	stage_3_s=''
 	for c_elem_s, elem_s in enumerate(stage_2_s):
-	  if(elem_s.isupper()==True):
-		if(c_elem_s != 0):
-		  stage_3_s=stage_3_s+'_'
-		  stage_3_s=stage_3_s+elem_s
+		if(elem_s.isupper()==True):
+			if(c_elem_s != 0):
+				stage_3_s=stage_3_s+'_'
+				stage_3_s=stage_3_s+elem_s
+			else:
+				stage_3_s=stage_3_s+elem_s
 		else:
-		  stage_3_s=stage_3_s+elem_s
-	  else:
-		stage_3_s=stage_3_s+elem_s
+			stage_3_s=stage_3_s+elem_s
 	stage_3_s=stage_3_s.lower()
 	t4_list.append(stage_3_s)
 
@@ -2014,10 +2013,10 @@ for m_elem in num_models_l1:
 				##p_reply=input('break in the code-- within main for, within fourth for, within first for')
 				if(elem_s.isupper()==True):
 					if(c_elem_s != 0):
-					  stage_3_s=stage_3_s+'_'
-					  stage_3_s=stage_3_s+elem_s
+						stage_3_s=stage_3_s+'_'
+						stage_3_s=stage_3_s+elem_s
 					else:
-					  stage_3_s=stage_3_s+elem_s
+						stage_3_s=stage_3_s+elem_s
 				else:
 					stage_3_s=stage_3_s+elem_s
 				stage_3_s=stage_3_s.lower()
@@ -2052,9 +2051,9 @@ for m_elem in num_models_l1:
 					#t4_list_c.append(str(def_cond))
 
 				def_para = str('	def create_' + str(t3_elem) + '(')
-				def_cond = '		if '
-				
-				
+				def_cond = '		if('
+
+
 
 				ob_of_class_call='			' + str(t3_elem.replace('_',''))
 
@@ -2064,9 +2063,10 @@ for m_elem in num_models_l1:
 				new_ob_c = new_ob_c.replace('_', '')
 
 				#ob_of_class_call='			' + str(new_ob_c)
-				
-				
-				ob_of_class_call = '\n\t\t\t' + str(t3_list[0]) + '.objects.create('
+
+				ob_of_class_call = '\n			#comment_placeholder\n\n			'
+
+				ob_of_class_call = str(ob_of_class_call) + str(t3_list[0]) + '.objects.create('
 
 				samp_data_tests='\n		self.create_'+ str(t3_elem) + '('
 
@@ -2115,11 +2115,11 @@ for m_elem in num_models_l1:
 		if(def_cond != '		if '):
 			def_para = str(def_para) + '):\n'
 			t4_list_c.append(str(def_para))
-			def_cond = str(def_cond) + ':\n'
+			def_cond = str(def_cond) + '):\n'
 			t4_list_c.append(str(def_cond))
 
 			ob_of_class_call = str(ob_of_class_call) + ')'
-			t4_list_c.append(str(ob_of_class_call))
+			t4_list_c.append('				' + str(ob_of_class_call))
 
 			t4_list_c.append( str('\n	def setUp(self):') )
 
@@ -2162,6 +2162,21 @@ for m_elem in num_models_l1:
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 " > testing_test_maker.py
 
 
@@ -2170,6 +2185,15 @@ for m_elem in num_models_l1:
 
 
 python3 testing_test_maker.py
+
+
+
+
+
+
+
+
+
 
 
 
