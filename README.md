@@ -12,6 +12,66 @@ START WITH "HOW_TO_GET_STARTED.md"
 
 
 
+===============================================================================
+===============================================================================
+===============================================================================
+
+
+TO DO:
+-----
+
+step 1)
+
+update so that version is not there
+
+and that urls are all on same list
+
+--so that endpoints are functional in browser
+
+------> so it list everything that's in there
+
+
+DONE!
+
+
+---------------------------------------------------------------------------------------------
+
+step 2)
+
+do what we did for GET for CREATE
+--------------------------------
+
+when a client app is creating an entry
+
+--in the browser
+
+json fields to enter data
+
+
+
+---------------------------------------------------------------------------------------------
+
+Summary (primary goal):
+
+understanding the implementation of the "create" endpoint by hand
+
+--see that (in browser) the "create" endpoint is functional
+
+--this will help solidify understanding of api development
+
+
+===============================================================================
+===============================================================================
+===============================================================================
+
+
+
+
+
+
+
+
+
 
 ===============================================================================
 CURRENT STEPS IN PROGRESS:
