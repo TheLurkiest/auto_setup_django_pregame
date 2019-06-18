@@ -23,24 +23,26 @@ Part 1: Sample Data API Auto-Generation:
 
 basic instructions on how to use this shell script (based on example with sample data):
 
+a)
 ...start by entering command into terminal (from location of shell script file):
 ./main_auto_api_maker2.sh
 
---hit enter at 1st prompt
---enter this at 2nd prompt:
+b)
+--If you wish to speed things up just hit enter at 1st prompt to set input data to the default files (xa.csv and xb.csv)-- or enter ADVANCED to enter the file names directly.  For now, just use the default xa.csv, and xb.csv-- once you understand this and know you can make it work, you can create your own unique files to enter info in Part 2.
+
+c)
+--so, if you entered ADVANCED-- for now just enter the default-- firstly:
 xa.csv
---enter this at 3rd prompt:
+--and then at the next prompt within the advanced sub-menu enter this:
 xb.csv
 
---then, following instructions displayed on terminal enter these 2 commands into terminal:
+d)
+--then, just follow instructions displayed on terminal which tell you to enter these 2 commands into terminal:
 cd api_auto_xxx
 ./finish_my_api
 
-.......you'll probably have to hit enter once more here
-
---then enter YES at prompt asking you if you added a 2nd .csv
---then just hit enter at any additional prompts or places where the code stops displaying a continuous stream of text at any point
-
+e)
+--further terminal commands will then display to the terminal, informing you of how you can proceed to make sure the process worked correctly, but at this point the API should be totally finished!
 
 
 ------------------------------------------------------------------------------

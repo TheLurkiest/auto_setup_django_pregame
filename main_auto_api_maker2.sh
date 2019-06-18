@@ -19,6 +19,7 @@ echo 'time-consuming steps needed to setup a Django Rest API with basic function
 echo '------------------------------------------------------------------------'
 echo ' '
 csv_reply="xa.csv"
+csv_reply2='xb.csv'
 
 echo 'you must have a .csv file already created to continue-- if not, use ctrl+d/ctrl+c to exit this code and use the info below to create one before starting this process again.'
 echo "to input models and fields into your API you must create a .csv file with models at the top, fields below them, seperated by a single space."
@@ -27,29 +28,44 @@ echo '1) model names go in the top row'
 echo '2) the fields of each model go right below them (within the same column of the model they are within)'
 echo '3) save as --> choose .csv in drop-down menu --> field delimeter: (just put a space in that box), string delimeter: (just delete everything in that box) --> hit ok -->'
 echo ' '
-echo '>>>> for more advanced info/options regarding this .csv setup enter ADVANCED now-- otherwise hit any key to continue'
+
+echo '------------------------------------------------------------------------'
+
+echo ''
+
+echo 'if you do not know how to set up a virtual environment-- which you must do prior to starting this process-- just ctrl+f through the word document called truncated_guide_setting_up_django_api.docx searching for virtual environment until you find some information on this.  I included all the steps needed to set this up within that document.  I color-coded that section gray to make it easier to find.'
+
+echo 'it might also be a good idea to check out HOW_TO_GET_STARTED.md if you are still getting used to this shell script'
+
+
+echo 'hit enter now to speed things up-- making use of the default files of xa.csv and xb.csv to complete the API-- which you can simply edit if you want to make this quicker-- otherwise, enter ADVANCED now for more advanced options: '
+
+#echo '>>>> for more advanced info/options regarding this .csv setup enter ADVANCED now-- otherwise hit any key to continue'
 read csv_reply
 if [ "$csv_reply" == "ADVANCED" ]
 then
-	echo '4) to write down any additional text that will not be read into the API (like names, dates, etc.) just put NOMODEL into the top row or some column, and you will be able to freely enter whatever text you wish into the cells within that column beneath that initial top row.'
-  echo '5) you may also enter an optional 2nd .csv momentarily when prompted to specify data types for each field.'
-  echo '--just set up your .csv the same as before, but with Integer, Date, Float, and Char within each cell which contains a field of that datatype.  Entering other datatypes besides these via this automation may be problematic.'
+	echo 'ADVANCED OPTIONS MENU: '
+	echo '----------------------'
+
+	echo 'make sure you follow the current very simple limitations when creating your own input .csv data files:'
+	echo '1) there must be exactly FIVE columns containing text-- columns a-e: all of these first five columns must contain either a model in the top row-- or the text NOMODEL for any columns you do not wish to use.'
+	echo '2) each item (field or model) seperated by ONLY a space-- same goes for data types for any other .csv files'
+	echo '3) if you have any questions I suggest you refer to the text file HOW_TO_GET_STARTED.md first-- and if this does not answer things, just ctrl+f through the word document called truncated_guide_setting_up_django_api.docx'
+	echo 'Enter the name of your .csv file containing fields and model info-- by default this is xa.csv: '
+	read csv_reply
+
+	echo 'thank you for your selection.  We will now ask for the .csv file containing data type information-- by default this is normally xb.csv'
+	echo 'if you wish to enter a different .csv file, just make sure it only uses the approved data types-- for the time being these are limited to: Integer, Boolean, Date, Float, and Char '
+
+	echo 'Enter a secondary .csv file to specify the data types for each field'
+	read csv_reply2
+	#echo '4) to write down any additional text that will not be read into the API (like names, dates, etc.) just put NOMODEL into the top row or some column, and you will be able to freely enter whatever text you wish into the cells within that column beneath that initial top row.'
+  #echo '5) you may also enter an optional 2nd .csv momentarily when prompted to specify data types for each field.'
+  #echo '--just set up your .csv the same as before, but with Integer, Date, Float, and Char within each cell which contains a field of that datatype.  Entering other datatypes besides these via this automation may be problematic.'
+else
+	csv_reply="xa.csv"
+	csv_reply2='xb.csv'
 fi
-
-echo '----------------------------------------------------------------------------------------------------------'
-echo 'Enter the name of your .csv file below or say NO here to enter fields and models manually: '
-read csv_reply
-
-# default right now is xb.csv for csv_reply2
-csv_reply2='xb.csv'
-
-echo 'Enter a secondary .csv file if you wish to generate specific data types for each field-- otherwise, enter \"SKIP\" now to use default settings: '
-read csv_reply2
-
-
-
-
-
 
 mkdir api_auto_xxx
 touch stage1_auto_d.py
@@ -64,7 +80,7 @@ print('...and then activate the virtual environment first before running this ag
 print(' ')
 print('------------------------------------------------------------------')
 p_reply = ''
-p_reply = input('press ANY KEY to continue automatic default setup or enter SKIP if you have already finished and tested this API and wish to make further alterations by adding new fields to existing models.')
+#p_reply = input('press ANY KEY to continue automatic default setup or enter SKIP if you have already finished and tested this API and wish to make further alterations by adding new fields to existing models.')
 
 
 if (p_reply.upper() != 'SKIP'):
@@ -137,7 +153,6 @@ if (p_reply.upper() != 'SKIP'):
 	fout3.write(str(s_post_marker))
 
 	fout3.close()
-
 
 
 
@@ -699,7 +714,7 @@ for f_per_m1_elem in fields_per_m1_2:
 
 
 print('\nfields_per_m1 is:\n'+str(fields_per_m1))
-p_reply=input('breakup code 2')
+# p_reply=input('breakup code 2')
 
 
 index_count=1
@@ -725,7 +740,7 @@ print('\n +++++++++++ \n')
 print('\n +++++++++++ \n')
 print('new_full_final_types is '+str(new_full_final_types)+' and length is: '+str(len(new_full_final_types)))
 # p_reply = input('testing 123')
-p_reply = input('fields_per_m1 is '+str(new_full_final_types)+' and length is: '+str(len(new_full_final_types)))
+# p_reply = input('fields_per_m1 is '+str(new_full_final_types)+' and length is: '+str(len(new_full_final_types)))
 
 
 print('\n +++++++++++ \n')
@@ -735,7 +750,7 @@ print('\n +++++++++++ \n')
 print('\n +++++++++++ \n')
 print('fields_per_m1 is '+str(fields_per_m1)+' and length is: '+str(len(fields_per_m1)))
 # p_reply = input('testing 123')
-p_reply = input('fields_per_m1 is '+str(fields_per_m1)+' and length is: '+str(len(fields_per_m1)))
+# p_reply = input('fields_per_m1 is '+str(fields_per_m1)+' and length is: '+str(len(fields_per_m1)))
 
 
 # f_types_per_m1# fields_per_m1
@@ -809,7 +824,7 @@ print('here is how we parse our for loop')
 print('new_full_final is: '+str(new_full_final))
 print('new_full_final length is: '+str(len(new_full_final)))
 print('\n-----------------------------------------------------------------\n')
-p_reply=input('breakup code 2')
+# p_reply=input('breakup code 2')
 
 
 fin1=open('seven_namesakes/models.py','r')
@@ -1221,8 +1236,10 @@ python3 stage1_auto_d.py
 
 
 field_types_added=''
-echo 'enter YES if you DID add a second .csv file which contained field type info for your models: '
-read field_types_added
+
+field_types_added='YES'
+#echo 'enter YES if you DID add a second .csv file which contained field type info for your models: '
+#read field_types_added
 
 if [ \"\$field_types_added\" == 'YES' ]
 then
@@ -2218,15 +2235,18 @@ python3 testing_test_maker.py
 
 
 
+echo "----------------------------------------------"
+echo "----------------------------------------------"
+echo ">>>>>>>> STEP 1 OF 2 IS NOW COMPLETE! <<<<<<<<"
+echo "----------------------------------------------"
+echo "----------------------------------------------"
 
-
-echo ""
-echo "-----------------------------------------------------------------------"
-echo "to complete the setup of this API, use the following terminal commands: "
+echo "to finish the setup of this API, use the following terminal commands: "
 echo "cd api_auto_xxx"
 echo "...followed by:"
 echo "./finish_my_api"
 
+echo "...and in a few moments your API will be finished!"
 
 
 
