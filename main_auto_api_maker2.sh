@@ -34,8 +34,18 @@ echo '------------------------------------------------------------------------'
 echo ''
 
 echo 'if you do not know how to set up a virtual environment-- which you must do prior to starting this process-- just ctrl+f through the word document called truncated_guide_setting_up_django_api.docx searching for virtual environment until you find some information on this.  I included all the steps needed to set this up within that document.  I color-coded that section gray to make it easier to find.'
-
 echo 'it might also be a good idea to check out HOW_TO_GET_STARTED.md if you are still getting used to this shell script'
+echo 'if you have not installed django and djangorestframework you must do so --once you are within a virtual environment-- by entering the following terminal commands while in your virtual environment:'
+echo 'pip install django'
+echo 'pip install djangorestframework'
+echo '.......you can check if these two have been correctly installed by using the following terminal command: '
+echo 'pip freeze'
+echo '..............if you have issues, you may need to use pip3 instead of pip and python3 instead of python to make these terminal commands here and within your shell script work.'
+echo 'you must also have at least python3.6 and up to make this shell script work properly.'
+
+
+
+
 
 
 echo 'hit enter now to speed things up-- making use of the default files of xa.csv and xb.csv to complete the API-- which you can simply edit if you want to make this quicker-- otherwise, enter ADVANCED now for more advanced options: '
