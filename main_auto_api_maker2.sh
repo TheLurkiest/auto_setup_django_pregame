@@ -1673,6 +1673,15 @@ else
 				echo "		serializer = ${m1}Serializer(${m1,,}, many=True)" >> seven_namesakes/views.py
 				echo "		return Response(serializer.data)" >> seven_namesakes/views.py
 
+				echo "	def post(self, request, format=None):" >> seven_namesakes/views.py
+				echo "		serializer = ${m1}Serializer(data=request.data)" >> seven_namesakes/views.py
+				echo "		if serializer.is_valid():" >> seven_namesakes/views.py
+				echo "			serializer.save()" >> seven_namesakes/views.py
+				echo "			return Response(serializer.data, status=status.HTTP_201_CREATED)" >> seven_namesakes/views.py
+				echo "		return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)" >> seven_namesakes/views.py
+
+
+
 				# working on tests.py now:
 				echo "from .models import ${m1}" >> seven_namesakes/tests.py
 				echo "from .serializers import ${m1}Serializer" >> seven_namesakes/tests.py
