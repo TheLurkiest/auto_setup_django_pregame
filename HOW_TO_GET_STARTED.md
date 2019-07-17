@@ -23,15 +23,16 @@ Part 1: Sample Data API Auto-Generation:
 
 basic instructions on how to use this shell script (based on example with sample data):
 
-a)
-...start by entering command into terminal (from location of shell script file):
+a) either create/setup a virtual environment manually, or use the following terminal command to execute a shell script that will do so for you automatically:
+./venv_autosetup_simpler.sh
+...then just follow the instructions displayed on the screen to activate this virtual environment if you have not already done so, and once done, simply enter this command into terminal (from location of shell script file) to get things started:
 ./main_auto_api_maker2.sh
 
 b)
 --If you wish to speed things up just hit enter at 1st prompt to set input data to the default files (xa.csv and xb.csv)-- or enter ADVANCED to enter the file names directly.  For now, just use the default xa.csv, and xb.csv-- once you understand this and know you can make it work, you can create your own unique files to enter info in Part 2.
 
 c)
---so, if you entered ADVANCED-- for now just enter the default-- firstly:
+--so, if you entered "ADVANCED" at the first prompt-- for now just enter the default if you haven't created your own .csv file yet-- firstly:
 xa.csv
 --and then at the next prompt within the advanced sub-menu enter this:
 xb.csv

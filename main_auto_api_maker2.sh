@@ -1291,21 +1291,30 @@ cp models.py api/
 python manage.py makemigrations
 python manage.py migrate
 
-echo 'use the following command:'
+echo '------------------------------------------------------------------------------------------------------'
+
+echo 'THE CREATION OF YOUR DJANGO REST API IS NOW COMPLETE!'
+
+echo '----------------------------------------------------'
+
+echo 'to gain access to this API you have just created and verify that everything is working correctly you first need to set up a username and password using the following terminal command:'
+
+echo 'python manage.py createsuperuser'
+
+
+echo '...and now whenever you want to make use of the API you have just made you can simply execute the following terminal command from within the folder you are current in right now, while your virtual environment is activated, as it should be at the moment: '
 
 echo 'python manage.py runserver'
 
 
-echo '...and copy the url displayed in the terminal into your firefox browser to test it.  '
-echo 'adding admin/ to the end will let you view the login screen'
-echo 'once this is confirmed, go back to the terminal hit ctrl+c'
-echo 'then you can set up the manner with which you want to log in using: '
+echo '...and then just copy the url displayed in the terminal into your firefox browser to test it with /admin/ added to the end of the URL let you view the login screen'
+echo 'to stop using this API, simply go back to the terminal and hit ctrl+c to leave'
 
-echo 'python manage.py createsuperuser'
+echo '...and as before, if you want to activate your virtual environment again, if it should become deactivated, simply enter the following terminal command PRIOR to python manage.py runserver:'
 
-echo 'that should give you everything you need to get through the login screen'
+echo 'source environV88/bin/activate'
 
-
+echo '--that concludes this automatic portion of this Django Rest API setup.  Good luck!'
 
 
 #----------------------------------
