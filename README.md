@@ -17,9 +17,6 @@ START WITH "HOW_TO_GET_STARTED.md"
 #### Django:
 Django is a web application framework for Python.  It is designed to prioritize principles of reusability and rapid development.
 
-
-
-
 -----------------------------------------------------------------
 -----------------------------------------------------------------
 
