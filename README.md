@@ -1,14 +1,30 @@
 # auto_setup_django_pregame
 
 ===============================================================================
-NOTE:
+### NOTE:
 ----
 IF YOU HAVE NOT READ "HOW_TO_GET_STARTED.md" IT IS STRONGLY ADVISED YOU DO SO (AND FOLLOW INSTRUCTIONS CONTAINED WITHIN) *BEFORE* READING ANY OF THIS README FILE.  READING THIS README FILE YOU ARE CURRENTLY READING IS *NOT* NECESSARY-- OR EVEN NECESSARILY BENEFICIAL.
 
 START WITH "HOW_TO_GET_STARTED.md"
 ===============================================================================
 
+-----------------------------------------------------------------
+-----------------------------------------------------------------
 
+### notes from 2024:
+---------------
+
+#### Django:
+Django is a web application framework for Python.  It is designed to prioritize principles of reusability and rapid development.
+
+
+
+
+-----------------------------------------------------------------
+-----------------------------------------------------------------
+
+
+==================================================================
 
 
 

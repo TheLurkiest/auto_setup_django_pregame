@@ -1,4 +1,10 @@
 # to shorten it just execute this shell script to set up the virtual environment automatically:
+
+# comment added 2024: might wanna do by hand prior
+sudo apt-get update
+# ...also I did this next line below (also 2024) and shit still worked... but still not sure if this line should be uncommented or not-- for now we leave it uncommented by default since it did work out fine:
+sudo apt-get upgrade
+
 sudo apt-get install python3-venv
 python3 -m venv environV88
 source environV88/bin/activate
