@@ -1,28 +1,21 @@
-# to shorten it just execute this shell script to set up the virtual environment automatically:
-
-# comment added 2024: might wanna do by hand prior
+# Update and upgrade system packages
 sudo apt-get update
-# ...also I did this next line below (also 2024) and shit still worked... but still not sure if this line should be uncommented or not-- for now we leave it uncommented by default since it did work out fine:
-sudo apt-get upgrade
+sudo apt-get upgrade -y
 
-sudo apt-get install python3-venv
+# Install Python virtual environment support
+sudo apt-get install python3-venv -y
+
+# Create and activate virtual environment
 python3 -m venv environV88
 source environV88/bin/activate
-pip3 install django
-pip install djangorestframework
 
-echo -------------------------------------------------------------------------------
+# Install Django and Django Rest Framework
+pip3 install django djangorestframework
 
-echo ok, the virtual environment you just auto set up is now ready to go:
-
-
-
-echo to get started using it, you must activate the virtual environment using the following terminal command: source environV88/bin/activate
-
-echo ...after that just execute the main shell script using the following terminal command: ./main_auto_api_maker2.sh
-
-echo --then hit enter at the first prompt
-
-echo --and just follow the instructions that are displayed on the terminal to complete the process!
-
-echo --this should take less than 30 seconds.
+# Instructional echo statements
+echo ------------------------------------------------------------------------------
+echo "The virtual environment 'environV88' is now ready."
+echo "Activate it using: source environV88/bin/activate"
+echo "Then, run the main setup script: ./main_auto_api_maker2.sh"
+echo "Follow the on-screen instructions to complete the setup."
+echo "This process should take less than 30 seconds."

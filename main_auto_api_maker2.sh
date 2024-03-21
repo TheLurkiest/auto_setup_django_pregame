@@ -2,7 +2,7 @@
 # Brent Fanning
 # Comp 705
 
-# step1
+# step1 
 
 
 rm dir_b[0-9]
