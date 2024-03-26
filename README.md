@@ -8,8 +8,8 @@ IF YOU HAVE NOT READ "HOW_TO_GET_STARTED.md" IT IS STRONGLY ADVISED YOU DO SO (A
 START WITH "HOW_TO_GET_STARTED.md"
 ===============================================================================
 
------------------------------------------------------------------
------------------------------------------------------------------
+--------------------------------------------------------
+--------------------------------------------------------
 
 ### notes from 2024:
 ---------------
@@ -17,8 +17,19 @@ START WITH "HOW_TO_GET_STARTED.md"
 #### Django:
 Django is a web application framework for Python.  It is designed to prioritize principles of reusability and rapid development.
 
------------------------------------------------------------------
------------------------------------------------------------------
+#### If there are any issues with our bash shell scripts getting saved in the incorrect form (with incorrect line endings), and having those line endings getting messed up again every time we try to commit/add/push new alterations to existing shell scripts, use the following terminal command on any shell scripts that get messed up:
+
+dos2unix /path/to/your/script.sh
+
+#### ...followed by something like THIS terminal command within Bash, within Visual Studio Code in Windows, to prevent things from continually getting UN-fixed every time we try to push changes to an existing repo:
+
+git config --global core.autocrlf false
+
+
+
+
+--------------------------------------------------------
+--------------------------------------------------------
 
 
 ==================================================================
