@@ -1,5 +1,29 @@
-HOW_TO_GET_STARTED
+# HOW_TO_GET_STARTED
 -----------------
+
+----------------------------------------------------------------------------------------------
+
+## Ultimately, the only real instructions you need the following two steps:
+### 1. first, customize the .csv files to meet their needs, *OR* just leave them as is to start with in order to see how the process works the first time around
+### 2. ...then to simply execute the main_auto_api_maker2.sh bash shell script within the linux terminal with the following terminal command:
+
+./main_auto_api_maker2.sh
+
+...and subsequently just follow the prompts/instructions that display on the screen as a result in order to totally finish the process and get their server running. 
+
+- ....every other bit of information contained within these markdown files (HOW_TO_GET_STARTED.md and README.md) just fleshes things out a little more just in case you need further details on how various things work, but you should be able to figure out how things work pretty quickly just by intuition once you've run through that process one time (which should ultimately only take 30 seconds or so, not including time it might take to update and add requirements for pip3 obviously, which might take a few minutes depending).
+
+----------------------------------------------------------------------------------------------
+
+
+
+------------------------------------------------------------------
+------------------------------------------------------------------
+------------------------------------------------------------------
+------------------------------------------------------------------
+------------------------------------------------------------------
+
+
 
 Basic instructions on how to create a Django Rest API through the use of a shell script (and python code created *by* the shell script)-- allowing the user to instantly jump from their original designs to functional code, with little/no typing required to get from one stage to the next: just copy/paste your tables/diagrams directly into a spreadsheet file and you can have an entire API set up in less than 5 minutes.
 

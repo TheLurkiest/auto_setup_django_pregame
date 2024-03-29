@@ -3,7 +3,7 @@
 ===============================================================================
 ### NOTE:
 ----
-IF YOU HAVE NOT READ "HOW_TO_GET_STARTED.md" IT IS STRONGLY ADVISED YOU DO SO (AND FOLLOW INSTRUCTIONS CONTAINED WITHIN) *BEFORE* READING ANY OF THIS README FILE.  READING THIS README FILE YOU ARE CURRENTLY READING IS *NOT* NECESSARY-- OR EVEN NECESSARILY BENEFICIAL.
+IF YOU HAVE NOT READ "HOW_TO_GET_STARTED.md" IT IS STRONGLY ADVISED YOU DO SO (AND FOLLOW INSTRUCTIONS CONTAINED WITHIN) *BEFORE* READING ANY OF THIS README FILE.  READING THIS README FILE YOU ARE CURRENTLY READING IS *NOT* NECESSARY-- OR EVEN *NECESSARILY* BENEFICIAL.
 
 START WITH "HOW_TO_GET_STARTED.md"
 ===============================================================================
@@ -26,156 +26,10 @@ dos2unix /path/to/your/script.sh
 git config --global core.autocrlf false
 
 
-
-
 --------------------------------------------------------
 --------------------------------------------------------
 
-
-==================================================================
-
-
-
 ===============================================================================
-===============================================================================
-===============================================================================
-
-
-TO DO:
------
-
-step 1)
-
-update so that version is not there
-
-and that urls are all on same list
-
---so that endpoints are functional in browser
-
-------> so it list everything that's in there
-
-
-DONE!
-
-
----------------------------------------------------------------------------------------------
-
-step 2)
-
-do what we did for GET for CREATE
---------------------------------
-
-when a client app is creating an entry
-
---in the browser
-
-json fields to enter data
-
-
-
----------------------------------------------------------------------------------------------
-
-Summary (primary goal):
-
-understanding the implementation of the "create" endpoint by hand
-
---see that (in browser) the "create" endpoint is functional
-
---this will help solidify understanding of api development
-
-
-===============================================================================
-===============================================================================
-===============================================================================
-
-
-
-
-
-
-
-
-
-
-===============================================================================
-CURRENT STEPS IN PROGRESS:
-
-...all these seem to have been created now-- we can test this by sticking this into our web browser: http://127.0.0.1:8000/api/cultivargroup/
-...AFTER we've used the runserver terminal command to get things going
-
-===============================================================================
----------------------------------------------
-changes to make django auto-api maker complete:
----------------------------------------------
----------------------------------------------
-
-change1- urls.py
-1a) ALL from imports need to be at the top
-
-DONE!
-
-1b) ALL paths need to be in a SINGLE urlpatterns list
-
-DONE!
-
----------------------------------------------
-change2- views.py
-2a) remove 'version' parameter from function definitions:
-def get(self, request, version, format=None):
-...so that they just say:
-def get(self, request, format=None):
-
-DONE!
-
----------------------------------------------
-change3- serializers.py
-looks identical...
-
-DONE!
----------------------------------------------
-change4- config/urls.py
-4a) re_path loses 'version' info from the 1st input parameter--
---changing from this:
-re_path('api/(?P<version>(v1|v2))', include('api.urls'))
-...to this:
-re_path('api/', include('api.urls'))
-
-DONE!
-
----------------------------------------------
-change5- models.py
-looks identical!
-
-DONE!
-
-extra_change- .gitignore
-
-changed this so that file creation is automatic-- not created from local reference.
-
-=======================================================================
-=======================================================================
-
---that means we just have change1, change2, and change4 left-- that's:
-1) urls.py
-2) views.py
-4) config/urls.py
-extra) don't forget to fix pathway to .gitignore
-
-
-
-===============================================================================
-===============================================================================
-===============================================================================
-===============================================================================
-===============================================================================
-
-
-
-
-
-
-
-
 
 
 Again--
@@ -183,7 +37,6 @@ If just starting out: read HOW_TO_GET_STARTED.md instead of this.
 It is a better source of concise information, which should also be clearer and more accurate.
 
 There is a great deal of info here within this README which is somewhat superfluous-- and some of it is a little bit out of date.  
-
 
 ------------------------------------------------------------------------------
 
@@ -206,7 +59,6 @@ cd api_auto_xxx
 
 --then enter YES at prompt asking you if you added a 2nd .csv
 --then just hit enter at any additional prompts or places where the code stops displaying a continuous stream of text at any point
-
 
 -----------------------------------------
 
@@ -235,7 +87,7 @@ python manage.py createsuperuser
 python manage.py runserver
 ...which gets your API up and running-- you'll need to execute this again any time you want to get log into your API.  Just copy and paste the url displayed in the terminal, with /admin/ added to the end of it-- and you can go directly to the login page of your new API where you can gain further access by entering the username and password you selected when you you used 'createsuperuser.'
 
-
+-------------------------------------------------------
 
 Remember-- the only file that is actually needed to make this entire program run is that single shell script file (main_auto_api_maker2)-- and whatever .csv files you decide to create in order to enter information into it.
 
@@ -251,20 +103,6 @@ Note- this is a work in progress.  Everything currently functions-- but there is
 8- backend and frontend?
 
 -------------------------------------------------------------------------------
-
-
-
-
-------------------------------------------
-
-------------------------------------------
-
-------------------------------------------
-
-------------------------------------------
-
-
-
 
 -------------------------------------------------------------------------------
 
@@ -336,23 +174,4 @@ Basic Instructions on how to implement our shell script (this is mostly complete
 
 ==============================================================================
 ==============================================================================
-Implementation notes on development of code still under construction (below this point):
-----------------------------------------------------------------------------
 
-New simplified setup for Django Rest API automatic setup
-
-our new plan is to exclusively use python code in order to finish things off and allow the user to have more advanced options when setting up his code and giving it greater range and functionality in use.  The next natural step in the evolution of this automatic django rest api generator is to give our code the versatility to give the user the option to setup specific field types and incorporate those types into the setup of the automatically as well.
-
-----------------------------------------------------------------------------
-
-Here is how this will be done-- by my current thinking:
-
-At the moment we already have a small amount of python code that is generated by our first shell script that is used to alter INSTALLED_APPS within config/settings.py after it is initially created in order to add 'api' and 'rest_framework' to our list of apps.
-
-We do this by looking for a specific text marker in our code and then just adding this secondary line in right after it.  We can re-use this code by first modularizing it in order to test out that we can make it work by putting it into its own separate module and then-- once we think we've got THAT working-- within its own function-- and finally reincorporate it into our existing shell script code by simply having our bash script "echo" in order to create these files automatically.
-
-----------------------------------------------------------------------------
-
-...of course you could just leave it as its own unique python module-- but for the time being I kind of just like the idea of having one single file that does EVERYTHING.  I like code that writes itself-- and like code that writes the code that writes itself even more.  This shell script isn't necessarily written to be easy to follow the logic of or edit further-- it's written to save the user precious time when transitioning from that first stage-- the idea stage-- to the execution stage.  And of course it's designed to make it FAR easier and quicker to make large changes to a huge number of different files with consistency and certainty-- with the precision, speed and efficiency of a machine.  
-
-To make more advanced, specific changes to code the user will still need to understand how these 7 python modules within the API that is generated inter-relate and interact with one another.  However, with this in place the user will no longer have to worry about individually painstakingly constructing these massive python models by hand-- one field at a time-- and then editing every single one of the other 5 or 6 modules that'll need to be edited as well to accommodate the changes you made to the FIRST file-- only to have one small typo in one random file undermine the entire project and having to go frantically cycling from one file to the next looking for a single grain of sand on a beach.  
