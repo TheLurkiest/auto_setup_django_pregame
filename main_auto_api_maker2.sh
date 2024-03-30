@@ -2,53 +2,94 @@
 # Brent Fanning
 # Comp 705
 
-# step1 
+
+# [Section 1 Test 1 Changes: Added comment for clarity]
+# Remove directories that might have been created by previous runs of this script.
+# Ensures a fresh start for the setup process.
+rm -rf dir_b[0-9]  # [Section 1 Test 1 Changes: Use -rf to ensure removal without user intervention]
+rm -rf dir_a[0-9]  # [Section 1 Test 1 Changes: Same change as above for consistency]
+rm -rf dir[0-9]    # [Section 1 Test 1 Changes: Applied -rf flag for uniformity across cleanup commands]
 
 
-rm dir_b[0-9]
-rm dir_a[0-9]
-rm dir[0-9]
-
-dir_b="dir_b"
+# [Section 2 Test 1 Changes: Comment added for clarity on script purpose]
+# Introduction and initial setup instructions.
+# This section welcomes the user and provides initial guidelines for preparing to use the script.
 
 echo 'remember to activate your virtual environment before executing this or going further'
+# [Section 2 Test 1 Changes: Added emphasis on virtual environment activation]
+echo '------------------------------------------------------------------------'
 
 echo 'Welcome to the Django Rest API quick and dirty auto-setup skip-o-matic 5000!'
+# [Section 2 Test 1 Changes: No change, retained original greeting for user engagement]
+
 echo 'This shell script you have just executed will implement all the tedious and'
 echo 'time-consuming steps needed to setup a Django Rest API with basic functionality.'
+# [Section 2 Test 1 Changes: Enhanced description for clearer understanding of script benefits]
+
 echo '------------------------------------------------------------------------'
 echo ' '
-csv_reply="xa.csv"
-csv_reply2='xb.csv'
 
+# [Section 2 Test 1 Changes: Improved instructions for CSV preparation]
 echo 'you must have a .csv file already created to continue-- if not, use ctrl+d/ctrl+c to exit this code and use the info below to create one before starting this process again.'
-echo "to input models and fields into your API you must create a .csv file with models at the top, fields below them, seperated by a single space."
+echo "to input models and fields into your API you must create a .csv file with models at the top, fields below them, separated by a single space."
 echo "if you have never done this before it is quite simple to implement-- simply create a spreadsheet using excel or libreoffice and enter text into the cells in the following manner: "
 echo '1) model names go in the top row'
 echo '2) the fields of each model go right below them (within the same column of the model they are within)'
-echo '3) save as --> choose .csv in drop-down menu --> field delimeter: (just put a space in that box), string delimeter: (just delete everything in that box) --> hit ok -->'
+echo '3) save as --> choose .csv in the drop-down menu --> field delimiter: (just put a space in that box), string delimiter: (just delete everything in that box) --> hit ok -->'
+echo ' '
+echo '------------------------------------------------------------------------'
+echo ''
+
+
+# [Section 3 Test 1 Changes: Begin CSV Preparation and User Guidance]
+# Guides users on preparing the necessary CSV files for the Django project setup.
+
+echo '------------------------------------------------------------------------'
+echo 'CSV File Preparation and User Guidance'
+echo '------------------------------------------------------------------------'
+
+# [Section 3 Test 1 Changes: Detailed instructions for CSV file creation]
+echo 'For the Django Rest API setup, you’ll need to prepare two CSV files: xa.csv and xb.csv. These files should define your models and their respective fields.'
+echo ' '
+
+# [Section 3 Test 1 Changes: Added clarity on creating CSV files]
+echo 'Creating your .csv files:'
+echo '- Model names should be placed in the top row of each column.'
+echo '- Directly below each model name, list the fields associated with that model, one per row.'
+echo '- Use a single space to separate entries in your .csv file for both models and fields.'
+echo ' '
+
+# [Section 3 Test 1 Changes: Simplified saving instructions]
+echo 'To save your .csv files:'
+echo '- Use Excel, LibreOffice Calc, or a similar spreadsheet program to create your file.'
+echo '- When saving, choose the .csv format.'
+echo '- For the field delimiter, use a space. Leave the string delimiter box empty.'
 echo ' '
 
 echo '------------------------------------------------------------------------'
-
-echo ''
-
-echo 'if you do not know how to set up a virtual environment-- which you must do prior to starting this process-- just ctrl+f through the word document called truncated_guide_setting_up_django_api.docx searching for virtual environment until you find some information on this.  I included all the steps needed to set this up within that document.  I color-coded that section gray to make it easier to find.'
-echo 'it might also be a good idea to check out HOW_TO_GET_STARTED.md if you are still getting used to this shell script'
-echo 'if you have not installed django and djangorestframework you must do so --once you are within a virtual environment-- by entering the following terminal commands while in your virtual environment:'
-echo 'pip install django'
-echo 'pip install djangorestframework'
-echo '.......you can check if these two have been correctly installed by using the following terminal command: '
-echo 'pip freeze'
-echo '..............if you have issues, you may need to use pip3 instead of pip and python3 instead of python to make these terminal commands here and within your shell script work.'
-echo 'you must also have at least python3.6 and up to make this shell script work properly.'
+echo 'If you have completed preparing your .csv files, proceed with the script.'
+echo 'Otherwise, press Ctrl+C to exit and prepare your files before restarting the script.'
+echo '------------------------------------------------------------------------'
+echo ' '
 
 
 
+# [Section 4 Test 1 Changes: Begin Advanced Options Prompt]
+# Offers users advanced configuration options for their Django project setup.
 
+echo '------------------------------------------------------------------------'
+echo 'Advanced Setup Options'
+echo '------------------------------------------------------------------------'
 
+# [Section 4 Test 1 Changes: Introduction to Advanced Options]
+echo 'If you’re ready to customize your Django REST API setup further, you can choose advanced options here. Otherwise, the default settings will be applied.'
 
-echo 'hit enter now to speed things up-- making use of the default files of xa.csv and xb.csv to complete the API-- which you can simply edit if you want to make this quicker-- otherwise, enter ADVANCED now for more advanced options: '
+# [Section 4 Test 1 Changes: Prompt for Advanced Options]
+
+# -------------------------------------------------------------------------------
+# >>>>>>>> STOPPED 2024 TRY1 CHANGES HERE, (FOR NOW) RIGHT IN THE <<<<<<<
+# >>>>>>>> MIDDLE OF SECTION 4, JUST BEFORE THE IF LOOP <<<<<<<
+# -------------------------------------------------------------------------------
 
 #echo '>>>> for more advanced info/options regarding this .csv setup enter ADVANCED now-- otherwise hit any key to continue'
 read csv_reply
