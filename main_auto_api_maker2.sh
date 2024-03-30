@@ -85,38 +85,35 @@ echo '------------------------------------------------------------------------'
 echo 'If you’re ready to customize your Django REST API setup further, you can choose advanced options here. Otherwise, the default settings will be applied.'
 
 # [Section 4 Test 1 Changes: Prompt for Advanced Options]
+read -p 'Would you like to enter advanced options? (yes/no): ' advanced_reply
+if [ "$advanced_reply" == "yes" ]; then
+    # [Section 4 Test 1 Changes: Instructions for Custom CSV Files]
+    echo 'You have chosen to specify custom .csv files for models and fields.'
+    echo 'Please ensure your .csv files are prepared according to the guidelines provided in the previous section.'
 
-# -------------------------------------------------------------------------------
-# >>>>>>>> STOPPED 2024 TRY1 CHANGES HERE, (FOR NOW) RIGHT IN THE <<<<<<<
-# >>>>>>>> MIDDLE OF SECTION 4, JUST BEFORE THE IF LOOP <<<<<<<
-# -------------------------------------------------------------------------------
+    # [Section 4 Test 1 Changes: Custom CSV File Input]
+    echo 'Enter the filename for your models .csv file (default is xa.csv): '
+    read csv_reply
+    csv_reply=${csv_reply:-xa.csv}  # [Section 4 Test 1 Changes: Apply default if input is empty]
 
-#echo '>>>> for more advanced info/options regarding this .csv setup enter ADVANCED now-- otherwise hit any key to continue'
-read csv_reply
-if [ "$csv_reply" == "ADVANCED" ]
-then
-	echo 'ADVANCED OPTIONS MENU: '
-	echo '----------------------'
+    echo 'Enter the filename for your fields data types .csv file (default is xb.csv): '
+    read csv_reply2
+    csv_reply2=${csv_reply2:-xb.csv}  # [Section 4 Test 1 Changes: Apply default if input is empty]
 
-	echo 'make sure you follow the current very simple limitations when creating your own input .csv data files:'
-	echo '1) there must be exactly FIVE columns containing text-- columns a-e: all of these first five columns must contain either a model in the top row-- or the text NOMODEL for any columns you do not wish to use.'
-	echo '2) each item (field or model) seperated by ONLY a space-- same goes for data types for any other .csv files'
-	echo '3) if you have any questions I suggest you refer to the text file HOW_TO_GET_STARTED.md first-- and if this does not answer things, just ctrl+f through the word document called truncated_guide_setting_up_django_api.docx'
-	echo 'Enter the name of your .csv file containing fields and model info-- by default this is xa.csv: '
-	read csv_reply
-
-	echo 'thank you for your selection.  We will now ask for the .csv file containing data type information-- by default this is normally xb.csv'
-	echo 'if you wish to enter a different .csv file, just make sure it only uses the approved data types-- for the time being these are limited to: Integer, Boolean, Date, Float, and Char '
-
-	echo 'Enter a secondary .csv file to specify the data types for each field'
-	read csv_reply2
-	#echo '4) to write down any additional text that will not be read into the API (like names, dates, etc.) just put NOMODEL into the top row or some column, and you will be able to freely enter whatever text you wish into the cells within that column beneath that initial top row.'
-  #echo '5) you may also enter an optional 2nd .csv momentarily when prompted to specify data types for each field.'
-  #echo '--just set up your .csv the same as before, but with Integer, Date, Float, and Char within each cell which contains a field of that datatype.  Entering other datatypes besides these via this automation may be problematic.'
 else
-	csv_reply="xa.csv"
-	csv_reply2='xb.csv'
+    # [Section 4 Test 1 Changes: Default CSV Files Used]
+    echo 'Proceeding with default .csv files: xa.csv and xb.csv.'
+    csv_reply="xa.csv"
+    csv_reply2='xb.csv'
 fi
+
+echo '------------------------------------------------------------------------'
+echo ' '
+
+# -------------------------------------------------------------------------------
+# >>>>>>>> STOPPED 2024 TRY1 CHANGES HERE, (FOR NOW) RIGHT AT THE <<<<<<<
+# >>>>>>>> END OF SECTION 4, JUST AFTER THE IF LOOP <<<<<<<
+# -------------------------------------------------------------------------------
 
 mkdir api_auto_xxx
 touch stage1_auto_d.py
