@@ -9,7 +9,7 @@
 
 ### 2. ...then to simply execute the venv_autosetup_simpler.sh bash shell script within the linux terminal with the following terminal command:
 
-./main_auto_api_maker2.sh
+./venv_autosetup_simpler.sh
 
 ...and subsequently just follow the prompts/instructions that display on the screen as a result in order to totally finish the process and get their server running. 
 
