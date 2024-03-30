@@ -14,8 +14,22 @@ START WITH "HOW_TO_GET_STARTED.md"
 ### notes from 2024:
 ---------------
 
+#### Things to make note of from Test 1 (for Test 2 and later):
+
+- some lines may be completely unnecessary clutter due to them being from older iterations of the setup that got left in place by accident (simply because they either didn't cause any additional errors by existing or because the errors they cause might not prevent the code from still working)-- for instance, it's possible that these lines from the beginning of Section 1 in our main shell script are trying to delete a file that could not possibly exist because no lines exist anymore that might create these files in the first place-- if so, I'd eventually like to get rid of that sort of clutter: 
+
+```
+rm -rf dir_b[0-9]  # [Section 1 Test 1 Changes: Use -rf to ensure removal without user intervention]
+rm -rf dir_a[0-9]  # [Section 1 Test 1 Changes: Same change as above for consistency]
+rm -rf dir[0-9]    # [Section 1 Test 1 Changes: Applied -rf flag for uniformity across cleanup commands]
+```
+
+
+
+
 #### Django:
-Django is a web application framework for Python.  It is designed to prioritize principles of reusability and rapid development.
+
+- Django is a web application framework for Python.  It is designed to prioritize principles of reusability and rapid development.
 
 #### If there are any issues with our bash shell scripts getting saved in the incorrect form (with incorrect line endings), and having those line endings getting messed up again every time we try to commit/add/push new alterations to existing shell scripts, use the following terminal command on any shell scripts that get messed up:
 
