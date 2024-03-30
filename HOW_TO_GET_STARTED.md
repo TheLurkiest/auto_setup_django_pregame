@@ -5,7 +5,7 @@
 
 ## Ultimately, the only real instructions you need the following two steps:
 ### 1. first, customize the .csv files to meet their needs, *OR* just leave them as is to start with in order to see how the process works the first time around
-### 2. ...then to simply execute the main_auto_api_maker2.sh bash shell script within the linux terminal with the following terminal command:
+### 2. ...then to simply execute the venv_autosetup_simpler.sh bash shell script within the linux terminal with the following terminal command:
 
 ./main_auto_api_maker2.sh
 
