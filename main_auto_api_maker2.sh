@@ -120,151 +120,65 @@ touch stage1_auto_d.py
 
 chmod 777 stage1_auto_d.py
 
-echo "import os
+# The use of "cat <<EOF > filename" called a "here document" (or "heredoc") and is a feature of Unix shell environments that allows you to direct a block of text (multiline string) into a command or file:
+cat <<EOF > stage1_auto_d.py
+# Python code or any text goes here:
 
-print('step 1: if virtual environment is not active, ctrl+c/d out of this python code')
-print('...and then activate the virtual environment first before running this again')
+# Section 6A Test 1 Changes: Python Script Content
+import os
 
-print(' ')
+# Initial checks for virtual environment activation
+print('Step 1: Ensure your virtual environment is active.')
+print('If the virtual environment is not active, please activate it before running this script.')
 print('------------------------------------------------------------------')
-p_reply = ''
-#p_reply = input('press ANY KEY to continue automatic default setup or enter SKIP if you have already finished and tested this API and wish to make further alterations by adding new fields to existing models.')
 
+# No user input for continuation yet, assuming direct execution for now.
+# Future enhancement could include checking for virtual env activation.
 
-if (p_reply.upper() != 'SKIP'):
+# Start modifications to the Django settings.py file
+apps_found = False
 
-	apps_found = False
+# Section 6A Test 1 Changes: Simplified settings modification logic
+# Open config/settings.py and read its contents
+with open('config/settings.py', 'r') as fin:
+    settings_contents = fin.readlines()
 
-	fin1=open('config/settings.py','r')
-	s_pre_marker=''
-	s_post_marker=''
-	for line in fin1:
-		if(apps_found == False):
-			s_pre_marker = str(s_pre_marker) + str(line)
-		if(line.count('django.contrib.admin') >= 1):
-			s_pre_marker = str(s_pre_marker) + str(line.replace(('django.contrib.admin'), ('rest_framework')))
-		if(line.find('INSTALLED_APPS') == True ):
-			apps_found = True
-	fin1.close()
+# Add 'rest_framework' and 'api' to the INSTALLED_APPS
+new_settings_contents = []
+for line in settings_contents:
+    if "INSTALLED_APPS" in line:
+        apps_found = True
+    if "django.contrib.admin" in line and not apps_found:
+        line = line.replace("django.contrib.admin", "rest_framework, 'django.contrib.admin")
+    if "django.contrib.admin" in line and apps_found:
+        line = line.replace("django.contrib.admin", "api, 'django.contrib.admin")
+    new_settings_contents.append(line)
 
-	apps_found = False
+# Write the modified settings back to config/settings.py
+with open('config/settings.py', 'w') as fout:
+    fout.writelines(new_settings_contents)
 
-	fin2=open('config/settings.py','r')
-	for line in fin2:
-		if(apps_found == True):
-			s_post_marker = str(s_pre_marker) + str(line)
-			if(line.count('INSTALLED_APPS') >= 1 ):
-				apps_found = True
-	fin2.close()
+print("Settings updated to include 'rest_framework' and 'api' apps.")
 
-	os.system('sudo rm config/settings.py')
-
-	fout3=open('config/settings.py','w')
-
-	fout3.write(str(s_pre_marker))
-	fout3.write(str(s_post_marker))
-
-	fout3.close()
-
-
-
-
-	apps_found = False
-
-	fin1=open('config/settings.py','r')
-	s_pre_marker=''
-	s_post_marker=''
-	for line in fin1:
-		if(apps_found == False):
-			s_pre_marker = str(s_pre_marker) + str(line)
-		if(line.count('django.contrib.admin') >= 1):
-			s_pre_marker = str(s_pre_marker) + str(line.replace(('django.contrib.admin'), ('api')))
-		if(line.find('INSTALLED_APPS') == True ):
-			apps_found = True
-	fin1.close()
-
-	apps_found = False
-
-	fin2=open('config/settings.py','r')
-	for line in fin2:
-		if(apps_found == True):
-			s_post_marker = str(s_pre_marker) + str(line)
-			if(line.count('INSTALLED_APPS') >= 1 ):
-				apps_found = True
-	fin2.close()
-
-	os.system('sudo rm config/settings.py')
-
-	fout3=open('config/settings.py','w')
-
-	fout3.write(str(s_pre_marker))
-	fout3.write(str(s_post_marker))
-
-	fout3.close()
-
-
-
-
-
-
-
-
-
-
-
+# Additional feature for adding new fields to existing models
+# Section 6A Test 1 Changes: Commented out for clarity - to be implemented
+# This section intended for future expansion to allow adding fields to models via script input.
+'''
+print("This feature allows adding new fields to existing models.")
+p_reply2 = input("Would you like to add a new field? (yes/no): ")
+if p_reply2.lower() == "yes":
+    model_name = input("Enter the model name to add fields to: ")
+    field_name = input("Enter the new field name: ")
+    # Logic to add field to model goes here
+    print(f"Added {field_name} to {model_name}.")
 else:
-	# ----------------------------------------------------------------------------
-	# here is where we can potentially choose to add new fields to existing files:
-	# ----------------
+    print("No changes made.")
+'''
 
-	print('If you have not yet tested out that this API currently works by going ')
-	print('to the url listed when the terminal command python3 manage.py runserver')
-	print('is used, and checking that the url listed within the terminal upon ')
-	print('running that terminal command leads you to a working website then')
-	print('answer NO to the following question.  This feature can be used in the')
-	print('future to add new fields to your models once it has been fully')
-	print('implemented-- but wait until you have tested the base setup first.')
-
-	print(' ')
-	print('NOTE: this feature is still under development-- not all changes are')
-	print('automatically implemented.  The following modules still need auto-')
-	print('alteration features added to make this option fully automatic:')
-	print('models.py, serializers.py, urls.py, ')
-
-	print('once tests.py has had its basic setup it will also need to have ')
-	print('features added here to make the new changes compatible will the')
-	print('new models.')
-
-	p_reply2 = ''
-	p_reply2 = input('Would you like to add a new field?')
-	p_reply = input('What is the name of the model you want to add that field to?')
-
-	model1 = p_reply
-
-	field_list=[]
-
-	while(p_reply2.upper() == 'YES'):
-		p_reply = input('What would you like to call your field within that model?')
-		if(len(p_reply) >= 1):
-			field_list.append(p_reply)
-		p_reply2 = input('Would you like to create any additional fields (yes/no)?')
+print('Use "python manage.py makemigrations" and "python manage.py migrate" to apply changes.')
 
 
-	print('the fields for the ' + str(model1) + 'model are as follows:')
-
-	r_field_list = range(len(field_list))
-	for r_elem in r_field_list:
-		print(str(field_list[r_elem]))
-
-	print('use the following two terminal commands to implement any changes: ')
-	print('python3 manage.py makemigrations')
-	print('python3 manage.py migrate')
-	# ----------------------------------------------------------------------------
-
-" > stage1_auto_d.py
-
-
-
+EOF
 
 
 
