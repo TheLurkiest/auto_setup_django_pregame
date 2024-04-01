@@ -18,3 +18,4 @@ sudo rm -r seven_namesakes
 sudo rm -r m1_file
 sudo rm -r m1_file_tests
 sudo rm -r api_auto_xxx
+rm [0-9]

@@ -146,36 +146,21 @@ with open('config/settings.py', 'r') as fin:
 # Add 'rest_framework' and 'api' to the INSTALLED_APPS
 new_settings_contents = []
 for line in settings_contents:
-    if "INSTALLED_APPS" in line:
+    if 'INSTALLED_APPS' in line:
         apps_found = True
-    if "django.contrib.admin" in line and not apps_found:
-        line = line.replace("django.contrib.admin", "rest_framework", "django.contrib.admin")
-    if "django.contrib.admin" in line and apps_found:
-        line = line.replace("django.contrib.admin", "api", "django.contrib.admin")
+    if 'django.contrib.admin' in line and not apps_found:
+        line = line.replace('django.contrib.admin', 'rest_framework', 'django.contrib.admin')
+    if 'django.contrib.admin' in line and apps_found:
+        line = line.replace('django.contrib.admin', 'api', 'django.contrib.admin')
     new_settings_contents.append(line)
 
 # Write the modified settings back to config/settings.py
 with open('config/settings.py', 'w') as fout:
     fout.writelines(new_settings_contents)
 
-print("Settings updated to include 'rest_framework' and 'api' apps.")
+print('Settings updated to include rest_framework and api apps.')
 
-# Additional feature for adding new fields to existing models
-# Section 6A Test 1 Changes: Commented out for clarity - to be implemented
-# This section intended for future expansion to allow adding fields to models via script input.
-'''
-print("This feature allows adding new fields to existing models.")
-p_reply2 = input("Would you like to add a new field? (yes/no): ")
-if p_reply2.lower() == "yes":
-    model_name = input("Enter the model name to add fields to: ")
-    field_name = input("Enter the new field name: ")
-    # Logic to add field to model goes here
-    print(f"Added {field_name} to {model_name}.")
-else:
-    print("No changes made.")
-'''
-
-print('Use "python manage.py makemigrations" and "python manage.py migrate" to apply changes.')
+print('Use python manage.py makemigrations and python manage.py migrate to apply changes.')
 
 
 EOF
@@ -2224,7 +2209,7 @@ echo "----------------------------------------------"
 echo "to finish the setup of this API, use the following terminal commands: "
 echo "cd api_auto_xxx"
 echo "...followed by:"
-echo "./finish_my_api"
+echo "./finish_my_api.sh"
 
 echo "...and in a few moments your API will be finished!"
 
