@@ -149,9 +149,9 @@ for line in settings_contents:
     if "INSTALLED_APPS" in line:
         apps_found = True
     if "django.contrib.admin" in line and not apps_found:
-        line = line.replace("django.contrib.admin", "rest_framework, 'django.contrib.admin")
+        line = line.replace("django.contrib.admin", "rest_framework", "django.contrib.admin")
     if "django.contrib.admin" in line and apps_found:
-        line = line.replace("django.contrib.admin", "api, 'django.contrib.admin")
+        line = line.replace("django.contrib.admin", "api", "django.contrib.admin")
     new_settings_contents.append(line)
 
 # Write the modified settings back to config/settings.py
