@@ -148,10 +148,8 @@ new_settings_contents = []
 for line in settings_contents:
     if 'INSTALLED_APPS' in line:
         apps_found = True
-    if 'django.contrib.admin' in line and not apps_found:
-        line = line.replace('django.contrib.admin', 'rest_framework', 'django.contrib.admin')
     if 'django.contrib.admin' in line and apps_found:
-        line = line.replace('django.contrib.admin', 'api', 'django.contrib.admin')
+        line = line.replace("'django.contrib.admin'", "'rest_framework',\n    'api',\n    'django.contrib.admin',")
     new_settings_contents.append(line)
 
 # Write the modified settings back to config/settings.py
@@ -1267,6 +1265,15 @@ for file in ../seven_namesakes/tests_m[1-99]; do
 done
 
 #----------------------------------
+
+# 3-31-2024 changes:
+python manage.py migrate
+python manage.py makemigrations api
+python manage.py migrate
+python manage.py makemigrations api
+python manage.py migrate
+
+
 
 
 " > api_auto_xxx/finish_my_api.sh
