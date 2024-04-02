@@ -1266,12 +1266,12 @@ done
 
 #----------------------------------
 
-# 3-31-2024 changes:
-python manage.py migrate
-python manage.py makemigrations api
-python manage.py migrate
-python manage.py makemigrations api
-python manage.py migrate
+# 3-31-2024 changes: commenting out now since these dont seem needed any more
+# python manage.py migrate
+# python manage.py makemigrations api
+# python manage.py migrate
+# python manage.py makemigrations api
+# python manage.py migrate
 
 
 
